@@ -1,0 +1,86 @@
+---
+title: "Binary outcomes"
+subtitle: "Risk ratio, odds ratio and risk difference from event counts"
+---
+
+Use this module when each study reports how many events occurred in each group
+and the size of each group. That covers yes or no outcomes: mortality,
+recurrence, response to treatment.
+
+If your effect already comes calculated from the paper, the right module is
+[pre-calculated effects](precalculated.qmd), not this one.
+
+This page covers what belongs to this module. The screens and the buttons are in
+[the three-step flow](flow.qmd).
+
+## Step 1, the data
+
+Five required columns, with these exact names:
+
+| Column | What it is |
+|---|---|
+| `study` | the study label, for example "Silva 2019" |
+| `event.e` | events in the experimental group |
+| `n.e` | size of the experimental group |
+| `event.c` | events in the control group |
+| `n.c` | size of the control group |
+
+Any extra column is optional and becomes available later, for subgroup analysis
+and meta-regression. The example dataset carries `Region`, `Design`,
+`RiskOfBias`, `MeanAge` and `FollowUpMonths`.
+
+## Step 2, the parameters
+
+### Summary measure (sm)
+
+Default `RR`. It decides what gets pooled:
+
+* `RR`, risk ratio. The easiest to communicate and the most used in clinical
+  trials. Recommended as a starting point.
+* `OR`, odds ratio. Needed if you will compare against literature that uses OR,
+  or if you intend to use the Peto or GLMM methods, which only work with `OR`.
+  Remember that the OR drifts away from the RR when the event is common.
+* `RD`, risk difference, on the absolute scale. Useful for communicating
+  clinical impact ("7 fewer events per 100 patients"), but usually more
+  heterogeneous across studies than the relative measures.
+
+### Method
+
+Default `inverse`. It is the pooling method, and it exists only in this module
+and in single proportions:
+
+* `inverse`, inverse variance. The app default, and it serves well when studies
+  are of reasonable size and events are not rare.
+* `MH`, Mantel-Haenszel. Behaves better than inverse variance when there are few
+  events or small studies. It is the Cochrane default for binary data.
+  Recommended if your outcome is uncommon.
+* `Peto`. Suits very rare events with groups of similar size. Only works with
+  `sm = OR`.
+* `GLMM`, generalized linear mixed model. Avoids the continuity corrections the
+  other methods apply to zero cells. Slower. Only works with `sm = OR`, and the
+  forest plot comes out without the Weight column, because a GLMM fit produces
+  no per-study weight.
+
+::: {.callout-important}
+## Peto and GLMM require OR
+If you leave `sm = RR` or `sm = RD` and pick `Peto` or `GLMM`, the analysis
+stops with an error message. Switch `sm` to `OR` first, or set the method back
+to `inverse` or `MH`.
+:::
+
+### The other fields
+
+**Outcome name**, the outcome direction and the group names work as described in
+[Outcome settings](flow.qmd#outcome-settings).
+
+**Analysis model**, **Tau method**, **Random CI method** and **Prediction
+method** work and are recommended as in
+[Statistical settings (advanced)](flow.qmd#statistical-settings-advanced). In
+this module the **Prediction interval** is off by default.
+
+## Step 3, export and results
+
+This module carries the full set of cards: forest plot, leave-one-out, funnel
+plot, small-study effects with Egger's test, subgroup analysis, meta-regression
+and the two summary tables as XLSX. All of them are described in
+[step 3 of the flow](flow.qmd).

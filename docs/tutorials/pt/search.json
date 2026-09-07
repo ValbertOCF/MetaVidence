@@ -1,0 +1,394 @@
+[
+  {
+    "objectID": "single-arm.html",
+    "href": "single-arm.html",
+    "title": "Meta-análise de braço único",
+    "section": "",
+    "text": "Use este módulo quando não há comparação: você quer a prevalência agrupada de uma condição, a taxa de complicação de um procedimento, ou o valor médio de uma medida numa população. Siga o fluxo em três passos, com um passo 2 bem mais curto, porque sem grupo controle vários campos deixam de fazer sentido."
+  },
+  {
+    "objectID": "single-arm.html#passo-1-os-dados",
+    "href": "single-arm.html#passo-1-os-dados",
+    "title": "Meta-análise de braço único",
+    "section": "Passo 1, os dados",
+    "text": "Passo 1, os dados\nDois submódulos, escolhidos na página anterior.\nProporções únicas\n\n\n\nColuna\nO que é\n\n\n\n\nstudy\nrótulo do estudo\n\n\nevent\nnúmero de participantes com o desfecho\n\n\nn\ntamanho da amostra do braço\n\n\n\nMédias únicas\n\n\n\nColuna\nO que é\n\n\n\n\nstudy\nrótulo do estudo\n\n\nn\ntamanho da amostra\n\n\nmean\nvalor médio do desfecho\n\n\nsd\ndesvio-padrão do desfecho\n\n\n\n\nEstudo que só reporta mediana também entra\n\n\n\nColuna\nO que é\n\n\n\n\nstudy, n\ncomo acima\n\n\nmedian, q1, q3\nmediana e quartis do desfecho\n\n\n\nmin e max são opcionais. Substituem os quartis quando o artigo traz só a amplitude, e aí a conversão fica menos precisa.\nMediana com sd e mais nada é recusada, de propósito. Mediana não vira média sem os quartis ou a amplitude, e o meta não reclama disso: ele descarta o estudo da análise sem uma palavra. Melhor ouvir isso aqui do que publicar uma revisão sem estudos que você nunca soube que ficaram de fora.\n\n\nAs duas formas podem se misturar no mesmo arquivo\nPreencha as colunas que cada estudo reporta e deixe o resto vazio. O conjunto de exemplo faz exatamente isso: oito estudos com média e desvio, quatro com mediana e quartis. O MetaVidence converte os de mediana antes de agrupar, pelo método de Luo e colaboradores para a média e o de Shi e colaboradores para o desvio-padrão, que são os padrões atuais do pacote meta.\nO Data check informa quantos estudos foram convertidos, então o número está na sua frente antes de qualquer coisa rodar e vai direto para a seção de métodos.\nMédia e desvio continua sendo a entrada ideal: é o que o estudo mediu, sem nada estimado. A conversão existe para que um estudo que reportou mediana participe da análise em vez de ficar de fora, não como escolha equivalente.\nColunas extras ficam disponíveis para subgrupo e meta-regressão, como nos demais módulos. O Data check confere as obrigatórias, conta os estudos e aponta problemas, incluindo event maior que n."
+  },
+  {
+    "objectID": "single-arm.html#passo-2-os-parâmetros",
+    "href": "single-arm.html#passo-2-os-parâmetros",
+    "title": "Meta-análise de braço único",
+    "section": "Passo 2, os parâmetros",
+    "text": "Passo 2, os parâmetros\nNão existem aqui os campos de direção do desfecho nem os nomes dos grupos: sem comparação, não há “favorece experimental” nem “favorece controle” a rotular.\n\nProporções únicas\nOutcome name entra nos títulos e nos nomes de arquivo, como sempre.\nSummary measure (sm) (padrão PLOGIT) escolhe a transformação. Proporções perto de 0% ou de 100% têm variância pequena demais e distorcem o agrupamento se usadas cruas, por isso a transformação existe:\n\nPLOGIT, logito. É o padrão e a recomendação para a maioria dos casos.\nPFT, Freeman-Tukey duplo arco-seno. Estabiliza a variância quando há proporções muito próximas dos extremos, mas a volta para a escala de porcentagem é problemática quando os tamanhos amostrais variam muito entre estudos. Use com consciência disso.\nPAS, arco-seno simples.\nPLN, logaritmo da proporção.\nPRAW, proporção crua, sem transformar. Só faz sentido quando todas as proporções estão longe de 0% e de 100%.\n\nOs resultados sempre voltam para a escala de porcentagem nos gráficos e tabelas, então a transformação é uma escolha de método, não de apresentação.\nMethod (padrão Inverse) escolhe entre Inverse, o inverso da variância, e GLMM, um modelo logístico de intercepto aleatório.\nRecomendação: mantenha Inverse, que é o que a grande maioria das meta-análises de prevalência publicadas usa, e deixe Tau method em REML.\nTroque para GLMM com Tau method em ML quando o seu conjunto tiver:\n\nestudos com zero eventos, ou\nproporções muito próximas de 0% ou de 100%.\n\nNessas duas situações o Inverse precisa somar 0,5 a cada célula, uma correção de continuidade que desloca justamente os estudos extremos, que são os que você está tentando estimar bem. O GLMM modela as contagens diretamente e dispensa essa correção.\n\n\n\n\n\n\nO GLMM não tem coluna de peso\n\n\n\nUm ajuste GLMM não produz peso por estudo, então o forest plot sai sem a coluna Weight e com todos os quadrados do mesmo tamanho. Não é um defeito do gráfico: o peso simplesmente não existe nesse modelo. Se a coluna de peso for importante para a figura do seu artigo, esse é um argumento a favor do Inverse.\n\n\n\n\n\n\n\n\nGLMM exige PLOGIT\n\n\n\nSe você trocar o sm para PFT, PAS, PLN ou PRAW e deixar o método em GLMM, a análise para com uma mensagem de erro. Ao mudar o sm, volte o método para Inverse.\n\n\nAnalysis model e Tau method funcionam como no módulo binário.\nEste submódulo não tem Prediction interval, nem Random CI method, nem Prediction method.\n\n\nMédias únicas\nSummary measure (sm) (padrão MRAW) tem duas opções. MRAW agrupa a média crua, na unidade original, e é a recomendação. MLN agrupa o logaritmo da média, útil quando a medida é positiva e fortemente assimétrica, como tempo até um evento ou concentração sérica.\nAnalysis model, Tau method (padrão REML) e Prediction interval (padrão Yes) funcionam como no módulo binário. Não há campo Method, nem Random CI method, nem Prediction method."
+  },
+  {
+    "objectID": "single-arm.html#passo-3-exportação-e-resultados",
+    "href": "single-arm.html#passo-3-exportação-e-resultados",
+    "title": "Meta-análise de braço único",
+    "section": "Passo 3, exportação e resultados",
+    "text": "Passo 3, exportação e resultados\nOs dois submódulos trazem os mesmos cartões dos módulos pareados: Forest plot, Leave-one-out analysis, Funnel plot, Small-study effects com o teste de Egger, Subgroup analysis, Meta-regression e as duas tabelas-resumo em XLSX."
+  },
+  {
+    "objectID": "network.html",
+    "href": "network.html",
+    "title": "Meta-análise em rede",
+    "section": "",
+    "text": "Use este módulo quando você tem vários tratamentos e nem todos foram comparados diretamente. A rede usa as comparações diretas para estimar as indiretas: se A foi comparado com B, e B com C, dá para estimar A contra C.\nSiga o fluxo em três passos, mas tanto a entrada quanto a saída são diferentes aqui."
+  },
+  {
+    "objectID": "network.html#passo-1-os-dados",
+    "href": "network.html#passo-1-os-dados",
+    "title": "Meta-análise em rede",
+    "section": "Passo 1, os dados",
+    "text": "Passo 1, os dados\nO formato é longo, uma linha por braço, e não por estudo. Não há colunas .e e .c: os estudos se repetem, uma vez para cada braço.\n\n\n\nstudy\ntreatment\nresponders\nsampleSize\n\n\n\n\nStudy A\nDrug A\n12\n120\n\n\nStudy A\nDrug B\n20\n118\n\n\nStudy B\nDrug A\n15\n130\n\n\nStudy B\nPlacebo\n23\n128\n\n\n\nSão três submódulos:\n\n\n\nSubmódulo\nColunas obrigatórias\n\n\n\n\nBinário\nstudy, treatment, responders, sampleSize\n\n\nContínuo\nstudy, treatment, mean, std.dev, sampleSize\n\n\nPré-calculado\nstudy, treat1, treat2, TE, lower, upper\n\n\n\nNo submódulo pré-calculado a linha é uma comparação, não um braço, por isso existem treat1 e treat2.\n\n\n\n\n\n\nO nome do tratamento precisa ser idêntico\n\n\n\nDrug A, drug A e Drug-A viram três nós diferentes na rede. É o erro mais comum aqui, e a rede sai desconexa sem que nada acuse o motivo. Padronize os nomes na planilha antes de carregar.\n\n\nCada estudo precisa de pelo menos dois braços. Estudos com três ou mais são aceitos, e o Data check informa quantos existem, porque eles exigem tratamento estatístico especial, que o netmeta já faz."
+  },
+  {
+    "objectID": "network.html#passo-2-os-parâmetros",
+    "href": "network.html#passo-2-os-parâmetros",
+    "title": "Meta-análise em rede",
+    "section": "Passo 2, os parâmetros",
+    "text": "Passo 2, os parâmetros\n\nOutcome settings\nOutcome name entra nos títulos e nomes de arquivo.\nSummary measure (sm) depende do submódulo: RR, OR e RD no binário, MD e SMD no contínuo, e HR, RR, OR, MD, SMD no pré-calculado. As recomendações são as mesmas dos módulos pareados.\nReference treatment (optional) define contra qual tratamento os demais são comparados no forest plot. Deixando em branco, o app escolhe sozinho. Recomendação: aponte o comparador clínico relevante, em geral placebo ou cuidado padrão. Isso não muda a rede, só o ponto de vista da figura.\nFor ranking, smaller values are (padrão Good) informa se valores menores são bons ou ruins. É o que faz o ranqueamento por P-score apontar na direção certa. Numa meta-análise de mortalidade, menor é melhor, então Good. Numa de resposta ao tratamento, maior é melhor, então Bad.\n\n\n\n\n\n\nEste campo inverte o ranking inteiro\n\n\n\nErrar aqui não gera erro nem aviso. O P-score sai calculado, bonito, e com a ordem invertida. Confira antes de reportar qualquer ranking.\n\n\n\n\nStatistical settings (advanced)\nAnalysis model (padrão Random-effects) e Tau method (padrão REML) funcionam como no módulo binário. Em rede o modelo aleatório é quase sempre a escolha certa, porque a rede reúne estudos ainda mais diversos que uma comparação par a par.\nNão há Prediction interval, Random CI method nem Prediction method neste módulo."
+  },
+  {
+    "objectID": "network.html#passo-3-exportação-e-resultados",
+    "href": "network.html#passo-3-exportação-e-resultados",
+    "title": "Meta-análise em rede",
+    "section": "Passo 3, exportação e resultados",
+    "text": "Passo 3, exportação e resultados\nEsta é a parte mais diferente dos outros módulos. São oito cartões.\nForest plot compara todos os tratamentos contra a referência escolhida.\nNetwork graph desenha a rede: os tratamentos são os nós e as comparações diretas são as arestas, com espessura proporcional à quantidade de evidência direta. Vale ser a primeira coisa que você olha, porque mostra de imediato se a rede é conexa e onde a evidência é fina.\nLeague table traz todas as comparações par a par numa tabela única, que sai em Excel. É a tabela que costuma ir para o material suplementar.\nBetween-study heterogeneity abre a decomposição por desenho e as estatísticas Q, que separam a heterogeneidade dentro dos desenhos da inconsistência entre eles.\nNode splitting compara evidência direta e indireta para cada comparação em que as duas existem. É o teste local de inconsistência.\nP-score ranking ordena os tratamentos. O P-score vai de 0 a 1 e resume a probabilidade de um tratamento ser melhor que os outros.\nComparison-adjusted funnel plot examina efeitos de estudo pequeno ao longo das comparações da rede.\nPairwise object baixa o objeto de comparações par a par usado para montar a rede, útil para conferência e reprodutibilidade."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Tutoriais do MetaVidence",
+    "section": "",
+    "text": "O MetaVidence faz meta-análise sem código. Você carrega uma planilha, escolhe os parâmetros e recebe os gráficos e tabelas prontos para publicação, tudo no navegador, sem instalar nada e sem que os seus dados saiam do seu computador."
+  },
+  {
+    "objectID": "index.html#por-onde-começar",
+    "href": "index.html#por-onde-começar",
+    "title": "Tutoriais do MetaVidence",
+    "section": "Por onde começar",
+    "text": "Por onde começar\n\nComece aqui mostra como abrir o MetaVidence no navegador, e como instalar o R, o RStudio e o pacote se você preferir rodar no seu computador.\nO fluxo em três passos percorre as telas de ponta a ponta: dados, parâmetros e exportação. Todo módulo funciona assim.\nA página do seu módulo trata só do que muda nele, como as colunas obrigatórias e a medida de efeito.\n\nTodo módulo traz um conjunto de dados de exemplo com 12 estudos. Vale rodar a análise com ele antes de usar os seus dados, para ver o que cada tela produz sem precisar preparar planilha nenhuma."
+  },
+  {
+    "objectID": "index.html#escolhendo-o-módulo",
+    "href": "index.html#escolhendo-o-módulo",
+    "title": "Tutoriais do MetaVidence",
+    "section": "Escolhendo o módulo",
+    "text": "Escolhendo o módulo\n\n\n\nVocê tem…\nUse\n\n\n\n\nEventos e tamanhos amostrais nos dois grupos\nDesfechos binários\n\n\nMédia e desvio, mediana e IQR, ou os dois misturados\nDesfechos contínuos\n\n\nO efeito já calculado, com IC ou erro-padrão\nEfeitos pré-calculados\n\n\nUma proporção ou média por estudo, sem comparação\nBraço único\n\n\nTrês ou mais tratamentos comparados indiretamente\nMeta-análise em rede\n\n\nTabelas 2×2 de acurácia diagnóstica\nMeta-análise diagnóstica\n\n\n\nTem mais de um desfecho para analisar? Depois de escolher o módulo, siga Vários desfechos de uma vez para rodar todos numa só passada."
+  },
+  {
+    "objectID": "index.html#como-citar",
+    "href": "index.html#como-citar",
+    "title": "Tutoriais do MetaVidence",
+    "section": "Como citar",
+    "text": "Como citar\nSe o MetaVidence produziu resultados que você vai publicar, cite o MetaVidence e os pacotes de análise. Citação é o que mantém de pé uma ferramenta acadêmica gratuita, e registrar qual software produziu os seus números faz parte de uma análise reproduzível."
+  },
+  {
+    "objectID": "get-started.html",
+    "href": "get-started.html",
+    "title": "Comece aqui",
+    "section": "",
+    "text": "Há duas formas de usar o MetaVidence, e as duas fazem exatamente as mesmas contas. Comece pelo navegador, que não pede instalação nenhuma. Se você for usar com frequência, vale o caminho do R, que abre bem mais rápido e funciona sem internet."
+  },
+  {
+    "objectID": "get-started.html#abra-o-site",
+    "href": "get-started.html#abra-o-site",
+    "title": "Comece aqui",
+    "section": "1. Abra o site",
+    "text": "1. Abra o site\nVá para metavidence.com. Não precisa criar conta, nem instalar nada, nem enviar arquivo para servidor nenhum."
+  },
+  {
+    "objectID": "get-started.html#espere-o-primeiro-carregamento",
+    "href": "get-started.html#espere-o-primeiro-carregamento",
+    "title": "Comece aqui",
+    "section": "2. Espere o primeiro carregamento",
+    "text": "2. Espere o primeiro carregamento\nNa primeira visita aparece uma tela com a palavra Loading e uma barra. O navegador está baixando o R e os pacotes estatísticos compilados para rodar dentro dele. Isso leva alguns minutos numa conexão comum.\nEnquanto espera, você pode usar os dois links da tela, que abrem em outra aba e não interrompem o carregamento.\nDa segunda vez em diante o navegador já tem os arquivos guardados e abre bem mais rápido."
+  },
+  {
+    "objectID": "get-started.html#siga-o-fluxo",
+    "href": "get-started.html#siga-o-fluxo",
+    "title": "Comece aqui",
+    "section": "3. Siga o fluxo",
+    "text": "3. Siga o fluxo\nCom o app aberto, siga o fluxo em três passos: ele mostra como escolher o módulo, carregar os dados, ajustar os parâmetros e exportar os resultados."
+  },
+  {
+    "objectID": "get-started.html#instale-o-r",
+    "href": "get-started.html#instale-o-r",
+    "title": "Comece aqui",
+    "section": "1. Instale o R",
+    "text": "1. Instale o R\nO R é a linguagem que faz as contas. O RStudio sozinho não funciona sem ele, por isso o R vem primeiro.\n\nVá para cran.r-project.org.\nClique no link do seu sistema: Download R for Windows, Download R for macOS ou Download R for Linux.\nNo Windows, clique em base e depois em Download R para Windows. No macOS, escolha o arquivo .pkg que corresponde ao seu processador: o de arm64 para Macs com chip Apple (M1 em diante) e o outro para Macs Intel.\nAbra o arquivo baixado e siga o instalador, aceitando as opções padrão.\n\nO MetaVidence precisa de R 4.1 ou mais novo. Qualquer versão baixada hoje do CRAN atende."
+  },
+  {
+    "objectID": "get-started.html#instale-o-rstudio",
+    "href": "get-started.html#instale-o-rstudio",
+    "title": "Comece aqui",
+    "section": "2. Instale o RStudio",
+    "text": "2. Instale o RStudio\nO RStudio é a janela por onde você usa o R. Dá para viver sem ele, mas com ele tudo fica mais simples.\n\nVá para posit.co/download/rstudio-desktop.\nBaixe a versão gratuita, RStudio Desktop, para o seu sistema.\nAbra o arquivo e siga o instalador."
+  },
+  {
+    "objectID": "get-started.html#abra-o-rstudio-e-encontre-o-console",
+    "href": "get-started.html#abra-o-rstudio-e-encontre-o-console",
+    "title": "Comece aqui",
+    "section": "3. Abra o RStudio e encontre o Console",
+    "text": "3. Abra o RStudio e encontre o Console\nAbra o RStudio. A janela é dividida em painéis; o que interessa agora é o Console, normalmente no canto inferior esquerdo, com um &gt; piscando.\nÉ ali que você cola os comandos dos próximos passos. Cole a linha e aperte Enter."
+  },
+  {
+    "objectID": "get-started.html#instale-o-pacote",
+    "href": "get-started.html#instale-o-pacote",
+    "title": "Comece aqui",
+    "section": "4. Instale o pacote",
+    "text": "4. Instale o pacote\nO MetaVidence foi submetido à CRAN. Até ele ser aceito, a instalação é a partir do repositório de origem. Cole estas duas linhas no Console, uma de cada vez, apertando Enter depois de cada:\ninstall.packages(\"remotes\")\nremotes::install_github(\"ValbertOCF/MetaVidence\", subdir = \"pkg\")\nA primeira linha instala o auxiliar que sabe instalar a partir do GitHub. A segunda baixa o MetaVidence e os pacotes de que ele depende, entre eles meta, metafor, netmeta, mada e shiny. São muitos arquivos, então a primeira instalação demora alguns minutos. Deixe rodar até o &gt; voltar a aparecer sozinho no Console.\nQuando o MetaVidence estiver na CRAN, isso vira uma linha só, install.packages(\"metavidence\"), e esta página vai dizer isso.\nSe o R perguntar algo como “Do you want to install from sources the package which needs compilation?”, responda no e aperte Enter. A versão pronta é suficiente e instala muito mais rápido."
+  },
+  {
+    "objectID": "get-started.html#rode-o-metavidence",
+    "href": "get-started.html#rode-o-metavidence",
+    "title": "Comece aqui",
+    "section": "5. Rode o MetaVidence",
+    "text": "5. Rode o MetaVidence\nCom a instalação terminada, cole:\nmetavidence::run_app()\nO MetaVidence abre numa janela do RStudio ou no seu navegador, com a mesma aparência da versão online. Daqui em diante é o mesmo fluxo de três passos.\n\n\n\n\n\n\nO Console fica ocupado enquanto o app roda\n\n\n\nIsso é normal: o R está servindo o aplicativo. Para voltar a usar o Console, feche a janela do MetaVidence ou clique no símbolo de parar (o quadrado vermelho) no canto do Console."
+  },
+  {
+    "objectID": "get-started.html#nas-próximas-vezes",
+    "href": "get-started.html#nas-próximas-vezes",
+    "title": "Comece aqui",
+    "section": "6. Nas próximas vezes",
+    "text": "6. Nas próximas vezes\nInstalar é só uma vez. Depois disso, abra o RStudio e rode apenas:\nmetavidence::run_app()\nPara atualizar quando sair uma versão nova, repita o comando do passo 4."
+  },
+  {
+    "objectID": "get-started.html#se-algo-der-errado",
+    "href": "get-started.html#se-algo-der-errado",
+    "title": "Comece aqui",
+    "section": "Se algo der errado",
+    "text": "Se algo der errado\nO comando de instalação devolve um erro dizendo que o pacote não está disponível. Confira se a linha foi colada inteira, incluindo as aspas. Se estiver correta, pode ser uma versão de R antiga demais: rode R.version.string no Console e confirme que é 4.1 ou maior.\nA instalação para no meio, num pacote de que o MetaVidence depende. Rode install.packages(\"nome_do_pacote\") só para aquele pacote, veja a mensagem de erro dele, e depois repita o comando do passo 4.\nrun_app() diz que não encontrou a pasta do aplicativo. Instale de novo com o comando do passo 4.\nNada abre ao rodar run_app(). Force o navegador com:\nmetavidence::run_app(launch.browser = TRUE)"
+  },
+  {
+    "objectID": "diagnostic.html",
+    "href": "diagnostic.html",
+    "title": "Meta-análise diagnóstica",
+    "section": "",
+    "text": "Use este módulo quando cada estudo traz uma tabela 2x2 de acurácia: verdadeiros positivos, falsos positivos, falsos negativos e verdadeiros negativos. Siga o fluxo em três passos, mas o passo 2 é bem mais curto e o passo 3 é o mais diferente de todos os módulos."
+  },
+  {
+    "objectID": "diagnostic.html#passo-1-os-dados",
+    "href": "diagnostic.html#passo-1-os-dados",
+    "title": "Meta-análise diagnóstica",
+    "section": "Passo 1, os dados",
+    "text": "Passo 1, os dados\n\n\n\nColuna\nO que é\n\n\n\n\nstudy\nrótulo do estudo\n\n\nTP\nverdadeiros positivos\n\n\nFP\nfalsos positivos\n\n\nFN\nfalsos negativos\n\n\nTN\nverdadeiros negativos\n\n\n\nNo módulo comparativo há uma coluna a mais, test, com o nome do teste, e cada estudo aparece duas vezes, uma linha por teste.\nColunas extras não são usadas neste fluxo. Data check confere as obrigatórias, conta os estudos e aponta células negativas ou em branco."
+  },
+  {
+    "objectID": "diagnostic.html#por-que-este-módulo-é-diferente",
+    "href": "diagnostic.html#por-que-este-módulo-é-diferente",
+    "title": "Meta-análise diagnóstica",
+    "section": "Por que este módulo é diferente",
+    "text": "Por que este módulo é diferente\nEm meta-análise diagnóstica o desfecho é bivariado: sensibilidade e especificidade andam juntas e são correlacionadas. Um teste mais sensível costuma ser menos específico, porque o ponto de corte se move. Por isso o modelo é o GLMM binomial bivariado, e não dois modelos separados. É o modelo que o Cochrane Handbook for DTA Reviews v2.0 especifica no capítulo 10.\nIsso tem uma consequência prática: não adianta olhar só a sensibilidade agrupada. O resultado principal é o ponto operacional, sensibilidade e especificidade juntas, com seus intervalos de confiança."
+  },
+  {
+    "objectID": "diagnostic.html#passo-2-os-parâmetros",
+    "href": "diagnostic.html#passo-2-os-parâmetros",
+    "title": "Meta-análise diagnóstica",
+    "section": "Passo 2, os parâmetros",
+    "text": "Passo 2, os parâmetros\nÉ o passo 2 mais curto do MetaVidence, porque a maior parte das escolhas de um modelo bivariado não é configurável campo a campo.\n\nMódulo de teste único\nOutcome name entra nos títulos e nomes de arquivo.\nAnalysis model (padrão Random-effects) afeta os forest plots de sensibilidade, de especificidade e de razão de chances diagnóstica.\n\n\n\n\n\n\nO modelo bivariado ignora este campo\n\n\n\nO modelo bivariado é sempre de efeitos aleatórios, por construção. Trocar para Fixed-effect muda os forest plots, mas não o ponto de resumo.\n\n\nNão há aqui sm, Method, Tau method, intervalo de predição nem nomes de grupo: nenhum desses campos se aplica ao modelo bivariado.\n\n\nMódulo comparativo\nAlém de Outcome name, aparecem Test A e Test B, que se preenchem sozinhos com os nomes encontrados na coluna test. Eles definem quem é comparado com quem e a ordem em que os dois aparecem nas figuras."
+  },
+  {
+    "objectID": "diagnostic.html#passo-3-exportação-e-resultados",
+    "href": "diagnostic.html#passo-3-exportação-e-resultados",
+    "title": "Meta-análise diagnóstica",
+    "section": "Passo 3, exportação e resultados",
+    "text": "Passo 3, exportação e resultados\n\nTeste único\nSensitivity forest plot e Specificity forest plot, um para cada, com sensibilidade calculada como TP / (TP + FN) e especificidade como TN / (TN + FP).\nSummary point, com os estudos, a sensibilidade e a especificidade agrupadas, uma região de confiança de 95% e uma região de predição de 95%. Não há curva nem AUC: as duas pertencem ao modelo HSROC, que o handbook registra não ser ajustável em R com o lme4. O modelo bivariado estima um ponto, então é um ponto que o gráfico mostra.\n\n\n\n\n\n\nOs forest plots mostram estudos, não estimativa agrupada\n\n\n\nOs forests não trazem losango agrupado, de propósito. Agrupar sensibilidade e especificidade separadamente ignora a correlação entre elas, que é justamente o que a seção 10.2.3 do handbook desaconselha. Todo número agrupado deste módulo vem do ajuste bivariado, e há só um de cada.\n\n\nDiagnostic odds ratio, com forest próprio. A DOR resume acurácia num único número, combinando sensibilidade e especificidade. É útil para comparar testes, mas não diz onde está o equilíbrio entre os dois erros, então não substitui o par sensibilidade e especificidade.\nThreshold effect, a correlação entre a sensibilidade e a taxa de falso-positivo entre os estudos, com o teste de Deeks para efeitos de estudo pequeno. Correlação positiva sugere que os estudos usaram pontos de corte diferentes, que é o confundidor específico da acurácia diagnóstica.\n\n\n\n\n\n\nAqui não há análise de subgrupo\n\n\n\nPara o modelo bivariado, subgrupo e comparação direta entre testes são a mesma coisa: uma covariável. O handbook diz isso com todas as letras, chamando os dois de “group”. Esse modelo vive no fluxo comparativo, então dividir um teste por uma coluna pertence a lá, em vez de existir aqui numa versão mais fraca.\nO app avisa quando há menos de 4 estudos: o modelo bivariado estima 5 parâmetros e converge assim mesmo, mas a estimativa fica instável. Convergir não é o mesmo que ser confiável.\n\n\n\n\nComparativo\nSensitivity by test e Specificity by test, os forest plots divididos por teste.\nComparative summary points, os dois testes no mesmo gráfico, cada um com a sua região de confiança. Os dois vêm de um modelo conjunto, agrupado por estudo, então um desenho pareado mantém o pareamento.\nOverall comparison, Sensitivity comparison e Specificity comparison: três testes de razão de verossimilhança, um para a acurácia global e um para cada componente. Ter o global significativo e os dois específicos não significativos é comum e informativo: os testes diferem no equilíbrio entre os dois erros, não em um deles isoladamente.\n\n\n\n\n\n\nO comparativo exige estudos pareados\n\n\n\nCada estudo precisa ter avaliado os dois testes na mesma população. Estudos com apenas um dos testes ficam de fora da comparação conjunta. Comparar testes avaliados em populações diferentes é comparar populações, não testes."
+  },
+  {
+    "objectID": "binary.html",
+    "href": "binary.html",
+    "title": "Desfechos binários",
+    "section": "",
+    "text": "Use este módulo quando cada estudo reporta quantos eventos ocorreram em cada grupo e o tamanho de cada grupo. É o caso de desfechos do tipo sim ou não: mortalidade, recidiva, resposta ao tratamento.\nSe o seu efeito já vem calculado do artigo, o módulo certo é o de efeitos pré-calculados, não este.\nEsta página trata do que é próprio deste módulo. As telas e os botões estão em o fluxo em três passos."
+  },
+  {
+    "objectID": "binary.html#passo-1-os-dados",
+    "href": "binary.html#passo-1-os-dados",
+    "title": "Desfechos binários",
+    "section": "Passo 1, os dados",
+    "text": "Passo 1, os dados\nSão cinco colunas obrigatórias, com estes nomes exatos:\n\n\n\nColuna\nO que é\n\n\n\n\nstudy\no rótulo do estudo, por exemplo “Silva 2019”\n\n\nevent.e\neventos no grupo experimental\n\n\nn.e\ntamanho do grupo experimental\n\n\nevent.c\neventos no grupo controle\n\n\nn.c\ntamanho do grupo controle\n\n\n\nQualquer coluna a mais é opcional e fica disponível depois, para análise de subgrupo e meta-regressão. No conjunto de exemplo há Region, Design, RiskOfBias, MeanAge e FollowUpMonths."
+  },
+  {
+    "objectID": "binary.html#passo-2-os-parâmetros",
+    "href": "binary.html#passo-2-os-parâmetros",
+    "title": "Desfechos binários",
+    "section": "Passo 2, os parâmetros",
+    "text": "Passo 2, os parâmetros\n\nSummary measure (sm)\nPadrão RR. Decide o que será agrupado:\n\nRR, risco relativo. É o mais fácil de comunicar e o mais usado em ensaios clínicos. Recomendado como ponto de partida.\nOR, razão de chances. Necessário se você vai comparar com literatura que usa OR, ou se pretende usar os métodos Peto ou GLMM, que só funcionam com OR. Lembre que a OR se afasta da RR quando o evento é frequente.\nRD, diferença de risco, na escala absoluta. Útil para comunicar impacto clínico (“7 eventos a menos por 100 pacientes”), mas costuma ser mais heterogênea entre estudos que as medidas relativas.\n\n\n\nMethod\nPadrão inverse. É o método de agrupamento, e só existe neste módulo e no de proporções únicas:\n\ninverse, inverso da variância. É o padrão do app e serve bem quando os estudos têm tamanho razoável e os eventos não são raros.\nMH, Mantel-Haenszel. Comporta-se melhor que o inverso da variância quando há poucos eventos ou estudos pequenos. É o padrão da Cochrane para dados binários. Recomendado se o seu desfecho é pouco frequente.\nPeto. Serve a eventos muito raros com grupos de tamanho parecido. Só funciona com sm = OR.\nGLMM, modelo linear generalizado misto. Evita as correções de continuidade que os outros métodos aplicam a células com zero. Mais lento. Só funciona com sm = OR, e o forest sai sem a coluna de peso, porque um ajuste GLMM não produz peso por estudo.\n\n\n\n\n\n\n\nPeto e GLMM exigem OR\n\n\n\nSe você deixar sm = RR ou sm = RD e escolher Peto ou GLMM, a análise para com uma mensagem de erro. Troque o sm para OR antes, ou volte o método para inverse ou MH.\n\n\n\n\nOs demais campos\nOutcome name, a direção do desfecho e os nomes dos grupos funcionam como descrito em Outcome settings.\nAnalysis model, Tau method, Random CI method e Prediction method funcionam e são recomendados como em Statistical settings (advanced). Neste módulo o Prediction interval vem desligado por padrão."
+  },
+  {
+    "objectID": "binary.html#passo-3-exportação-e-resultados",
+    "href": "binary.html#passo-3-exportação-e-resultados",
+    "title": "Desfechos binários",
+    "section": "Passo 3, exportação e resultados",
+    "text": "Passo 3, exportação e resultados\nEste módulo traz o conjunto completo de cartões: forest plot, leave-one-out, funnel plot, small-study effects com o teste de Egger, análise de subgrupo, meta-regressão e as duas tabelas-resumo em XLSX. Todos estão descritos no passo 3 do fluxo."
+  },
+  {
+    "objectID": "continuous.html",
+    "href": "continuous.html",
+    "title": "Desfechos contínuos",
+    "section": "",
+    "text": "Use este módulo quando o desfecho é uma medida numérica: pressão arterial, dias de internação, escore de qualidade de vida. Siga o fluxo em três passos; esta página trata de como os dados precisam estar e do que muda no passo 2."
+  },
+  {
+    "objectID": "continuous.html#passo-1-os-dados",
+    "href": "continuous.html#passo-1-os-dados",
+    "title": "Desfechos contínuos",
+    "section": "Passo 1, os dados",
+    "text": "Passo 1, os dados\nTodo estudo precisa de study, n.e e n.c. Depois, para cada grupo, o que o artigo de fato reportou.\n\nMédia e desvio-padrão, a entrada ideal\n\n\n\nColuna\nO que é\n\n\n\n\nn.e, mean.e, sd.e\ntamanho, média e DP do grupo experimental\n\n\nn.c, mean.c, sd.c\no mesmo para o grupo controle\n\n\n\n\n\nEstudo que reporta mediana também entra\n\n\n\n\n\n\n\nColuna\nO que é\n\n\n\n\nn.e, median.e, q1.e, q3.e\ntamanho, mediana e quartis do grupo experimental\n\n\nn.c, median.c, q1.c, q3.c\no mesmo para o grupo controle\n\n\n\nmin.e, max.e, min.c e max.c são opcionais. Podem substituir os quartis quando o artigo traz só a amplitude, e aí a conversão fica menos precisa.\n\n\nOs dois podem se misturar no mesmo arquivo\nPreencha as colunas que cada estudo reporta e deixe o resto vazio. O conjunto de exemplo faz exatamente isso: oito estudos com média e desvio, quatro com mediana e quartis. O MetaVidence converte os de mediana antes de agrupar, usando o método de Luo e colaboradores para a média e o de Shi e colaboradores para o desvio-padrão, que são os padrões atuais do pacote meta.\nO Data check informa quantos estudos foram convertidos, então o número está na sua frente antes de rodar qualquer coisa e vai direto para a seção de métodos.\n\n\n\n\n\n\nA conversão tem limites\n\n\n\nEla assume distribuição aproximadamente simétrica. Com dados muito assimétricos, que costuma ser justamente o motivo de o artigo ter reportado mediana, a média estimada pode não representar bem o estudo. Reporte quantos estudos foram convertidos e considere uma análise de sensibilidade sem eles.\n\n\n\n\n\n\n\n\nMediana com desvio-padrão e nada mais\n\n\n\nEssa dupla não tem como ser convertida, e o MetaVidence recusa o arquivo em vez de aceitar. Se deixasse passar, o pacote meta descartaria esses estudos da análise sem dizer nada, e uma meta-análise com estudos faltando em silêncio é pior que uma mensagem de erro.\n\n\nO Data check no mais funciona como no módulo binário: confere as colunas obrigatórias, conta os estudos, lista as colunas que sobraram para subgrupo e meta-regressão e aponta problemas, incluindo quartis fora de ordem."
+  },
+  {
+    "objectID": "continuous.html#passo-2-os-parâmetros",
+    "href": "continuous.html#passo-2-os-parâmetros",
+    "title": "Desfechos contínuos",
+    "section": "Passo 2, os parâmetros",
+    "text": "Passo 2, os parâmetros\n\nOutcome settings\nOutcome name, If the outcome increases, is that beneficial or harmful?, Experimental group name e Control group name funcionam exatamente como no módulo binário.\nSummary measure (sm) (padrão MD) é a decisão que mais importa aqui, e não é cosmética:\n\nMD, diferença de médias, quando todos os estudos usam a mesma escala. O resultado sai na unidade original, o que facilita a interpretação: “3,2 dias a menos de internação”. Recomendado sempre que as escalas coincidem.\nSMD, diferença de médias padronizada, quando as escalas diferem entre estudos, por exemplo instrumentos diferentes medindo depressão. O resultado sai em desvios-padrão, sem unidade.\n\nSe as escalas são iguais, prefira MD. O SMD é a solução para um problema que você talvez não tenha, e é bem mais difícil de comunicar ao leitor.\n\n\nStatistical settings (advanced)\nAnalysis model, Tau method, Random CI method e Prediction method funcionam e são recomendados exatamente como no o fluxo.\nPrediction interval aqui vem ligado por padrão (Yes), ao contrário do módulo binário. Desligue se tiver menos de 3 estudos ou se o intervalo estiver tão largo que atrapalhe a leitura da figura.\nNão existe campo Method neste módulo. Mantel-Haenszel, Peto e GLMM são métodos para contagens de eventos, e não se aplicam a médias."
+  },
+  {
+    "objectID": "continuous.html#passo-3-exportação-e-resultados",
+    "href": "continuous.html#passo-3-exportação-e-resultados",
+    "title": "Desfechos contínuos",
+    "section": "Passo 3, exportação e resultados",
+    "text": "Passo 3, exportação e resultados\nOs cartões são os mesmos do módulo binário, com o mesmo comportamento:\n\nForest plot, com o efeito de cada estudo, os pesos e o losango agrupado.\nLeave-one-out analysis, para ver se algum estudo isolado sustenta o resultado.\nFunnel plot e Small-study effects, este último com o teste de Egger.\nSubgroup analysis, com o seletor de coluna dentro do próprio cartão.\nMeta-regression, com moderadores numéricos e gráfico de bolhas.\nSubgroup summary table e Meta-regression summary table, em XLSX.\n\n\n\n\n\n\n\nConfira o sinal antes de agrupar\n\n\n\nEm desfechos contínuos é comum que alguns estudos reportem a mudança em relação ao basal e outros o valor final. Misturar os dois sem pensar produz um efeito agrupado sem sentido. Padronize antes de carregar a planilha."
+  },
+  {
+    "objectID": "flow.html",
+    "href": "flow.html",
+    "title": "O fluxo em três passos",
+    "section": "",
+    "text": "Todos os módulos do MetaVidence seguem a mesma sequência, sempre na mesma ordem: carregar os dados, escolher os parâmetros, revisar e exportar os resultados.\nEsta página percorre esse fluxo inteiro, tela por tela. As imagens são do módulo de desfechos binários, mas o que está descrito aqui vale para todos. Cada página de módulo trata só do que muda nele."
+  },
+  {
+    "objectID": "flow.html#o-ponto-de-partida",
+    "href": "flow.html#o-ponto-de-partida",
+    "title": "O fluxo em três passos",
+    "section": "O ponto de partida",
+    "text": "O ponto de partida\n\nNa página inicial, clique no cartão do tipo de dado que você tem. A tabela da página inicial dos tutoriais diz qual módulo serve para cada formato."
+  },
+  {
+    "objectID": "flow.html#passo-1-os-dados",
+    "href": "flow.html#passo-1-os-dados",
+    "title": "O fluxo em três passos",
+    "section": "Passo 1, os dados",
+    "text": "Passo 1, os dados\n\nVocê tem três caminhos, nas abas do cartão à esquerda:\n\nUpload file envia um Excel ou CSV. O botão de baixar o modelo de planilha está ao lado, já com os nomes de coluna corretos.\nPaste data cola direto do Google Sheets ou do Excel.\nExample carrega 12 estudos fictícios, para explorar o app sem preparar nada.\n\n\nAs colunas obrigatórias\nO guia recolhível logo abaixo das abas lista o que a planilha precisa ter, com os nomes exatos das colunas daquele módulo. A página de cada módulo traz a mesma lista.\nQualquer coluna a mais é opcional. Colunas de texto ficam disponíveis para análise de subgrupo, e colunas numéricas para meta-regressão. Nos conjuntos de exemplo há Region, Design, RiskOfBias, MeanAge e FollowUpMonths.\n\n\nO Data check\n\nAssim que os dados entram, o cartão Data check confere e informa: se as colunas obrigatórias estão todas lá, quantos estudos foram detectados, quais colunas sobraram para subgrupo e meta-regressão, e se há problemas, como células em branco, eventos maiores que o total ou tamanhos amostrais iguais a zero.\nVale ler antes de seguir. É mais rápido corrigir a planilha agora do que descobrir o erro no meio da análise.\nQuando estiver tudo certo, clique em Next: parameters."
+  },
+  {
+    "objectID": "flow.html#passo-2-os-parâmetros",
+    "href": "flow.html#passo-2-os-parâmetros",
+    "title": "O fluxo em três passos",
+    "section": "Passo 2, os parâmetros",
+    "text": "Passo 2, os parâmetros\n\nOs campos vêm separados em duas seções. Outcome settings abre por padrão, porque é a que quase sempre se mexe. Statistical settings (advanced) vem recolhida, porque os padrões servem à maioria dos casos.\nCada campo tem um “?” ao lado com um resumo da explicação, dentro do próprio app.\n\nOutcome settings\nOutcome name (padrão Outcome) entra no título dos gráficos e no nome dos arquivos exportados. Vale trocar por algo curto e específico, como Mortalidade em 30 dias, porque é assim que o arquivo vai chegar ao seu computador.\nIf the outcome increases, is that beneficial or harmful? (padrão Harmful) só define os rótulos “Favors experimental” e “Favors control” embaixo do forest plot. Não muda nenhum número. Escolha Harmful para desfechos ruins, como morte, e Beneficial para desfechos bons, como cura.\nExperimental group name e Control group name definem como os grupos aparecem nos gráficos. Trocar por nomes reais, como Anticoagulante e Placebo, deixa a figura pronta para publicação.\nSummary measure (sm) decide o que será agrupado, e as opções mudam de módulo para módulo. É a escolha mais importante desta tela, então ela está explicada na página de cada módulo.\nBraço único não tem direção nem nomes de grupo, porque não há comparação. Rede tem dois campos próprios aqui, e diagnóstica quase não tem nada. Veja a página do módulo.\n\n\nStatistical settings (advanced)\nEstes campos são os mesmos na maioria dos módulos, com os mesmos padrões e as mesmas recomendações.\nAnalysis model (padrão Random-effects).\n\nRandom-effects deixa o efeito verdadeiro variar entre estudos. É a escolha usual, porque populações, doses e tempos de seguimento quase sempre diferem.\nFixed-effect assume que todos os estudos estimam exatamente o mesmo efeito. Só se justifica em réplicas muito próximas.\nBoth desenha as duas linhas no mesmo forest plot. É uma boa forma de mostrar ao leitor que a conclusão não dependeu da escolha do modelo.\n\nRecomendação: mantenha Random-effects, e use Both quando quiser deixar a comparação explícita no artigo.\nTau method (padrão REML) é o estimador da variância entre estudos, o τ², que governa os pesos do modelo aleatório, o I² e o intervalo de predição. Recomendação: mantenha REML. Use DL (DerSimonian-Laird) apenas para reproduzir uma análise antiga, já que foi o padrão histórico. PM e SJ são alternativas defensáveis quando há poucos estudos. ML tende a subestimar o τ².\nI-squared method (padrão Q) define como o I² é calculado. Q é a definição clássica de Higgins e Thompson, I² = (Q − gl)/Q, que é o que praticamente todo artigo publicado reporta e o que o pacote meta usa por padrão. From tau-squared deriva o valor do τ² estimado. Os dois podem divergir bastante: nos mesmos quatro estudos, 89,9% com Q e 97,2% com τ². Nenhum está errado, eles respondem a perguntas ligeiramente diferentes, mas não são intercambiáveis num manuscrito. Recomendação: mantenha Q, a menos que tenha um motivo declarado, e diga nos métodos qual você usou.\nPrediction interval acrescenta ao forest plot a faixa onde se espera o efeito de um estudo futuro. Precisa de pelo menos 3 estudos. Recomendação: ligue quando houver heterogeneidade relevante, porque é a forma mais honesta de mostrar o que a heterogeneidade significa na prática. Com 3 ou 4 estudos o intervalo sai tão largo que raramente informa algo. O padrão varia por módulo.\nRandom CI method (padrão classic) define como o intervalo de confiança do efeito agrupado é calculado no modelo aleatório.\n\nclassic usa a aproximação normal.\nHK, Hartung-Knapp, usa a distribuição t e em geral alarga o intervalo, com cobertura melhor quando há poucos estudos.\nKR, Kenward-Roger, segue a mesma ideia com um ajuste da variância.\n\nRecomendação: considere HK quando tiver poucos estudos, digamos menos de 10, e heterogeneidade presente. Mantenha classic se precisar ser comparável a uma análise já publicada. Em situações raras o HK produz um intervalo mais estreito que o classic, então vale olhar os dois antes de decidir.\nPrediction method (padrão V) define como o intervalo de predição é calculado. V usa a distribuição t com k-1 graus de liberdade e HTS usa t com k-2, portanto é um pouco mais conservador. Recomendação: mantenha V.\nMethod, o método de agrupamento, só existe nos módulos binário e de proporções únicas, com opções diferentes em cada um. Veja a página do módulo.\n\n\nSubgrupo e meta-regressão\nEssas duas colunas não são escolhidas aqui. Tanto em desfecho único quanto em lote, você escolhe no passo 3, dentro do próprio cartão do resultado, e a análise é refeita para a coluna escolhida.\nQuando estiver pronto, clique em Run analysis."
+  },
+  {
+    "objectID": "flow.html#passo-3-exportação-e-resultados",
+    "href": "flow.html#passo-3-exportação-e-resultados",
+    "title": "O fluxo em três passos",
+    "section": "Passo 3, exportação e resultados",
+    "text": "Passo 3, exportação e resultados\n\nO cartão 3. Results and citation no topo traz o status da análise e o lembrete de citação. Abaixo dele vem a grade de resultados.\nCada resultado tem seu cartão. A maioria traz Preview para ver na tela, Summary para o resumo numérico e Download para salvar. Alguns cartões não têm preview, e neles o botão se chama Download plot para não ser confundido com o resumo. Formato, largura e altura ficam em cada cartão: PNG sai em 600 DPI e PDF sai vetorial, os dois adequados para submissão.\n\n\n\n\n\n\nGráfico saiu cortado?\n\n\n\nAumente a altura no próprio cartão e baixe de novo. Isso resolve quase todos os cortes, porque a área do gráfico é dividida entre as linhas de estudos e o rodapé com as estatísticas.\n\n\n\n\n\n\n\n\nBaixe antes de sair\n\n\n\nNão recarregue nem feche a aba enquanto houver resultado que você ainda não baixou. O app guarda tudo na memória da sessão: recarregar começa uma sessão nova, e os dados carregados e os resultados se perdem. Não há como recuperar sem rodar a análise de novo.\n\n\nNem todo módulo traz todos os cartões abaixo. Rede e diagnóstica têm conjuntos próprios, descritos nas páginas delas.\n\nForest plot\n\nO gráfico principal. Cada estudo com seu efeito e intervalo de confiança, o peso que recebeu, e o losango do efeito agrupado no rodapé. Abaixo dele vêm a heterogeneidade (τ², Q, I²) e o teste do efeito global.\n\n\nLeave-one-out analysis\nRefaz o agrupamento tirando um estudo por vez, e desenha o resultado de cada rodada. Serve para responder se algum estudo isolado está sustentando a conclusão. Se a estimativa se move pouco, o resultado é robusto. Se um estudo muda a direção ou a significância, isso precisa ser dito no artigo.\n\n\nFunnel plot\nO gráfico de funil, efeito contra precisão. Assimetria sugere viés de publicação, mas também pode vir de heterogeneidade real ou de estudos pequenos com qualidade diferente. Interprete com cautela abaixo de 10 estudos.\n\n\nSmall-study effects\nEste cartão tem só o botão Summary, e abre o resultado do teste de Egger com uma nota de interpretação. É o teste formal para a assimetria que você viu no funil.\n\n\nSubgroup analysis\n\nEscolha uma coluna no seletor dentro do cartão e o gráfico é redesenhado na hora. Não é preciso voltar ao passo 2 nem rodar a análise de novo.\nO efeito agrupado global não muda ao pedir subgrupos. A mesma análise é reexecutada com os mesmos parâmetros, só que particionada. O que aparece a mais é o efeito de cada nível e o teste de diferença entre subgrupos, no rodapé.\n\n\nMeta-regression\nEscolha um moderador numérico e o app desenha o gráfico de bolhas, com o tamanho de cada bolha proporcional ao peso do estudo, e a reta ajustada. O Summary traz o coeficiente, o intervalo, o valor de p e o R² do modelo.\nO seletor lista apenas colunas numéricas, como MeanAge ou FollowUpMonths. Moderadores categóricos são o caso da análise de subgrupo, não deste cartão.\n\n\n\n\n\n\nMeta-regressão precisa de estudos\n\n\n\nUma regra de bolso comum é pelo menos 10 estudos por moderador. Abaixo disso o coeficiente é instável e a reta parece mais convincente do que é.\n\n\n\n\nSubgroup summary table e Meta-regression summary table\nAqui você seleciona várias colunas de uma vez e recebe uma tabela única. A de subgrupo traz o efeito por nível, o número de estudos, o I² e o valor de p da interação de cada variável. A de meta-regressão traz os coeficientes de cada moderador numérico. São as tabelas que costumam ir para o artigo, e as duas saem em XLSX."
+  },
+  {
+    "objectID": "how-to-cite.html",
+    "href": "how-to-cite.html",
+    "title": "Como citar",
+    "section": "",
+    "text": "Se o MetaVidence produziu resultados que você vai publicar, cite assim:\n\nCosta Filho VO (2026). MetaVidence: no-code meta-analysis in the browser and in R. Version 0.1.0. https://metavidence.com\n\nEm BibTeX:\n@Manual{metavidence,\n  title   = {MetaVidence: no-code meta-analysis in the browser and in R},\n  author  = {Valbert Oliveira Costa Filho},\n  year    = {2026},\n  note    = {R package version 0.1.0},\n  url     = {https://metavidence.com}\n}"
+  },
+  {
+    "objectID": "how-to-cite.html#cite-o-metavidence",
+    "href": "how-to-cite.html#cite-o-metavidence",
+    "title": "Como citar",
+    "section": "",
+    "text": "Se o MetaVidence produziu resultados que você vai publicar, cite assim:\n\nCosta Filho VO (2026). MetaVidence: no-code meta-analysis in the browser and in R. Version 0.1.0. https://metavidence.com\n\nEm BibTeX:\n@Manual{metavidence,\n  title   = {MetaVidence: no-code meta-analysis in the browser and in R},\n  author  = {Valbert Oliveira Costa Filho},\n  year    = {2026},\n  note    = {R package version 0.1.0},\n  url     = {https://metavidence.com}\n}"
+  },
+  {
+    "objectID": "how-to-cite.html#cite-também-os-pacotes-de-análise",
+    "href": "how-to-cite.html#cite-também-os-pacotes-de-análise",
+    "title": "Como citar",
+    "section": "Cite também os pacotes de análise",
+    "text": "Cite também os pacotes de análise\nO MetaVidence não faz as contas sozinho. Ele chama meta, metafor, netmeta e mada, e são esses pacotes que implementam os modelos. Cite os que a sua análise usou, e registre a versão de cada um.\nNo R, citation(\"meta\") dá a redação exata de cada um. Quais se aplicam depende do módulo:\n\n\n\n\n\n\n\nMódulo\nPacotes por trás\n\n\n\n\nBinário, contínuo, pré-calculado, braço único\nmeta, e metafor na meta-regressão\n\n\nMeta-análise em rede\nnetmeta\n\n\nAcurácia diagnóstica\nmada, e meta nos forest plots"
+  },
+  {
+    "objectID": "multiple-outcomes.html",
+    "href": "multiple-outcomes.html",
+    "title": "Vários desfechos de uma vez",
+    "section": "",
+    "text": "Siga os passos desta página para analisar mortalidade, recidiva e eventos adversos numa única rodada, e baixar cada tipo de gráfico já com todos os desfechos dentro de um ZIP.\nFunciona nestes módulos: desfechos binários, desfechos contínuos, os três de efeitos pré-calculados, proporções únicas e médias únicas. Rede e diagnóstica não têm este modo."
+  },
+  {
+    "objectID": "multiple-outcomes.html#baixe-o-modelo",
+    "href": "multiple-outcomes.html#baixe-o-modelo",
+    "title": "Vários desfechos de uma vez",
+    "section": "1. Baixe o modelo",
+    "text": "1. Baixe o modelo\n\nAbra o módulo que você vai usar.\nNo passo Data, vá ao cartão da direita, More than one outcome.\nClique em Download XLSX template, ao lado do campo de arquivo.\n\nVocê recebe uma planilha com três abas já preenchidas e no formato certo. Use esse arquivo como ponto de partida, não o modelo do cartão da esquerda, que é de desfecho único e tem uma estrutura diferente."
+  },
+  {
+    "objectID": "multiple-outcomes.html#monte-a-sua-planilha",
+    "href": "multiple-outcomes.html#monte-a-sua-planilha",
+    "title": "Vários desfechos de uma vez",
+    "section": "2. Monte a sua planilha",
+    "text": "2. Monte a sua planilha\nAbra o modelo e siga estas regras:\n\nDeixe uma aba por desfecho. Acrescente ou apague abas até ficar com o número de desfechos que você tem.\nRenomeie cada aba com o nome do desfecho. Escreva Mortalidade em 30    dias, não Planilha1. Esse nome vai para o título dos gráficos e para o nome dos arquivos exportados.\nPreencha cada aba como se fosse uma análise separada. Todos os estudos daquele desfecho, com todas as colunas obrigatórias do módulo.\nUse os mesmos nomes de coluna em todas as abas, exatamente como estão no modelo.\nRepita o estudo em quantas abas ele aparecer. As abas não se comunicam: nenhum estudo é ligado ao seu par em outra aba.\nSalve como .xlsx.\n\n\n\n\n\n\n\nRegras do nome da aba\n\n\n\nO Excel limita nome de aba a 31 caracteres e recusa : \\ / ? * [ ]. Ao gerar os arquivos, o MetaVidence troca tudo que não é letra ou número por _, então Sobrevida livre de progressão chega ao seu computador como Sobrevida_livre_de_progressao.\n\n\n\n\n\n\n\n\nVai usar subgrupo ou meta-regressão?\n\n\n\nInclua a coluna em todas as abas em que você quer esse resultado. Se ela faltar numa aba, aquele desfecho roda sem o subgrupo e o app registra o motivo, em vez de interromper a rodada inteira."
+  },
+  {
+    "objectID": "multiple-outcomes.html#envie-a-planilha",
+    "href": "multiple-outcomes.html#envie-a-planilha",
+    "title": "Vários desfechos de uma vez",
+    "section": "3. Envie a planilha",
+    "text": "3. Envie a planilha\n\nVolte ao cartão More than one outcome.\nClique em Browse em Import multi-outcome workbook (.xlsx).\nEscolha o seu arquivo.\n\nNão use o campo do cartão da esquerda. Ele lê só a primeira aba e trata o arquivo como um desfecho único."
+  },
+  {
+    "objectID": "multiple-outcomes.html#confira-o-data-check",
+    "href": "multiple-outcomes.html#confira-o-data-check",
+    "title": "Vários desfechos de uma vez",
+    "section": "4. Confira o Data check",
+    "text": "4. Confira o Data check\nO cartão Data check passa a mostrar uma linha por desfecho, com o número de estudos encontrados em cada um.\nLeia antes de seguir. Se alguma aba estiver com coluna faltando ou com valor inválido, corrija a planilha e envie de novo. É mais rápido do que descobrir o erro depois de rodar tudo."
+  },
+  {
+    "objectID": "multiple-outcomes.html#ajuste-os-parâmetros",
+    "href": "multiple-outcomes.html#ajuste-os-parâmetros",
+    "title": "Vários desfechos de uma vez",
+    "section": "5. Ajuste os parâmetros",
+    "text": "5. Ajuste os parâmetros\nClique em Next: parameters. Uma coisa muda nesta tela quando você está em lote: o campo Outcome name desaparece, porque quem nomeia cada desfecho agora é o nome da aba.\nEscolha o sm, o modelo e o resto normalmente. Um único conjunto de parâmetros vale para todos os desfechos. Subgrupo e meta-regressão não se definem aqui: essas colunas você escolhe no passo 3, dentro do cartão do resultado, igual ao modo de desfecho único.\n\n\n\n\n\n\nUm sm para todos\n\n\n\nSe um desfecho pede RR e outro pede MD, não coloque os dois no mesmo arquivo. Separe em duas planilhas e faça duas rodadas."
+  },
+  {
+    "objectID": "multiple-outcomes.html#rode-a-análise",
+    "href": "multiple-outcomes.html#rode-a-análise",
+    "title": "Vários desfechos de uma vez",
+    "section": "6. Rode a análise",
+    "text": "6. Rode a análise\nClique em Run analysis. O app processa cada aba, uma por uma, e avança para o passo 3."
+  },
+  {
+    "objectID": "multiple-outcomes.html#baixe-os-resultados",
+    "href": "multiple-outcomes.html#baixe-os-resultados",
+    "title": "Vários desfechos de uma vez",
+    "section": "7. Baixe os resultados",
+    "text": "7. Baixe os resultados\nEm lote cada cartão de resultado ganha um botão a mais. Para cada gráfico que você quiser:\n\nClique em 1. Run analysis, dentro do cartão.\nEspere o botão ao lado deixar de mostrar 2. Download locked.\nClique em 2. Download.\n\nOs cartões Subgroup analysis e Meta-regression trazem também um seletor de coluna. Escolha a coluna ali e clique em 1. Run analysis no mesmo cartão. Trocar a coluna trava o download de novo, então clique em 1. Run analysis outra vez para reconstruir os arquivos com a nova coluna.\nEscolha o formato, a largura e a altura antes de baixar, nos campos do próprio cartão. Vale para todos os desfechos daquele ZIP.\nVocê recebe um arquivo Forest_Batch.zip, e dentro dele um gráfico por desfecho, com o nome da aba no nome do arquivo. Repita para o funnel, o leave-one-out e o que mais precisar.\n\n\n\n\n\n\nPrepare só o que você vai usar\n\n\n\nCada clique em 1. Run analysis desenha aquele gráfico para todos os desfechos. Com muitos desfechos isso leva tempo, então prepare apenas os cartões que vão para o artigo."
+  },
+  {
+    "objectID": "precalculated.html",
+    "href": "precalculated.html",
+    "title": "Efeitos pré-calculados",
+    "section": "",
+    "text": "Use este módulo quando você extraiu dos artigos o efeito já calculado, em vez das contagens brutas. É o caso típico das razões de risco (HR) de análises de sobrevida, que raramente vêm com dados suficientes para recalcular.\nSiga o fluxo em três passos. Aqui trato dos três formatos de entrada e do campo que decide se a sua análise vai sair certa."
+  },
+  {
+    "objectID": "precalculated.html#passo-1-os-dados",
+    "href": "precalculated.html#passo-1-os-dados",
+    "title": "Efeitos pré-calculados",
+    "section": "Passo 1, os dados",
+    "text": "Passo 1, os dados\nSão três submódulos, escolhidos na página anterior. Escolha o que corresponde ao que você conseguiu extrair dos artigos.\n\n\n\nFormato\nColunas obrigatórias\nPrecisa de erro-padrão?\n\n\n\n\nTE com IC 95%\nstudy, TE, lower, upper\nnão\n\n\nTE com erro-padrão\nstudy, TE, seTE\nsim\n\n\nConjunto completo\nstudy, TE, seTE, lower, upper\nsim\n\n\n\nn.e e n.c são opcionais nos três formatos e aparecem no forest plot quando presentes. Qualquer outra coluna fica disponível para subgrupo e meta-regressão.\n\n\n\n\n\n\nQual formato escolher\n\n\n\nPrefira o TE com IC 95%. É o único em que você não digita erro-padrão nenhum: o app o deriva do intervalo, sempre na escala certa. Os outros dois pedem o seTE, e é aí que entram os erros de aritmética e de escala.\n\n\nO Data check confere as colunas, conta os estudos e valida a coerência do intervalo, exigindo lower &lt;= TE &lt;= upper. Se você inverteu duas colunas, ele avisa aqui, antes de a análise rodar."
+  },
+  {
+    "objectID": "precalculated.html#passo-2-os-parâmetros",
+    "href": "precalculated.html#passo-2-os-parâmetros",
+    "title": "Efeitos pré-calculados",
+    "section": "Passo 2, os parâmetros",
+    "text": "Passo 2, os parâmetros\n\nOutcome settings\nOutcome name, If the outcome increases, is that beneficial or harmful?, Experimental group name e Control group name funcionam como no módulo binário.\nSummary measure (sm) (padrão HR) oferece seis opções, e aqui ele faz mais do que rotular o eixo: ele decide se os seus números passam por transformação logarítmica.\n\nMedidas de razão: HR, RR, OR. O agrupamento acontece na escala logarítmica e o resultado volta para a escala original nos gráficos.\nMedidas de diferença: RD, MD, SMD. Não há transformação.\n\n\n\nA escala do TE\nEste é o ponto onde mais se erra, e vale ler com atenção.\nPara medidas de razão, o MetaVidence espera o valor como reportado no artigo, não o logaritmo. Se o artigo diz “HR 0,76 (IC 95% 0,61 a 0,95)”, você digita 0,76, 0,61 e 0,95. Digitar o logaritmo faz o app rejeitar a planilha, já que ele exige valores positivos nas medidas de razão.\nPara medidas de diferença, o valor já está na escala certa e nada é transformado.\n\n\n\n\n\n\nConfira o sm antes de rodar\n\n\n\nO sm escolhido em Outcome settings decide se os seus números passam pela transformação logarítmica. Escolher MD quando os dados são razões, ou o contrário, produz um resultado que parece plausível e está errado. É o tipo de erro que nenhuma validação pega, porque os números são todos válidos.\n\n\n\n\n\n\n\n\nAtenção: o seTE vai numa escala diferente do TE\n\n\n\nNas medidas de razão os dois campos não usam a mesma escala. O TE vai como reportado, 0,76. O seTE vai na escala logarítmica, que é como os artigos o reportam e como o cálculo o usa. Para o exemplo acima, seTE seria 0,113, e não 0,087.\nErrar isso não gera erro nenhum: sai um intervalo de confiança plausível e errado. O jeito de não passar por essa decisão é usar o formato TE com IC 95%, que dispensa o seTE.\n\n\n\n\nStatistical settings (advanced)\nAnalysis model, Tau method, Random CI method e Prediction method funcionam e são recomendados exatamente como no o fluxo.\nPrediction interval vem desligado por padrão (No) nos três submódulos.\nNão existe campo Method: o efeito já vem calculado, então o agrupamento é sempre pelo inverso da variância."
+  },
+  {
+    "objectID": "precalculated.html#passo-3-exportação-e-resultados",
+    "href": "precalculated.html#passo-3-exportação-e-resultados",
+    "title": "Efeitos pré-calculados",
+    "section": "Passo 3, exportação e resultados",
+    "text": "Passo 3, exportação e resultados\nTodos os cartões do módulo binário estão aqui, com o mesmo comportamento: Forest plot, Leave-one-out analysis, Funnel plot, Small-study effects com o teste de Egger, Subgroup analysis e Meta-regression, mais as duas tabelas-resumo em XLSX."
+  }
+]

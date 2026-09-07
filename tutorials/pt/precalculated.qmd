@@ -1,0 +1,102 @@
+---
+title: "Efeitos pré-calculados"
+subtitle: "Quando o artigo já traz o efeito e você só precisa agrupar"
+---
+
+Use este módulo quando você extraiu dos artigos o efeito já calculado, em vez
+das contagens brutas. É o caso típico das razões de risco (HR) de análises de
+sobrevida, que raramente vêm com dados suficientes para recalcular.
+
+Siga [o fluxo em três passos](flow.qmd). Aqui trato dos três formatos de
+entrada e do campo que decide se a sua análise vai sair certa.
+
+## Passo 1, os dados
+
+São três submódulos, escolhidos na página anterior. Escolha o que corresponde ao
+que você conseguiu extrair dos artigos.
+
+| Formato | Colunas obrigatórias | Precisa de erro-padrão? |
+|---|---|:---:|
+| TE com IC 95% | `study`, `TE`, `lower`, `upper` | não |
+| TE com erro-padrão | `study`, `TE`, `seTE` | sim |
+| Conjunto completo | `study`, `TE`, `seTE`, `lower`, `upper` | sim |
+
+`n.e` e `n.c` são opcionais nos três formatos e aparecem no forest plot quando
+presentes. Qualquer outra coluna fica disponível para subgrupo e meta-regressão.
+
+::: {.callout-tip}
+## Qual formato escolher
+Prefira o **TE com IC 95%**. É o único em que você não digita erro-padrão
+nenhum: o app o deriva do intervalo, sempre na escala certa. Os outros dois
+pedem o `seTE`, e é aí que entram os erros de aritmética e de escala.
+:::
+
+O **Data check** confere as colunas, conta os estudos e valida a coerência do
+intervalo, exigindo `lower <= TE <= upper`. Se você inverteu duas colunas, ele
+avisa aqui, antes de a análise rodar.
+
+## Passo 2, os parâmetros
+
+### Outcome settings
+
+**Outcome name**, **If the outcome increases, is that beneficial or harmful?**,
+**Experimental group name** e **Control group name** funcionam como no módulo
+binário.
+
+**Summary measure (sm)** (padrão `HR`) oferece seis opções, e aqui ele faz mais
+do que rotular o eixo: ele decide se os seus números passam por transformação
+logarítmica.
+
+* Medidas de razão: `HR`, `RR`, `OR`. O agrupamento acontece na escala
+  logarítmica e o resultado volta para a escala original nos gráficos.
+* Medidas de diferença: `RD`, `MD`, `SMD`. Não há transformação.
+
+### A escala do TE
+
+Este é o ponto onde mais se erra, e vale ler com atenção.
+
+Para medidas de razão, o MetaVidence espera o valor **como reportado no
+artigo**, não o logaritmo. Se o artigo diz "HR 0,76 (IC 95% 0,61 a 0,95)", você
+digita 0,76, 0,61 e 0,95. Digitar o logaritmo faz o app rejeitar a planilha, já
+que ele exige valores positivos nas medidas de razão.
+
+Para medidas de diferença, o valor já está na escala certa e nada é
+transformado.
+
+::: {.callout-important}
+## Confira o sm antes de rodar
+O `sm` escolhido em **Outcome settings** decide se os seus números passam pela
+transformação logarítmica. Escolher `MD` quando os dados são razões, ou o
+contrário, produz um resultado que parece plausível e está errado. É o tipo de
+erro que nenhuma validação pega, porque os números são todos válidos.
+:::
+
+::: {.callout-important}
+## Atenção: o `seTE` vai numa escala diferente do `TE`
+Nas medidas de razão os dois campos não usam a mesma escala. O `TE` vai como
+reportado, 0,76. O `seTE` vai na **escala logarítmica**, que é como os artigos o
+reportam e como o cálculo o usa. Para o exemplo acima, `seTE` seria 0,113, e não
+0,087.
+
+Errar isso não gera erro nenhum: sai um intervalo de confiança plausível e
+errado. O jeito de não passar por essa decisão é usar o formato **TE com IC
+95%**, que dispensa o `seTE`.
+:::
+
+### Statistical settings (advanced)
+
+**Analysis model**, **Tau method**, **Random CI method** e **Prediction method**
+funcionam e são recomendados exatamente como no
+[o fluxo](flow.qmd#statistical-settings-advanced).
+
+**Prediction interval** vem desligado por padrão (`No`) nos três submódulos.
+
+Não existe campo **Method**: o efeito já vem calculado, então o agrupamento é
+sempre pelo inverso da variância.
+
+## Passo 3, exportação e resultados
+
+Todos os cartões do módulo binário estão aqui, com o mesmo comportamento:
+**Forest plot**, **Leave-one-out analysis**, **Funnel plot**, **Small-study
+effects** com o teste de Egger, **Subgroup analysis** e **Meta-regression**, mais
+as duas tabelas-resumo em XLSX.

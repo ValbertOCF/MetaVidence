@@ -1,0 +1,144 @@
+---
+title: "Meta-análise de braço único"
+subtitle: "Agrupar uma proporção ou uma média, sem grupo de comparação"
+---
+
+Use este módulo quando não há comparação: você quer a prevalência agrupada de
+uma condição, a taxa de complicação de um procedimento, ou o valor médio de uma
+medida numa população. Siga [o fluxo em três passos](flow.qmd), com um passo 2 bem mais curto, porque
+sem grupo controle vários campos deixam de fazer sentido.
+
+## Passo 1, os dados
+
+Dois submódulos, escolhidos na página anterior.
+
+**Proporções únicas**
+
+| Coluna | O que é |
+|---|---|
+| `study` | rótulo do estudo |
+| `event` | número de participantes com o desfecho |
+| `n` | tamanho da amostra do braço |
+
+**Médias únicas**
+
+| Coluna | O que é |
+|---|---|
+| `study` | rótulo do estudo |
+| `n` | tamanho da amostra |
+| `mean` | valor médio do desfecho |
+| `sd` | desvio-padrão do desfecho |
+
+#### Estudo que só reporta mediana também entra
+
+| Coluna | O que é |
+|---|---|
+| `study`, `n` | como acima |
+| `median`, `q1`, `q3` | mediana e quartis do desfecho |
+
+`min` e `max` são opcionais. Substituem os quartis quando o artigo traz só a
+amplitude, e aí a conversão fica menos precisa.
+
+Mediana com `sd` e mais nada é recusada, de propósito. Mediana não vira média sem
+os quartis ou a amplitude, e o `meta` não reclama disso: ele descarta o estudo da
+análise sem uma palavra. Melhor ouvir isso aqui do que publicar uma revisão sem
+estudos que você nunca soube que ficaram de fora.
+
+#### As duas formas podem se misturar no mesmo arquivo
+
+Preencha as colunas que cada estudo reporta e deixe o resto vazio. O conjunto de
+exemplo faz exatamente isso: oito estudos com média e desvio, quatro com mediana
+e quartis. O MetaVidence converte os de mediana antes de agrupar, pelo método de
+Luo e colaboradores para a média e o de Shi e colaboradores para o desvio-padrão,
+que são os padrões atuais do pacote `meta`.
+
+O **Data check** informa quantos estudos foram convertidos, então o número está
+na sua frente antes de qualquer coisa rodar e vai direto para a seção de métodos.
+
+Média e desvio continua sendo a entrada ideal: é o que o estudo mediu, sem nada
+estimado. A conversão existe para que um estudo que reportou mediana participe da
+análise em vez de ficar de fora, não como escolha equivalente.
+
+Colunas extras ficam disponíveis para subgrupo e meta-regressão, como nos demais
+módulos. O **Data check** confere as obrigatórias, conta os estudos e aponta
+problemas, incluindo `event` maior que `n`.
+
+## Passo 2, os parâmetros
+
+Não existem aqui os campos de direção do desfecho nem os nomes dos grupos: sem
+comparação, não há "favorece experimental" nem "favorece controle" a rotular.
+
+### Proporções únicas
+
+**Outcome name** entra nos títulos e nos nomes de arquivo, como sempre.
+
+**Summary measure (sm)** (padrão `PLOGIT`) escolhe a transformação. Proporções
+perto de 0% ou de 100% têm variância pequena demais e distorcem o agrupamento se
+usadas cruas, por isso a transformação existe:
+
+* `PLOGIT`, logito. É o padrão e a recomendação para a maioria dos casos.
+* `PFT`, Freeman-Tukey duplo arco-seno. Estabiliza a variância quando há
+  proporções muito próximas dos extremos, mas a volta para a escala de
+  porcentagem é problemática quando os tamanhos amostrais variam muito entre
+  estudos. Use com consciência disso.
+* `PAS`, arco-seno simples.
+* `PLN`, logaritmo da proporção.
+* `PRAW`, proporção crua, sem transformar. Só faz sentido quando todas as
+  proporções estão longe de 0% e de 100%.
+
+Os resultados sempre voltam para a escala de porcentagem nos gráficos e tabelas,
+então a transformação é uma escolha de método, não de apresentação.
+
+**Method** (padrão `Inverse`) escolhe entre `Inverse`, o inverso da variância, e
+`GLMM`, um modelo logístico de intercepto aleatório.
+
+Recomendação: mantenha `Inverse`, que é o que a grande maioria das
+meta-análises de prevalência publicadas usa, e deixe `Tau method` em `REML`.
+
+Troque para `GLMM` com `Tau method` em `ML` quando o seu conjunto tiver:
+
+* estudos com zero eventos, ou
+* proporções muito próximas de 0% ou de 100%.
+
+Nessas duas situações o `Inverse` precisa somar 0,5 a cada célula, uma correção
+de continuidade que desloca justamente os estudos extremos, que são os que você
+está tentando estimar bem. O `GLMM` modela as contagens diretamente e dispensa
+essa correção.
+
+::: {.callout-note}
+## O GLMM não tem coluna de peso
+Um ajuste GLMM não produz peso por estudo, então o forest plot sai sem a coluna
+Weight e com todos os quadrados do mesmo tamanho. Não é um defeito do gráfico: o
+peso simplesmente não existe nesse modelo. Se a coluna de peso for importante
+para a figura do seu artigo, esse é um argumento a favor do `Inverse`.
+:::
+
+::: {.callout-important}
+## GLMM exige PLOGIT
+Se você trocar o `sm` para `PFT`, `PAS`, `PLN` ou `PRAW` e deixar o método em
+`GLMM`, a análise para com uma mensagem de erro. Ao mudar o `sm`, volte o método
+para `Inverse`.
+:::
+
+**Analysis model** e **Tau method** funcionam como no módulo binário.
+
+Este submódulo não tem **Prediction interval**, nem **Random CI method**, nem
+**Prediction method**.
+
+### Médias únicas
+
+**Summary measure (sm)** (padrão `MRAW`) tem duas opções. `MRAW` agrupa a média
+crua, na unidade original, e é a recomendação. `MLN` agrupa o logaritmo da média,
+útil quando a medida é positiva e fortemente assimétrica, como tempo até um
+evento ou concentração sérica.
+
+**Analysis model**, **Tau method** (padrão `REML`) e **Prediction interval**
+(padrão `Yes`) funcionam como no módulo binário. Não há campo **Method**, nem
+**Random CI method**, nem **Prediction method**.
+
+## Passo 3, exportação e resultados
+
+Os dois submódulos trazem os mesmos cartões dos módulos pareados: **Forest
+plot**, **Leave-one-out analysis**, **Funnel plot**, **Small-study effects** com
+o teste de Egger, **Subgroup analysis**, **Meta-regression** e as duas
+tabelas-resumo em XLSX.

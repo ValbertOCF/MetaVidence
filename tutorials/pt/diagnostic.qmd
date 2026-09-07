@@ -1,0 +1,131 @@
+---
+title: "Meta-análise diagnóstica"
+subtitle: "Sensibilidade, especificidade, ponto de resumo e razão de chances diagnóstica"
+---
+
+Use este módulo quando cada estudo traz uma tabela 2x2 de acurácia: verdadeiros
+positivos, falsos positivos, falsos negativos e verdadeiros negativos. Siga [o fluxo em três
+passos](flow.qmd), mas o passo 2 é bem mais curto e o passo 3 é o mais diferente
+de todos os módulos.
+
+## Passo 1, os dados
+
+| Coluna | O que é |
+|---|---|
+| `study` | rótulo do estudo |
+| `TP` | verdadeiros positivos |
+| `FP` | falsos positivos |
+| `FN` | falsos negativos |
+| `TN` | verdadeiros negativos |
+
+No módulo comparativo há uma coluna a mais, `test`, com o nome do teste, e cada
+estudo aparece duas vezes, uma linha por teste.
+
+Colunas extras não são usadas neste fluxo. 
+**Data check** confere as obrigatórias, conta os estudos e aponta células
+negativas ou em branco.
+
+## Por que este módulo é diferente
+
+Em meta-análise diagnóstica o desfecho é **bivariado**: sensibilidade e
+especificidade andam juntas e são correlacionadas. Um teste mais sensível
+costuma ser menos específico, porque o ponto de corte se move. Por isso o modelo
+é o GLMM binomial bivariado, e não dois modelos separados. É o modelo que o
+Cochrane Handbook for DTA Reviews v2.0 especifica no capítulo 10.
+
+Isso tem uma consequência prática: não adianta olhar só a sensibilidade
+agrupada. O resultado principal é o **ponto operacional**, sensibilidade e
+especificidade juntas, com seus intervalos de confiança.
+
+## Passo 2, os parâmetros
+
+É o passo 2 mais curto do MetaVidence, porque a maior parte das escolhas de um
+modelo bivariado não é configurável campo a campo.
+
+### Módulo de teste único
+
+**Outcome name** entra nos títulos e nomes de arquivo.
+
+**Analysis model** (padrão `Random-effects`) afeta os forest plots de
+sensibilidade, de especificidade e de razão de chances diagnóstica.
+
+::: {.callout-note}
+## O modelo bivariado ignora este campo
+O modelo bivariado é sempre de efeitos aleatórios, por construção.
+Trocar para `Fixed-effect` muda os forest plots, mas não o
+ponto de resumo.
+:::
+
+Não há aqui `sm`, `Method`, `Tau method`, intervalo de predição nem nomes de
+grupo: nenhum desses campos se aplica ao modelo bivariado.
+
+### Módulo comparativo
+
+Além de **Outcome name**, aparecem **Test A** e **Test B**, que se preenchem
+sozinhos com os nomes encontrados na coluna `test`. Eles definem quem é comparado
+com quem e a ordem em que os dois aparecem nas figuras.
+
+## Passo 3, exportação e resultados
+
+### Teste único
+
+**Sensitivity forest plot** e **Specificity forest plot**, um para cada, com
+sensibilidade calculada como TP / (TP + FN) e especificidade como TN / (TN + FP).
+
+**Summary point**, com os estudos, a sensibilidade e a especificidade agrupadas,
+uma região de confiança de 95% e uma região de predição de 95%. Não há curva
+nem AUC: as duas pertencem ao modelo HSROC, que o handbook registra não ser
+ajustável em R com o lme4. O modelo bivariado estima um ponto, então é um
+ponto que o gráfico mostra.
+
+::: {.callout-important}
+## Os forest plots mostram estudos, não estimativa agrupada
+Os forests não trazem losango agrupado, de propósito. Agrupar sensibilidade e
+especificidade separadamente ignora a correlação entre elas, que é justamente o
+que a seção 10.2.3 do handbook desaconselha. Todo número agrupado deste módulo
+vem do ajuste bivariado, e há só um de cada.
+:::
+
+**Diagnostic odds ratio**, com forest próprio. A DOR resume acurácia num único
+número, combinando sensibilidade e especificidade. É útil para comparar testes,
+mas não diz onde está o equilíbrio entre os dois erros, então não substitui o par
+sensibilidade e especificidade.
+
+**Threshold effect**, a correlação entre a sensibilidade e a taxa de falso-positivo
+entre os estudos, com o teste de Deeks para efeitos de estudo pequeno. Correlação
+positiva sugere que os estudos usaram pontos de corte diferentes, que é o
+confundidor específico da acurácia diagnóstica.
+
+::: {.callout-note}
+## Aqui não há análise de subgrupo
+Para o modelo bivariado, subgrupo e comparação direta entre testes são a mesma
+coisa: uma covariável. O handbook diz isso com todas as letras, chamando os dois
+de "group". Esse modelo vive no fluxo comparativo, então dividir um teste por
+uma coluna pertence a lá, em vez de existir aqui numa versão mais fraca.
+
+O app avisa quando há menos de 4 estudos: o modelo bivariado estima 5
+parâmetros e converge assim mesmo, mas a estimativa fica instável. Convergir não
+é o mesmo que ser confiável.
+:::
+
+### Comparativo
+
+**Sensitivity by test** e **Specificity by test**, os forest plots divididos por
+teste.
+
+**Comparative summary points**, os dois testes no mesmo gráfico, cada um com a
+sua região de confiança. Os dois vêm de um modelo conjunto, agrupado por
+estudo, então um desenho pareado mantém o pareamento.
+
+**Overall comparison**, **Sensitivity comparison** e **Specificity comparison**:
+três testes de razão de verossimilhança, um para a acurácia global e um para cada
+componente. Ter o global significativo e os dois específicos não significativos é
+comum e informativo: os testes diferem no equilíbrio entre os dois erros, não em
+um deles isoladamente.
+
+::: {.callout-important}
+## O comparativo exige estudos pareados
+Cada estudo precisa ter avaliado os dois testes na mesma população. Estudos com
+apenas um dos testes ficam de fora da comparação conjunta. Comparar testes
+avaliados em populações diferentes é comparar populações, não testes.
+:::

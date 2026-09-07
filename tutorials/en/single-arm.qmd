@@ -1,0 +1,146 @@
+---
+title: "Single-arm meta-analysis"
+subtitle: "Pooling a proportion or a mean, with no comparison group"
+---
+
+Use this module when there is no comparison: you want the pooled prevalence of a
+condition, the complication rate of a procedure, or the average value of a
+measure in a population. Follow [the three-step flow](flow.qmd), with a much shorter step 2, because
+without a control group several fields stop making sense.
+
+## Step 1, the data
+
+Two submodules, chosen on the previous page.
+
+**Single proportions**
+
+| Column | What it is |
+|---|---|
+| `study` | the study label |
+| `event` | number of participants with the outcome |
+| `n` | sample size of the arm |
+
+**Single means**
+
+| Column | What it is |
+|---|---|
+| `study` | the study label |
+| `n` | sample size |
+| `mean` | mean value of the outcome |
+| `sd` | standard deviation of the outcome |
+
+#### A study reporting a median is accepted too
+
+| Column | What it is |
+|---|---|
+| `study`, `n` | as above |
+| `median`, `q1`, `q3` | median and quartiles of the outcome |
+
+`min` and `max` are optional. They can stand in for the quartiles when a paper
+reports only a range, and the conversion is then less precise.
+
+A median with `sd` and nothing else is refused, and on purpose. A median cannot
+be turned into a mean without the quartiles or the range, and `meta` does not
+complain about it: it drops the study from the pooling with no message. Better
+to hear it here than to publish a review missing studies you never knew were
+excluded.
+
+#### The two can be mixed in one file
+
+Fill the columns each study reports and leave the rest empty. The example dataset
+does exactly that: eight studies with mean and SD, four with median and
+quartiles. MetaVidence converts the median studies before pooling, using the
+method of Luo and colleagues for the mean and that of Shi and colleagues for the
+standard deviation, which are the current defaults of the `meta` package.
+
+The **Data check** reports how many studies were converted, so the number is in
+front of you before anything runs and can go straight into the methods section.
+
+Mean and SD remains the ideal input: it is what the study measured, with nothing
+estimated. The conversion is there so that a study reporting a median can join
+the analysis instead of being left out, not as an equivalent choice.
+
+Extra columns stay available for subgroup analysis and meta-regression, as in
+the other modules. The **Data check** verifies the required ones, counts the
+studies and flags problems, including `event` larger than `n`.
+
+## Step 2, the parameters
+
+The outcome direction field and the group name fields do not exist here: with no
+comparison, there is no "favors experimental" or "favors control" to label.
+
+### Single proportions
+
+**Outcome name** goes into titles and file names, as always.
+
+**Summary measure (sm)** (default `PLOGIT`) chooses the transformation.
+Proportions near 0% or 100% have too small a variance and distort the pooling if
+used raw, which is why the transformation exists:
+
+* `PLOGIT`, logit. The default, and the recommendation for most cases.
+* `PFT`, Freeman-Tukey double arcsine. Stabilizes the variance when there are
+  proportions very close to the extremes, but the way back to the percentage
+  scale is problematic when sample sizes vary a lot between studies. Use it
+  knowing that.
+* `PAS`, plain arcsine.
+* `PLN`, log of the proportion.
+* `PRAW`, raw proportion, untransformed. Only sensible when every proportion is
+  far from 0% and 100%.
+
+Results always return to the percentage scale in plots and tables, so the
+transformation is a choice of method, not of presentation.
+
+**Method** (default `Inverse`) chooses between `Inverse`, inverse variance, and
+`GLMM`, a random-intercept logistic model.
+
+Recommendation: keep `Inverse`, which is what the large majority of published
+prevalence meta-analyses use, and leave `Tau method` at `REML`.
+
+Switch to `GLMM` with `Tau method` at `ML` when your dataset has:
+
+* studies with zero events, or
+* proportions very close to 0% or 100%.
+
+In those two situations `Inverse` has to add 0.5 to each cell, a continuity
+correction that shifts precisely the extreme studies, which are the ones you are
+trying to estimate well. `GLMM` models the counts directly and needs no such
+correction.
+
+::: {.callout-note}
+## GLMM has no weight column
+A GLMM fit produces no per-study weight, so the forest plot comes out without
+the Weight column and with every square the same size. This is not a defect of
+the plot: the weight simply does not exist in that model. If the weight column
+matters for the figure in your paper, that is an argument in favour of
+`Inverse`.
+:::
+
+::: {.callout-important}
+## GLMM requires PLOGIT
+If you switch `sm` to `PFT`, `PAS`, `PLN` or `PRAW` and leave the method at
+`GLMM`, the analysis stops with an error message. When you change `sm`, set the
+method back to `Inverse`.
+:::
+
+**Analysis model** and **Tau method** work as in the binary module.
+
+This submodule has no **Prediction interval**, no **Random CI method** and no
+**Prediction method**.
+
+### Single means
+
+**Summary measure (sm)** (default `MRAW`) has two options. `MRAW` pools the raw
+mean, in the original unit, and is the recommendation. `MLN` pools the log of
+the mean, useful when the measure is positive and strongly skewed, such as time
+to an event or serum concentration.
+
+**Analysis model**, **Tau method** (default `REML`) and **Prediction interval**
+(default `Yes`) work as in the binary module. There is no **Method** field, no
+**Random CI method** and no **Prediction method**.
+
+## Step 3, export and results
+
+Both submodules carry the same cards as the paired modules: **Forest plot**,
+**Leave-one-out analysis**, **Funnel plot**, **Small-study effects** with
+Egger's test, **Subgroup analysis**, **Meta-regression** and the two summary
+tables as XLSX.

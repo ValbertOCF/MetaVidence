@@ -1,0 +1,131 @@
+---
+title: "Diagnostic test accuracy meta-analysis"
+subtitle: "Sensitivity, specificity, summary point and diagnostic odds ratio"
+---
+
+Use this module when each study gives a 2x2 accuracy table: true positives,
+false positives, false negatives and true negatives. Follow [the three-step
+flow](flow.qmd), but step 2 is much shorter and step 3 is the most different of
+all the modules.
+
+## Step 1, the data
+
+| Column | What it is |
+|---|---|
+| `study` | the study label |
+| `TP` | true positives |
+| `FP` | false positives |
+| `FN` | false negatives |
+| `TN` | true negatives |
+
+In the comparative module there is one more column, `test`, with the name of the
+test, and each study appears twice, one row per test.
+
+Extra columns, such as `Region`, stay available for subgroup analysis. The
+**Data check** verifies the required ones, counts the studies and flags negative
+or blank cells.
+
+## Why this module is different
+
+In diagnostic meta-analysis the outcome is **bivariate**: sensitivity and
+specificity move together and are correlated. A more sensitive test is usually
+less specific, because the threshold moves. That is why the model is the
+bivariate binomial GLMM, and not two separate models. That is the model the
+Cochrane Handbook for DTA Reviews v2.0 specifies in chapter 10.
+
+This has a practical consequence: looking at pooled sensitivity alone gets you
+nowhere. The main result is the **operating point**, sensitivity and specificity
+together, with their confidence intervals.
+
+## Step 2, the parameters
+
+This is the shortest step 2 in MetaVidence, because most of the choices in a
+bivariate model are not configurable field by field.
+
+### Single test module
+
+**Outcome name** goes into titles and file names.
+
+**Analysis model** (default `Random-effects`) affects the sensitivity,
+specificity and diagnostic odds ratio forest plots.
+
+::: {.callout-note}
+## The bivariate model ignores this field
+The Reitsma bivariate model is always random-effects, by construction. Switching
+to `Fixed-effect` changes the forest plots, but neither the summary point nor the
+summary operating point.
+:::
+
+There is no `sm`, `Method`, `Tau method`, prediction interval or group name
+here: none of those fields applies to the bivariate model.
+
+### Comparative module
+
+Besides **Outcome name**, there are **Test A** and **Test B**, which fill
+themselves with the names found in the `test` column. They define which test is
+compared against which, and the order the two appear in the figures.
+
+## Step 3, export and results
+
+### Single test
+
+**Sensitivity forest plot** and **Specificity forest plot**, one for each, with
+sensitivity computed as TP / (TP + FN) and specificity as TN / (TN + FP).
+
+**Summary point**, with the studies, the pooled sensitivity and specificity, a
+95% confidence region and a 95% prediction region. There is no curve and no
+AUC: those belong to the HSROC model, which the handbook notes cannot be fitted
+in R with lme4. The bivariate model estimates a point, so a point is what the
+plot shows.
+
+::: {.callout-important}
+## The forest plots show studies, not a pooled estimate
+The forests deliberately carry no pooled diamond. Averaging sensitivity and
+specificity separately ignores the correlation between them, which is what
+section 10.2.3 of the handbook rules out. Every pooled number in this module
+comes from the bivariate fit, and there is only one of each.
+:::
+
+**Diagnostic odds ratio**, with its own forest plot. The DOR summarizes accuracy
+in a single number, combining sensitivity and specificity. It is useful for
+comparing tests, but it says nothing about where the balance between the two
+errors lies, so it does not replace the sensitivity and specificity pair.
+
+**Threshold effect**, the correlation between sensitivity and the false-positive
+rate across studies, with the Deeks test for small-study effects. A positive
+correlation suggests the studies used different positivity thresholds, which is
+the confounder specific to diagnostic accuracy.
+
+::: {.callout-note}
+## There is no subgroup analysis here
+To the bivariate model a subgroup and a head-to-head test comparison are the
+same thing: a covariate. The handbook says so plainly, calling them both
+"group". That model lives in the comparative workflow, so splitting one test by
+a column belongs there rather than being duplicated as a weaker version here.
+
+The app warns when there are fewer than 4 studies: the bivariate model estimates
+5 parameters and converges anyway, but the estimate becomes unstable.
+Converging is not the same as being trustworthy.
+:::
+
+### Comparative
+
+**Sensitivity by test** and **Specificity by test**, the forest plots split by
+test.
+
+**Comparative summary points**, both tests on the same plot, each with its own
+confidence region. Both come from one joint model, grouped by study, so a
+paired design keeps its pairing.
+
+**Overall comparison**, **Sensitivity comparison** and **Specificity
+comparison**: three likelihood-ratio tests, one for overall accuracy and one for
+each component. Having the overall test significant and the two specific ones
+not significant is common and informative: the tests differ in the balance
+between the two errors, not in either one alone.
+
+::: {.callout-important}
+## The comparative module requires paired studies
+Each study must have assessed both tests in the same population. Studies with
+only one of the tests stay out of the joint comparison. Comparing tests assessed
+in different populations means comparing populations, not tests.
+:::

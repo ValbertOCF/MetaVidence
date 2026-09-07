@@ -1,0 +1,43 @@
+---
+title: "MetaVidence tutorials"
+---
+
+MetaVidence does meta-analysis without code. You load a spreadsheet, choose the
+parameters and get publication-ready plots and tables, all in the browser, with
+nothing to install and without your data leaving your computer.
+
+## Where to start
+
+1. **[Get started](get-started.qmd)** shows how to open MetaVidence in the
+   browser, and how to install R, RStudio and the package if you would rather
+   run it on your own computer.
+2. **[The three-step flow](flow.qmd)** walks the screens end to end: data,
+   parameters and export. Every module works this way.
+3. **Your module's page** covers only what changes in it, such as the required
+   columns and the summary measure.
+
+Every module ships an example dataset with 12 studies. It is worth running the
+analysis on it before using your own data, so you can see what each screen
+produces without preparing a spreadsheet.
+
+## Choosing the module
+
+| You have… | Use |
+|---|---|
+| Event counts and sample sizes in both groups | [Binary outcomes](binary.qmd) |
+| Mean and SD, median and IQR, or a mix of the two | [Continuous outcomes](continuous.qmd) |
+| The effect already calculated, with CI or standard error | [Pre-calculated effects](precalculated.qmd) |
+| One proportion or mean per study, no comparison | [Single arm](single-arm.qmd) |
+| Three or more treatments compared indirectly | [Network meta-analysis](network.qmd) |
+| 2×2 diagnostic accuracy tables | [Diagnostic meta-analysis](diagnostic.qmd) |
+
+Have more than one outcome to analyse? Once you have picked the module, follow
+[Multiple outcomes at once](multiple-outcomes.qmd) to run them all in a single
+pass.
+
+## How to cite
+
+If MetaVidence produced results you are publishing,
+[cite MetaVidence and the analysis packages](how-to-cite.qmd). Citations are what
+keep this free academic tool alive and maintained, and recording which software
+produced your numbers is part of a reproducible analysis.

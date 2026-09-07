@@ -1,0 +1,114 @@
+---
+title: "Desfechos contínuos"
+subtitle: "Diferença de médias e diferença de médias padronizada"
+---
+
+Use este módulo quando o desfecho é uma medida numérica: pressão arterial, dias
+de internação, escore de qualidade de vida. Siga [o fluxo em três passos](flow.qmd);
+esta página trata de como os dados precisam estar e do que muda no passo 2.
+
+## Passo 1, os dados
+
+Todo estudo precisa de `study`, `n.e` e `n.c`. Depois, para cada grupo, o que o
+artigo de fato reportou.
+
+### Média e desvio-padrão, a entrada ideal
+
+| Coluna | O que é |
+|---|---|
+| `n.e`, `mean.e`, `sd.e` | tamanho, média e DP do grupo experimental |
+| `n.c`, `mean.c`, `sd.c` | o mesmo para o grupo controle |
+
+### Estudo que reporta mediana também entra
+
+| Coluna | O que é |
+|---|---|
+| `n.e`, `median.e`, `q1.e`, `q3.e` | tamanho, mediana e quartis do grupo experimental |
+| `n.c`, `median.c`, `q1.c`, `q3.c` | o mesmo para o grupo controle |
+
+`min.e`, `max.e`, `min.c` e `max.c` são opcionais. Podem substituir os quartis
+quando o artigo traz só a amplitude, e aí a conversão fica menos precisa.
+
+### Os dois podem se misturar no mesmo arquivo
+
+Preencha as colunas que cada estudo reporta e deixe o resto vazio. O conjunto de
+exemplo faz exatamente isso: oito estudos com média e desvio, quatro com mediana
+e quartis. O MetaVidence converte os de mediana antes de agrupar, usando o
+método de Luo e colaboradores para a média e o de Shi e colaboradores para o
+desvio-padrão, que são os padrões atuais do pacote `meta`.
+
+O **Data check** informa quantos estudos foram convertidos, então o número está
+na sua frente antes de rodar qualquer coisa e vai direto para a seção de métodos.
+
+::: {.callout-warning}
+## A conversão tem limites
+Ela assume distribuição aproximadamente simétrica. Com dados muito assimétricos,
+que costuma ser justamente o motivo de o artigo ter reportado mediana, a média
+estimada pode não representar bem o estudo. Reporte quantos estudos foram
+convertidos e considere uma análise de sensibilidade sem eles.
+:::
+
+::: {.callout-important}
+## Mediana com desvio-padrão e nada mais
+Essa dupla não tem como ser convertida, e o MetaVidence recusa o arquivo em vez
+de aceitar. Se deixasse passar, o pacote `meta` descartaria esses estudos da
+análise sem dizer nada, e uma meta-análise com estudos faltando em silêncio é
+pior que uma mensagem de erro.
+:::
+
+O Data check no mais funciona como no módulo binário: confere as colunas
+obrigatórias, conta os estudos, lista as colunas que sobraram para subgrupo e
+meta-regressão e aponta problemas, incluindo quartis fora de ordem.
+
+## Passo 2, os parâmetros
+
+### Outcome settings
+
+**Outcome name**, **If the outcome increases, is that beneficial or harmful?**,
+**Experimental group name** e **Control group name** funcionam exatamente como
+no módulo binário.
+
+**Summary measure (sm)** (padrão `MD`) é a decisão que mais importa aqui, e não
+é cosmética:
+
+* `MD`, diferença de médias, quando todos os estudos usam a mesma escala. O
+  resultado sai na unidade original, o que facilita a interpretação: "3,2 dias a
+  menos de internação". Recomendado sempre que as escalas coincidem.
+* `SMD`, diferença de médias padronizada, quando as escalas diferem entre
+  estudos, por exemplo instrumentos diferentes medindo depressão. O resultado
+  sai em desvios-padrão, sem unidade.
+
+Se as escalas são iguais, prefira `MD`. O `SMD` é a solução para um problema que
+você talvez não tenha, e é bem mais difícil de comunicar ao leitor.
+
+### Statistical settings (advanced)
+
+**Analysis model**, **Tau method**, **Random CI method** e **Prediction method**
+funcionam e são recomendados exatamente como no
+[o fluxo](flow.qmd#statistical-settings-advanced).
+
+**Prediction interval** aqui vem ligado por padrão (`Yes`), ao contrário do
+módulo binário. Desligue se tiver menos de 3 estudos ou se o intervalo estiver
+tão largo que atrapalhe a leitura da figura.
+
+Não existe campo **Method** neste módulo. Mantel-Haenszel, Peto e GLMM são
+métodos para contagens de eventos, e não se aplicam a médias.
+
+## Passo 3, exportação e resultados
+
+Os cartões são os mesmos do módulo binário, com o mesmo comportamento:
+
+* **Forest plot**, com o efeito de cada estudo, os pesos e o losango agrupado.
+* **Leave-one-out analysis**, para ver se algum estudo isolado sustenta o
+  resultado.
+* **Funnel plot** e **Small-study effects**, este último com o teste de Egger.
+* **Subgroup analysis**, com o seletor de coluna dentro do próprio cartão.
+* **Meta-regression**, com moderadores numéricos e gráfico de bolhas.
+* **Subgroup summary table** e **Meta-regression summary table**, em XLSX.
+
+::: {.callout-warning}
+## Confira o sinal antes de agrupar
+Em desfechos contínuos é comum que alguns estudos reportem a mudança em relação
+ao basal e outros o valor final. Misturar os dois sem pensar produz um efeito
+agrupado sem sentido. Padronize antes de carregar a planilha.
+:::

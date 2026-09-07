@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>O fluxo em três passos – MetaVidence</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+<link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">MetaVidence</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Procurar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Alternar de navegação" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Início</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./get-started.html"> 
+<span class="menu-text">Comece aqui</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./flow.html" aria-current="page"> 
+<span class="menu-text">O fluxo</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-módulos" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Módulos</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-módulos">    
+        <li>
+    <a class="dropdown-item" href="./binary.html">
+ <span class="dropdown-text">Desfechos binários</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./continuous.html">
+ <span class="dropdown-text">Desfechos contínuos</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./precalculated.html">
+ <span class="dropdown-text">Efeitos pré-calculados</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./single-arm.html">
+ <span class="dropdown-text">Braço único</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./network.html">
+ <span class="dropdown-text">Meta-análise em rede</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./diagnostic.html">
+ <span class="dropdown-text">Meta-análise diagnóstica</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./multiple-outcomes.html"> 
+<span class="menu-text">Vários desfechos</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./how-to-cite.html"> 
+<span class="menu-text">Como citar</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./../en/"> 
+<span class="menu-text">English</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./../../"> 
+<span class="menu-text">Abrir o MetaVidence</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Nesta página</h2>
+   
+  <ul>
+  <li><a href="#o-ponto-de-partida" id="toc-o-ponto-de-partida" class="nav-link active" data-scroll-target="#o-ponto-de-partida">O ponto de partida</a></li>
+  <li><a href="#passo-1-os-dados" id="toc-passo-1-os-dados" class="nav-link" data-scroll-target="#passo-1-os-dados">Passo 1, os dados</a>
+  <ul class="collapse">
+  <li><a href="#as-colunas-obrigatórias" id="toc-as-colunas-obrigatórias" class="nav-link" data-scroll-target="#as-colunas-obrigatórias">As colunas obrigatórias</a></li>
+  <li><a href="#o-data-check" id="toc-o-data-check" class="nav-link" data-scroll-target="#o-data-check">O Data check</a></li>
+  </ul></li>
+  <li><a href="#passo-2-os-parâmetros" id="toc-passo-2-os-parâmetros" class="nav-link" data-scroll-target="#passo-2-os-parâmetros">Passo 2, os parâmetros</a>
+  <ul class="collapse">
+  <li><a href="#outcome-settings" id="toc-outcome-settings" class="nav-link" data-scroll-target="#outcome-settings">Outcome settings</a></li>
+  <li><a href="#statistical-settings-advanced" id="toc-statistical-settings-advanced" class="nav-link" data-scroll-target="#statistical-settings-advanced">Statistical settings (advanced)</a></li>
+  <li><a href="#subgrupo-e-meta-regressão" id="toc-subgrupo-e-meta-regressão" class="nav-link" data-scroll-target="#subgrupo-e-meta-regressão">Subgrupo e meta-regressão</a></li>
+  </ul></li>
+  <li><a href="#passo-3-exportação-e-resultados" id="toc-passo-3-exportação-e-resultados" class="nav-link" data-scroll-target="#passo-3-exportação-e-resultados">Passo 3, exportação e resultados</a>
+  <ul class="collapse">
+  <li><a href="#forest-plot" id="toc-forest-plot" class="nav-link" data-scroll-target="#forest-plot">Forest plot</a></li>
+  <li><a href="#leave-one-out-analysis" id="toc-leave-one-out-analysis" class="nav-link" data-scroll-target="#leave-one-out-analysis">Leave-one-out analysis</a></li>
+  <li><a href="#funnel-plot" id="toc-funnel-plot" class="nav-link" data-scroll-target="#funnel-plot">Funnel plot</a></li>
+  <li><a href="#small-study-effects" id="toc-small-study-effects" class="nav-link" data-scroll-target="#small-study-effects">Small-study effects</a></li>
+  <li><a href="#subgroup-analysis" id="toc-subgroup-analysis" class="nav-link" data-scroll-target="#subgroup-analysis">Subgroup analysis</a></li>
+  <li><a href="#meta-regression" id="toc-meta-regression" class="nav-link" data-scroll-target="#meta-regression">Meta-regression</a></li>
+  <li><a href="#subgroup-summary-table-e-meta-regression-summary-table" id="toc-subgroup-summary-table-e-meta-regression-summary-table" class="nav-link" data-scroll-target="#subgroup-summary-table-e-meta-regression-summary-table">Subgroup summary table e Meta-regression summary table</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">O fluxo em três passos</h1>
+<p class="subtitle lead">Como todo módulo funciona: dados, parâmetros, exportação</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Todos os módulos do MetaVidence seguem a mesma sequência, sempre na mesma ordem: carregar os dados, escolher os parâmetros, revisar e exportar os resultados.</p>
+<p>Esta página percorre esse fluxo inteiro, tela por tela. As imagens são do módulo de desfechos binários, mas o que está descrito aqui vale para todos. Cada página de módulo trata só do que muda nele.</p>
+<section id="o-ponto-de-partida" class="level2">
+<h2 class="anchored" data-anchor-id="o-ponto-de-partida">O ponto de partida</h2>
+<p><img src="../img/01-home.png" class="img-fluid"></p>
+<p>Na página inicial, clique no cartão do tipo de dado que você tem. A tabela da <a href="./index.html">página inicial dos tutoriais</a> diz qual módulo serve para cada formato.</p>
+</section>
+<section id="passo-1-os-dados" class="level2">
+<h2 class="anchored" data-anchor-id="passo-1-os-dados">Passo 1, os dados</h2>
+<p><img src="../img/02-binary-dados.png" class="img-fluid"></p>
+<p>Você tem três caminhos, nas abas do cartão à esquerda:</p>
+<ul>
+<li><strong>Upload file</strong> envia um Excel ou CSV. O botão de baixar o modelo de planilha está ao lado, já com os nomes de coluna corretos.</li>
+<li><strong>Paste data</strong> cola direto do Google Sheets ou do Excel.</li>
+<li><strong>Example</strong> carrega 12 estudos fictícios, para explorar o app sem preparar nada.</li>
+</ul>
+<section id="as-colunas-obrigatórias" class="level3">
+<h3 class="anchored" data-anchor-id="as-colunas-obrigatórias">As colunas obrigatórias</h3>
+<p>O guia recolhível logo abaixo das abas lista o que a planilha precisa ter, com os nomes exatos das colunas daquele módulo. A página de cada módulo traz a mesma lista.</p>
+<p>Qualquer coluna a mais é opcional. Colunas de texto ficam disponíveis para análise de subgrupo, e colunas numéricas para meta-regressão. Nos conjuntos de exemplo há <code>Region</code>, <code>Design</code>, <code>RiskOfBias</code>, <code>MeanAge</code> e <code>FollowUpMonths</code>.</p>
+</section>
+<section id="o-data-check" class="level3">
+<h3 class="anchored" data-anchor-id="o-data-check">O Data check</h3>
+<p><img src="../img/03-binary-carregado.png" class="img-fluid"></p>
+<p>Assim que os dados entram, o cartão <strong>Data check</strong> confere e informa: se as colunas obrigatórias estão todas lá, quantos estudos foram detectados, quais colunas sobraram para subgrupo e meta-regressão, e se há problemas, como células em branco, eventos maiores que o total ou tamanhos amostrais iguais a zero.</p>
+<p>Vale ler antes de seguir. É mais rápido corrigir a planilha agora do que descobrir o erro no meio da análise.</p>
+<p>Quando estiver tudo certo, clique em <strong>Next: parameters</strong>.</p>
+</section>
+</section>
+<section id="passo-2-os-parâmetros" class="level2">
+<h2 class="anchored" data-anchor-id="passo-2-os-parâmetros">Passo 2, os parâmetros</h2>
+<p><img src="../img/04-binary-parametros.png" class="img-fluid"></p>
+<p>Os campos vêm separados em duas seções. <strong>Outcome settings</strong> abre por padrão, porque é a que quase sempre se mexe. <strong>Statistical settings (advanced)</strong> vem recolhida, porque os padrões servem à maioria dos casos.</p>
+<p>Cada campo tem um “?” ao lado com um resumo da explicação, dentro do próprio app.</p>
+<section id="outcome-settings" class="level3">
+<h3 class="anchored" data-anchor-id="outcome-settings">Outcome settings</h3>
+<p><strong>Outcome name</strong> (padrão <code>Outcome</code>) entra no título dos gráficos e no nome dos arquivos exportados. Vale trocar por algo curto e específico, como <code>Mortalidade em 30 dias</code>, porque é assim que o arquivo vai chegar ao seu computador.</p>
+<p><strong>If the outcome increases, is that beneficial or harmful?</strong> (padrão <code>Harmful</code>) só define os rótulos “Favors experimental” e “Favors control” embaixo do forest plot. Não muda nenhum número. Escolha <code>Harmful</code> para desfechos ruins, como morte, e <code>Beneficial</code> para desfechos bons, como cura.</p>
+<p><strong>Experimental group name</strong> e <strong>Control group name</strong> definem como os grupos aparecem nos gráficos. Trocar por nomes reais, como <code>Anticoagulante</code> e <code>Placebo</code>, deixa a figura pronta para publicação.</p>
+<p><strong>Summary measure (sm)</strong> decide o que será agrupado, e as opções mudam de módulo para módulo. É a escolha mais importante desta tela, então ela está explicada na página de cada módulo.</p>
+<p>Braço único não tem direção nem nomes de grupo, porque não há comparação. Rede tem dois campos próprios aqui, e diagnóstica quase não tem nada. Veja a página do módulo.</p>
+</section>
+<section id="statistical-settings-advanced" class="level3">
+<h3 class="anchored" data-anchor-id="statistical-settings-advanced">Statistical settings (advanced)</h3>
+<p>Estes campos são os mesmos na maioria dos módulos, com os mesmos padrões e as mesmas recomendações.</p>
+<p><strong>Analysis model</strong> (padrão <code>Random-effects</code>).</p>
+<ul>
+<li><code>Random-effects</code> deixa o efeito verdadeiro variar entre estudos. É a escolha usual, porque populações, doses e tempos de seguimento quase sempre diferem.</li>
+<li><code>Fixed-effect</code> assume que todos os estudos estimam exatamente o mesmo efeito. Só se justifica em réplicas muito próximas.</li>
+<li><code>Both</code> desenha as duas linhas no mesmo forest plot. É uma boa forma de mostrar ao leitor que a conclusão não dependeu da escolha do modelo.</li>
+</ul>
+<p>Recomendação: mantenha <code>Random-effects</code>, e use <code>Both</code> quando quiser deixar a comparação explícita no artigo.</p>
+<p><strong>Tau method</strong> (padrão <code>REML</code>) é o estimador da variância entre estudos, o τ², que governa os pesos do modelo aleatório, o I² e o intervalo de predição. Recomendação: mantenha <code>REML</code>. Use <code>DL</code> (DerSimonian-Laird) apenas para reproduzir uma análise antiga, já que foi o padrão histórico. <code>PM</code> e <code>SJ</code> são alternativas defensáveis quando há poucos estudos. <code>ML</code> tende a subestimar o τ².</p>
+<p><strong>I-squared method</strong> (padrão <code>Q</code>) define como o I² é calculado. <code>Q</code> é a definição clássica de Higgins e Thompson, I² = (Q − gl)/Q, que é o que praticamente todo artigo publicado reporta e o que o pacote <code>meta</code> usa por padrão. <code>From tau-squared</code> deriva o valor do τ² estimado. Os dois podem divergir bastante: nos mesmos quatro estudos, 89,9% com <code>Q</code> e 97,2% com τ². Nenhum está errado, eles respondem a perguntas ligeiramente diferentes, mas não são intercambiáveis num manuscrito. Recomendação: mantenha <code>Q</code>, a menos que tenha um motivo declarado, e diga nos métodos qual você usou.</p>
+<p><strong>Prediction interval</strong> acrescenta ao forest plot a faixa onde se espera o efeito de um estudo futuro. Precisa de pelo menos 3 estudos. Recomendação: ligue quando houver heterogeneidade relevante, porque é a forma mais honesta de mostrar o que a heterogeneidade significa na prática. Com 3 ou 4 estudos o intervalo sai tão largo que raramente informa algo. O padrão varia por módulo.</p>
+<p><strong>Random CI method</strong> (padrão <code>classic</code>) define como o intervalo de confiança do efeito agrupado é calculado no modelo aleatório.</p>
+<ul>
+<li><code>classic</code> usa a aproximação normal.</li>
+<li><code>HK</code>, Hartung-Knapp, usa a distribuição t e em geral alarga o intervalo, com cobertura melhor quando há poucos estudos.</li>
+<li><code>KR</code>, Kenward-Roger, segue a mesma ideia com um ajuste da variância.</li>
+</ul>
+<p>Recomendação: considere <code>HK</code> quando tiver poucos estudos, digamos menos de 10, e heterogeneidade presente. Mantenha <code>classic</code> se precisar ser comparável a uma análise já publicada. Em situações raras o <code>HK</code> produz um intervalo mais estreito que o <code>classic</code>, então vale olhar os dois antes de decidir.</p>
+<p><strong>Prediction method</strong> (padrão <code>V</code>) define como o intervalo de predição é calculado. <code>V</code> usa a distribuição t com k-1 graus de liberdade e <code>HTS</code> usa t com k-2, portanto é um pouco mais conservador. Recomendação: mantenha <code>V</code>.</p>
+<p><strong>Method</strong>, o método de agrupamento, só existe nos módulos binário e de proporções únicas, com opções diferentes em cada um. Veja a página do módulo.</p>
+</section>
+<section id="subgrupo-e-meta-regressão" class="level3">
+<h3 class="anchored" data-anchor-id="subgrupo-e-meta-regressão">Subgrupo e meta-regressão</h3>
+<p>Essas duas colunas não são escolhidas aqui. Tanto em desfecho único quanto em <a href="./multiple-outcomes.html">lote</a>, você escolhe no passo 3, dentro do próprio cartão do resultado, e a análise é refeita para a coluna escolhida.</p>
+<p>Quando estiver pronto, clique em <strong>Run analysis</strong>.</p>
+</section>
+</section>
+<section id="passo-3-exportação-e-resultados" class="level2">
+<h2 class="anchored" data-anchor-id="passo-3-exportação-e-resultados">Passo 3, exportação e resultados</h2>
+<p><img src="../img/06-binary-resultados.png" class="img-fluid"></p>
+<p>O cartão <strong>3. Results and citation</strong> no topo traz o status da análise e o lembrete de citação. Abaixo dele vem a grade de resultados.</p>
+<p>Cada resultado tem seu cartão. A maioria traz <strong>Preview</strong> para ver na tela, <strong>Summary</strong> para o resumo numérico e <strong>Download</strong> para salvar. Alguns cartões não têm preview, e neles o botão se chama <strong>Download plot</strong> para não ser confundido com o resumo. Formato, largura e altura ficam em cada cartão: PNG sai em 600 DPI e PDF sai vetorial, os dois adequados para submissão.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Gráfico saiu cortado?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Aumente a altura no próprio cartão e baixe de novo. Isso resolve quase todos os cortes, porque a área do gráfico é dividida entre as linhas de estudos e o rodapé com as estatísticas.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Baixe antes de sair
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Não recarregue nem feche a aba enquanto houver resultado que você ainda não baixou. O app guarda tudo na memória da sessão: recarregar começa uma sessão nova, e os dados carregados e os resultados se perdem. Não há como recuperar sem rodar a análise de novo.</p>
+</div>
+</div>
+<p>Nem todo módulo traz todos os cartões abaixo. Rede e diagnóstica têm conjuntos próprios, descritos nas páginas delas.</p>
+<section id="forest-plot" class="level3">
+<h3 class="anchored" data-anchor-id="forest-plot">Forest plot</h3>
+<p><img src="../img/07-binary-forest.png" class="img-fluid"></p>
+<p>O gráfico principal. Cada estudo com seu efeito e intervalo de confiança, o peso que recebeu, e o losango do efeito agrupado no rodapé. Abaixo dele vêm a heterogeneidade (τ², Q, I²) e o teste do efeito global.</p>
+</section>
+<section id="leave-one-out-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="leave-one-out-analysis">Leave-one-out analysis</h3>
+<p>Refaz o agrupamento tirando um estudo por vez, e desenha o resultado de cada rodada. Serve para responder se algum estudo isolado está sustentando a conclusão. Se a estimativa se move pouco, o resultado é robusto. Se um estudo muda a direção ou a significância, isso precisa ser dito no artigo.</p>
+</section>
+<section id="funnel-plot" class="level3">
+<h3 class="anchored" data-anchor-id="funnel-plot">Funnel plot</h3>
+<p>O gráfico de funil, efeito contra precisão. Assimetria sugere viés de publicação, mas também pode vir de heterogeneidade real ou de estudos pequenos com qualidade diferente. Interprete com cautela abaixo de 10 estudos.</p>
+</section>
+<section id="small-study-effects" class="level3">
+<h3 class="anchored" data-anchor-id="small-study-effects">Small-study effects</h3>
+<p>Este cartão tem só o botão <strong>Summary</strong>, e abre o resultado do teste de Egger com uma nota de interpretação. É o teste formal para a assimetria que você viu no funil.</p>
+</section>
+<section id="subgroup-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="subgroup-analysis">Subgroup analysis</h3>
+<p><img src="../img/08-binary-subgrupo.png" class="img-fluid"></p>
+<p>Escolha uma coluna no seletor dentro do cartão e o gráfico é redesenhado na hora. Não é preciso voltar ao passo 2 nem rodar a análise de novo.</p>
+<p>O efeito agrupado global não muda ao pedir subgrupos. A mesma análise é reexecutada com os mesmos parâmetros, só que particionada. O que aparece a mais é o efeito de cada nível e o teste de diferença entre subgrupos, no rodapé.</p>
+</section>
+<section id="meta-regression" class="level3">
+<h3 class="anchored" data-anchor-id="meta-regression">Meta-regression</h3>
+<p>Escolha um moderador numérico e o app desenha o gráfico de bolhas, com o tamanho de cada bolha proporcional ao peso do estudo, e a reta ajustada. O <strong>Summary</strong> traz o coeficiente, o intervalo, o valor de p e o R² do modelo.</p>
+<p>O seletor lista apenas colunas numéricas, como <code>MeanAge</code> ou <code>FollowUpMonths</code>. Moderadores categóricos são o caso da análise de subgrupo, não deste cartão.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Meta-regressão precisa de estudos
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Uma regra de bolso comum é pelo menos 10 estudos por moderador. Abaixo disso o coeficiente é instável e a reta parece mais convincente do que é.</p>
+</div>
+</div>
+</section>
+<section id="subgroup-summary-table-e-meta-regression-summary-table" class="level3">
+<h3 class="anchored" data-anchor-id="subgroup-summary-table-e-meta-regression-summary-table">Subgroup summary table e Meta-regression summary table</h3>
+<p>Aqui você seleciona várias colunas de uma vez e recebe uma tabela única. A de subgrupo traz o efeito por nível, o número de estudos, o I² e o valor de p da interação de cada variável. A de meta-regressão traz os coeficientes de cada moderador numérico. São as tabelas que costumam ir para o artigo, e as duas saem em XLSX.</p>
+<p><img src="../img/09-binary-tabela-subgrupo.png" class="img-fluid"></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiada");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiada");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>MetaVidence</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

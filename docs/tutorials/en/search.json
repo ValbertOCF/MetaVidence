@@ -1,0 +1,394 @@
+[
+  {
+    "objectID": "single-arm.html",
+    "href": "single-arm.html",
+    "title": "Single-arm meta-analysis",
+    "section": "",
+    "text": "Use this module when there is no comparison: you want the pooled prevalence of a condition, the complication rate of a procedure, or the average value of a measure in a population. Follow the three-step flow, with a much shorter step 2, because without a control group several fields stop making sense."
+  },
+  {
+    "objectID": "single-arm.html#step-1-the-data",
+    "href": "single-arm.html#step-1-the-data",
+    "title": "Single-arm meta-analysis",
+    "section": "Step 1, the data",
+    "text": "Step 1, the data\nTwo submodules, chosen on the previous page.\nSingle proportions\n\n\n\nColumn\nWhat it is\n\n\n\n\nstudy\nthe study label\n\n\nevent\nnumber of participants with the outcome\n\n\nn\nsample size of the arm\n\n\n\nSingle means\n\n\n\nColumn\nWhat it is\n\n\n\n\nstudy\nthe study label\n\n\nn\nsample size\n\n\nmean\nmean value of the outcome\n\n\nsd\nstandard deviation of the outcome\n\n\n\n\nA study reporting a median is accepted too\n\n\n\nColumn\nWhat it is\n\n\n\n\nstudy, n\nas above\n\n\nmedian, q1, q3\nmedian and quartiles of the outcome\n\n\n\nmin and max are optional. They can stand in for the quartiles when a paper reports only a range, and the conversion is then less precise.\nA median with sd and nothing else is refused, and on purpose. A median cannot be turned into a mean without the quartiles or the range, and meta does not complain about it: it drops the study from the pooling with no message. Better to hear it here than to publish a review missing studies you never knew were excluded.\n\n\nThe two can be mixed in one file\nFill the columns each study reports and leave the rest empty. The example dataset does exactly that: eight studies with mean and SD, four with median and quartiles. MetaVidence converts the median studies before pooling, using the method of Luo and colleagues for the mean and that of Shi and colleagues for the standard deviation, which are the current defaults of the meta package.\nThe Data check reports how many studies were converted, so the number is in front of you before anything runs and can go straight into the methods section.\nMean and SD remains the ideal input: it is what the study measured, with nothing estimated. The conversion is there so that a study reporting a median can join the analysis instead of being left out, not as an equivalent choice.\nExtra columns stay available for subgroup analysis and meta-regression, as in the other modules. The Data check verifies the required ones, counts the studies and flags problems, including event larger than n."
+  },
+  {
+    "objectID": "single-arm.html#step-2-the-parameters",
+    "href": "single-arm.html#step-2-the-parameters",
+    "title": "Single-arm meta-analysis",
+    "section": "Step 2, the parameters",
+    "text": "Step 2, the parameters\nThe outcome direction field and the group name fields do not exist here: with no comparison, there is no “favors experimental” or “favors control” to label.\n\nSingle proportions\nOutcome name goes into titles and file names, as always.\nSummary measure (sm) (default PLOGIT) chooses the transformation. Proportions near 0% or 100% have too small a variance and distort the pooling if used raw, which is why the transformation exists:\n\nPLOGIT, logit. The default, and the recommendation for most cases.\nPFT, Freeman-Tukey double arcsine. Stabilizes the variance when there are proportions very close to the extremes, but the way back to the percentage scale is problematic when sample sizes vary a lot between studies. Use it knowing that.\nPAS, plain arcsine.\nPLN, log of the proportion.\nPRAW, raw proportion, untransformed. Only sensible when every proportion is far from 0% and 100%.\n\nResults always return to the percentage scale in plots and tables, so the transformation is a choice of method, not of presentation.\nMethod (default Inverse) chooses between Inverse, inverse variance, and GLMM, a random-intercept logistic model.\nRecommendation: keep Inverse, which is what the large majority of published prevalence meta-analyses use, and leave Tau method at REML.\nSwitch to GLMM with Tau method at ML when your dataset has:\n\nstudies with zero events, or\nproportions very close to 0% or 100%.\n\nIn those two situations Inverse has to add 0.5 to each cell, a continuity correction that shifts precisely the extreme studies, which are the ones you are trying to estimate well. GLMM models the counts directly and needs no such correction.\n\n\n\n\n\n\nGLMM has no weight column\n\n\n\nA GLMM fit produces no per-study weight, so the forest plot comes out without the Weight column and with every square the same size. This is not a defect of the plot: the weight simply does not exist in that model. If the weight column matters for the figure in your paper, that is an argument in favour of Inverse.\n\n\n\n\n\n\n\n\nGLMM requires PLOGIT\n\n\n\nIf you switch sm to PFT, PAS, PLN or PRAW and leave the method at GLMM, the analysis stops with an error message. When you change sm, set the method back to Inverse.\n\n\nAnalysis model and Tau method work as in the binary module.\nThis submodule has no Prediction interval, no Random CI method and no Prediction method.\n\n\nSingle means\nSummary measure (sm) (default MRAW) has two options. MRAW pools the raw mean, in the original unit, and is the recommendation. MLN pools the log of the mean, useful when the measure is positive and strongly skewed, such as time to an event or serum concentration.\nAnalysis model, Tau method (default REML) and Prediction interval (default Yes) work as in the binary module. There is no Method field, no Random CI method and no Prediction method."
+  },
+  {
+    "objectID": "single-arm.html#step-3-export-and-results",
+    "href": "single-arm.html#step-3-export-and-results",
+    "title": "Single-arm meta-analysis",
+    "section": "Step 3, export and results",
+    "text": "Step 3, export and results\nBoth submodules carry the same cards as the paired modules: Forest plot, Leave-one-out analysis, Funnel plot, Small-study effects with Egger’s test, Subgroup analysis, Meta-regression and the two summary tables as XLSX."
+  },
+  {
+    "objectID": "network.html",
+    "href": "network.html",
+    "title": "Network meta-analysis",
+    "section": "",
+    "text": "Use this module when you have several treatments and not all of them were compared directly. The network uses the direct comparisons to estimate the indirect ones: if A was compared with B, and B with C, then A against C can be estimated.\nFollow the three-step flow, but both the input and the output are different here."
+  },
+  {
+    "objectID": "network.html#step-1-the-data",
+    "href": "network.html#step-1-the-data",
+    "title": "Network meta-analysis",
+    "section": "Step 1, the data",
+    "text": "Step 1, the data\nThe format is long, one row per arm rather than per study. There are no .e and .c columns: studies repeat, once for each arm.\n\n\n\nstudy\ntreatment\nresponders\nsampleSize\n\n\n\n\nStudy A\nDrug A\n12\n120\n\n\nStudy A\nDrug B\n20\n118\n\n\nStudy B\nDrug A\n15\n130\n\n\nStudy B\nPlacebo\n23\n128\n\n\n\nThere are three submodules:\n\n\n\nSubmodule\nRequired columns\n\n\n\n\nBinary\nstudy, treatment, responders, sampleSize\n\n\nContinuous\nstudy, treatment, mean, std.dev, sampleSize\n\n\nPre-calculated\nstudy, treat1, treat2, TE, lower, upper\n\n\n\nIn the pre-calculated submodule a row is a comparison, not an arm, which is why treat1 and treat2 exist.\n\n\n\n\n\n\nThe treatment name must match exactly\n\n\n\nDrug A, drug A and Drug-A become three different nodes in the network. It is the most common error here, and the network comes out disconnected with nothing pointing at the reason. Standardize the names in the spreadsheet before loading.\n\n\nEach study needs at least two arms. Studies with three or more are accepted, and the Data check reports how many there are, because they require special statistical handling, which netmeta already does."
+  },
+  {
+    "objectID": "network.html#step-2-the-parameters",
+    "href": "network.html#step-2-the-parameters",
+    "title": "Network meta-analysis",
+    "section": "Step 2, the parameters",
+    "text": "Step 2, the parameters\n\nOutcome settings\nOutcome name goes into titles and file names.\nSummary measure (sm) depends on the submodule: RR, OR and RD in the binary one, MD and SMD in the continuous one, and HR, RR, OR, MD, SMD in the pre-calculated one. The recommendations are the same as in the paired modules.\nReference treatment (optional) sets which treatment the others are compared against in the forest plot. Left blank, the app picks one on its own. Recommendation: name the clinically relevant comparator, usually placebo or standard care. This does not change the network, only the point of view of the figure.\nFor ranking, smaller values are (default Good) tells the app whether smaller values are good or bad. It is what makes the P-score ranking point the right way. In a mortality meta-analysis, smaller is better, so Good. In one about treatment response, larger is better, so Bad.\n\n\n\n\n\n\nThis field flips the whole ranking\n\n\n\nGetting it wrong raises no error and no warning. The P-score comes out computed, neat, and in reverse order. Check it before reporting any ranking.\n\n\n\n\nStatistical settings (advanced)\nAnalysis model (default Random-effects) and Tau method (default REML) work as in the binary module. In a network the random-effects model is almost always the right choice, because the network gathers studies that are even more diverse than in a pairwise comparison.\nThere is no Prediction interval, Random CI method or Prediction method in this module."
+  },
+  {
+    "objectID": "network.html#step-3-export-and-results",
+    "href": "network.html#step-3-export-and-results",
+    "title": "Network meta-analysis",
+    "section": "Step 3, export and results",
+    "text": "Step 3, export and results\nThis is the part that differs most from the other modules. There are eight cards.\nForest plot compares every treatment against the chosen reference.\nNetwork graph draws the network: treatments are the nodes and direct comparisons are the edges, with thickness proportional to the amount of direct evidence. It is worth being the first thing you look at, because it shows at once whether the network is connected and where the evidence is thin.\nLeague table puts every pairwise comparison into a single table, exported to Excel. It is the table that usually goes into supplementary material.\nBetween-study heterogeneity opens the design-based decomposition and the Q statistics, which separate heterogeneity within designs from inconsistency between them.\nNode splitting compares direct and indirect evidence for each comparison where both exist. It is the local test of inconsistency.\nP-score ranking orders the treatments. The P-score runs from 0 to 1 and summarizes how likely a treatment is to be better than the others.\nComparison-adjusted funnel plot examines small-study effects across the network comparisons.\nPairwise object downloads the pairwise object used to build the network, useful for checking and reproducibility."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "MetaVidence tutorials",
+    "section": "",
+    "text": "MetaVidence does meta-analysis without code. You load a spreadsheet, choose the parameters and get publication-ready plots and tables, all in the browser, with nothing to install and without your data leaving your computer."
+  },
+  {
+    "objectID": "index.html#where-to-start",
+    "href": "index.html#where-to-start",
+    "title": "MetaVidence tutorials",
+    "section": "Where to start",
+    "text": "Where to start\n\nGet started shows how to open MetaVidence in the browser, and how to install R, RStudio and the package if you would rather run it on your own computer.\nThe three-step flow walks the screens end to end: data, parameters and export. Every module works this way.\nYour module’s page covers only what changes in it, such as the required columns and the summary measure.\n\nEvery module ships an example dataset with 12 studies. It is worth running the analysis on it before using your own data, so you can see what each screen produces without preparing a spreadsheet."
+  },
+  {
+    "objectID": "index.html#choosing-the-module",
+    "href": "index.html#choosing-the-module",
+    "title": "MetaVidence tutorials",
+    "section": "Choosing the module",
+    "text": "Choosing the module\n\n\n\nYou have…\nUse\n\n\n\n\nEvent counts and sample sizes in both groups\nBinary outcomes\n\n\nMean and SD, median and IQR, or a mix of the two\nContinuous outcomes\n\n\nThe effect already calculated, with CI or standard error\nPre-calculated effects\n\n\nOne proportion or mean per study, no comparison\nSingle arm\n\n\nThree or more treatments compared indirectly\nNetwork meta-analysis\n\n\n2×2 diagnostic accuracy tables\nDiagnostic meta-analysis\n\n\n\nHave more than one outcome to analyse? Once you have picked the module, follow Multiple outcomes at once to run them all in a single pass."
+  },
+  {
+    "objectID": "index.html#how-to-cite",
+    "href": "index.html#how-to-cite",
+    "title": "MetaVidence tutorials",
+    "section": "How to cite",
+    "text": "How to cite\nIf MetaVidence produced results you are publishing, cite MetaVidence and the analysis packages. Citations are what keep this free academic tool alive and maintained, and recording which software produced your numbers is part of a reproducible analysis."
+  },
+  {
+    "objectID": "get-started.html",
+    "href": "get-started.html",
+    "title": "Get started",
+    "section": "",
+    "text": "There are two ways to use MetaVidence, and both do exactly the same maths. Start with the browser, which asks you to install nothing. If you are going to use it often, the R route is worth it: it opens much faster and works without an internet connection."
+  },
+  {
+    "objectID": "get-started.html#open-the-site",
+    "href": "get-started.html#open-the-site",
+    "title": "Get started",
+    "section": "1. Open the site",
+    "text": "1. Open the site\nGo to metavidence.com. No account to create, nothing to install, no file sent to any server."
+  },
+  {
+    "objectID": "get-started.html#wait-for-the-first-load",
+    "href": "get-started.html#wait-for-the-first-load",
+    "title": "Get started",
+    "section": "2. Wait for the first load",
+    "text": "2. Wait for the first load\nOn the first visit you get a screen with the word Loading and a bar. The browser is downloading R and the statistical packages compiled to run inside it. That takes a few minutes on an ordinary connection.\nWhile you wait, you can use the two links on that screen. They open in another tab and do not interrupt the loading.\nFrom the second visit on, the browser already has the files stored and starts much faster."
+  },
+  {
+    "objectID": "get-started.html#follow-the-flow",
+    "href": "get-started.html#follow-the-flow",
+    "title": "Get started",
+    "section": "3. Follow the flow",
+    "text": "3. Follow the flow\nWith the app open, follow the three-step flow: it shows how to pick the module, load the data, set the parameters and export the results."
+  },
+  {
+    "objectID": "get-started.html#install-r",
+    "href": "get-started.html#install-r",
+    "title": "Get started",
+    "section": "1. Install R",
+    "text": "1. Install R\nR is the language that does the maths. RStudio on its own does nothing without it, which is why R comes first.\n\nGo to cran.r-project.org.\nClick the link for your system: Download R for Windows, Download R for macOS or Download R for Linux.\nOn Windows, click base and then Download R for Windows. On macOS, pick the .pkg file that matches your processor: the arm64 one for Macs with an Apple chip (M1 onwards) and the other one for Intel Macs.\nOpen the downloaded file and follow the installer, accepting the defaults.\n\nMetaVidence needs R 4.1 or newer. Any version downloaded from CRAN today qualifies."
+  },
+  {
+    "objectID": "get-started.html#install-rstudio",
+    "href": "get-started.html#install-rstudio",
+    "title": "Get started",
+    "section": "2. Install RStudio",
+    "text": "2. Install RStudio\nRStudio is the window through which you use R. You can live without it, but it makes everything simpler.\n\nGo to posit.co/download/rstudio-desktop.\nDownload the free version, RStudio Desktop, for your system.\nOpen the file and follow the installer."
+  },
+  {
+    "objectID": "get-started.html#open-rstudio-and-find-the-console",
+    "href": "get-started.html#open-rstudio-and-find-the-console",
+    "title": "Get started",
+    "section": "3. Open RStudio and find the Console",
+    "text": "3. Open RStudio and find the Console\nOpen RStudio. The window is split into panes; the one that matters now is the Console, usually at the bottom left, with a blinking &gt;.\nThat is where you paste the commands in the next steps. Paste the line and press Enter."
+  },
+  {
+    "objectID": "get-started.html#install-the-package",
+    "href": "get-started.html#install-the-package",
+    "title": "Get started",
+    "section": "4. Install the package",
+    "text": "4. Install the package\nMetaVidence has been submitted to CRAN. Until it is accepted, install it from the source repository. Paste these two lines into the Console, one at a time, pressing Enter after each:\ninstall.packages(\"remotes\")\nremotes::install_github(\"ValbertOCF/MetaVidence\", subdir = \"pkg\")\nThe first line installs the helper that can install from GitHub. The second downloads MetaVidence and the packages it depends on, among them meta, metafor, netmeta, mada and shiny. That is a lot of files, so the first installation takes a few minutes. Let it run until the &gt; comes back on its own in the Console.\nOnce MetaVidence is on CRAN, this becomes a single line, install.packages(\"metavidence\"), and this page will say so.\nIf R asks something like “Do you want to install from sources the package which needs compilation?”, answer no and press Enter. The prebuilt version is enough and installs far faster."
+  },
+  {
+    "objectID": "get-started.html#run-metavidence",
+    "href": "get-started.html#run-metavidence",
+    "title": "Get started",
+    "section": "5. Run MetaVidence",
+    "text": "5. Run MetaVidence\nOnce the installation finishes, paste:\nmetavidence::run_app()\nMetaVidence opens in an RStudio window or in your browser, looking exactly like the online version. From here on it is the same three-step flow.\n\n\n\n\n\n\nThe Console stays busy while the app runs\n\n\n\nThat is normal: R is serving the application. To get the Console back, close the MetaVidence window or click the stop symbol (the red square) in the corner of the Console."
+  },
+  {
+    "objectID": "get-started.html#next-times",
+    "href": "get-started.html#next-times",
+    "title": "Get started",
+    "section": "6. Next times",
+    "text": "6. Next times\nYou install only once. After that, open RStudio and run just:\nmetavidence::run_app()\nTo update when a new version comes out, repeat the command from step 4."
+  },
+  {
+    "objectID": "get-started.html#if-something-goes-wrong",
+    "href": "get-started.html#if-something-goes-wrong",
+    "title": "Get started",
+    "section": "If something goes wrong",
+    "text": "If something goes wrong\nThe install command returns an error saying the package is not available. Check that the line was pasted whole, including the quotes. If it is correct, your R may be too old: run R.version.string in the Console and confirm it is 4.1 or higher.\nThe installation stops partway, on one of the packages MetaVidence depends on. Run install.packages(\"package_name\") for that package alone, read its error message, then repeat the command from step 4.\nrun_app() says it could not find the application directory. Install again with the command from step 4.\nNothing opens when you run run_app(). Force the browser with:\nmetavidence::run_app(launch.browser = TRUE)"
+  },
+  {
+    "objectID": "diagnostic.html",
+    "href": "diagnostic.html",
+    "title": "Diagnostic test accuracy meta-analysis",
+    "section": "",
+    "text": "Use this module when each study gives a 2x2 accuracy table: true positives, false positives, false negatives and true negatives. Follow the three-step flow, but step 2 is much shorter and step 3 is the most different of all the modules."
+  },
+  {
+    "objectID": "diagnostic.html#step-1-the-data",
+    "href": "diagnostic.html#step-1-the-data",
+    "title": "Diagnostic test accuracy meta-analysis",
+    "section": "Step 1, the data",
+    "text": "Step 1, the data\n\n\n\nColumn\nWhat it is\n\n\n\n\nstudy\nthe study label\n\n\nTP\ntrue positives\n\n\nFP\nfalse positives\n\n\nFN\nfalse negatives\n\n\nTN\ntrue negatives\n\n\n\nIn the comparative module there is one more column, test, with the name of the test, and each study appears twice, one row per test.\nExtra columns, such as Region, stay available for subgroup analysis. The Data check verifies the required ones, counts the studies and flags negative or blank cells."
+  },
+  {
+    "objectID": "diagnostic.html#why-this-module-is-different",
+    "href": "diagnostic.html#why-this-module-is-different",
+    "title": "Diagnostic test accuracy meta-analysis",
+    "section": "Why this module is different",
+    "text": "Why this module is different\nIn diagnostic meta-analysis the outcome is bivariate: sensitivity and specificity move together and are correlated. A more sensitive test is usually less specific, because the threshold moves. That is why the model is the bivariate binomial GLMM, and not two separate models. That is the model the Cochrane Handbook for DTA Reviews v2.0 specifies in chapter 10.\nThis has a practical consequence: looking at pooled sensitivity alone gets you nowhere. The main result is the operating point, sensitivity and specificity together, with their confidence intervals."
+  },
+  {
+    "objectID": "diagnostic.html#step-2-the-parameters",
+    "href": "diagnostic.html#step-2-the-parameters",
+    "title": "Diagnostic test accuracy meta-analysis",
+    "section": "Step 2, the parameters",
+    "text": "Step 2, the parameters\nThis is the shortest step 2 in MetaVidence, because most of the choices in a bivariate model are not configurable field by field.\n\nSingle test module\nOutcome name goes into titles and file names.\nAnalysis model (default Random-effects) affects the sensitivity, specificity and diagnostic odds ratio forest plots.\n\n\n\n\n\n\nThe bivariate model ignores this field\n\n\n\nThe Reitsma bivariate model is always random-effects, by construction. Switching to Fixed-effect changes the forest plots, but neither the summary point nor the summary operating point.\n\n\nThere is no sm, Method, Tau method, prediction interval or group name here: none of those fields applies to the bivariate model.\n\n\nComparative module\nBesides Outcome name, there are Test A and Test B, which fill themselves with the names found in the test column. They define which test is compared against which, and the order the two appear in the figures."
+  },
+  {
+    "objectID": "diagnostic.html#step-3-export-and-results",
+    "href": "diagnostic.html#step-3-export-and-results",
+    "title": "Diagnostic test accuracy meta-analysis",
+    "section": "Step 3, export and results",
+    "text": "Step 3, export and results\n\nSingle test\nSensitivity forest plot and Specificity forest plot, one for each, with sensitivity computed as TP / (TP + FN) and specificity as TN / (TN + FP).\nSummary point, with the studies, the pooled sensitivity and specificity, a 95% confidence region and a 95% prediction region. There is no curve and no AUC: those belong to the HSROC model, which the handbook notes cannot be fitted in R with lme4. The bivariate model estimates a point, so a point is what the plot shows.\n\n\n\n\n\n\nThe forest plots show studies, not a pooled estimate\n\n\n\nThe forests deliberately carry no pooled diamond. Averaging sensitivity and specificity separately ignores the correlation between them, which is what section 10.2.3 of the handbook rules out. Every pooled number in this module comes from the bivariate fit, and there is only one of each.\n\n\nDiagnostic odds ratio, with its own forest plot. The DOR summarizes accuracy in a single number, combining sensitivity and specificity. It is useful for comparing tests, but it says nothing about where the balance between the two errors lies, so it does not replace the sensitivity and specificity pair.\nThreshold effect, the correlation between sensitivity and the false-positive rate across studies, with the Deeks test for small-study effects. A positive correlation suggests the studies used different positivity thresholds, which is the confounder specific to diagnostic accuracy.\n\n\n\n\n\n\nThere is no subgroup analysis here\n\n\n\nTo the bivariate model a subgroup and a head-to-head test comparison are the same thing: a covariate. The handbook says so plainly, calling them both “group”. That model lives in the comparative workflow, so splitting one test by a column belongs there rather than being duplicated as a weaker version here.\nThe app warns when there are fewer than 4 studies: the bivariate model estimates 5 parameters and converges anyway, but the estimate becomes unstable. Converging is not the same as being trustworthy.\n\n\n\n\nComparative\nSensitivity by test and Specificity by test, the forest plots split by test.\nComparative summary points, both tests on the same plot, each with its own confidence region. Both come from one joint model, grouped by study, so a paired design keeps its pairing.\nOverall comparison, Sensitivity comparison and Specificity comparison: three likelihood-ratio tests, one for overall accuracy and one for each component. Having the overall test significant and the two specific ones not significant is common and informative: the tests differ in the balance between the two errors, not in either one alone.\n\n\n\n\n\n\nThe comparative module requires paired studies\n\n\n\nEach study must have assessed both tests in the same population. Studies with only one of the tests stay out of the joint comparison. Comparing tests assessed in different populations means comparing populations, not tests."
+  },
+  {
+    "objectID": "binary.html",
+    "href": "binary.html",
+    "title": "Binary outcomes",
+    "section": "",
+    "text": "Use this module when each study reports how many events occurred in each group and the size of each group. That covers yes or no outcomes: mortality, recurrence, response to treatment.\nIf your effect already comes calculated from the paper, the right module is pre-calculated effects, not this one.\nThis page covers what belongs to this module. The screens and the buttons are in the three-step flow."
+  },
+  {
+    "objectID": "binary.html#step-1-the-data",
+    "href": "binary.html#step-1-the-data",
+    "title": "Binary outcomes",
+    "section": "Step 1, the data",
+    "text": "Step 1, the data\nFive required columns, with these exact names:\n\n\n\nColumn\nWhat it is\n\n\n\n\nstudy\nthe study label, for example “Silva 2019”\n\n\nevent.e\nevents in the experimental group\n\n\nn.e\nsize of the experimental group\n\n\nevent.c\nevents in the control group\n\n\nn.c\nsize of the control group\n\n\n\nAny extra column is optional and becomes available later, for subgroup analysis and meta-regression. The example dataset carries Region, Design, RiskOfBias, MeanAge and FollowUpMonths."
+  },
+  {
+    "objectID": "binary.html#step-2-the-parameters",
+    "href": "binary.html#step-2-the-parameters",
+    "title": "Binary outcomes",
+    "section": "Step 2, the parameters",
+    "text": "Step 2, the parameters\n\nSummary measure (sm)\nDefault RR. It decides what gets pooled:\n\nRR, risk ratio. The easiest to communicate and the most used in clinical trials. Recommended as a starting point.\nOR, odds ratio. Needed if you will compare against literature that uses OR, or if you intend to use the Peto or GLMM methods, which only work with OR. Remember that the OR drifts away from the RR when the event is common.\nRD, risk difference, on the absolute scale. Useful for communicating clinical impact (“7 fewer events per 100 patients”), but usually more heterogeneous across studies than the relative measures.\n\n\n\nMethod\nDefault inverse. It is the pooling method, and it exists only in this module and in single proportions:\n\ninverse, inverse variance. The app default, and it serves well when studies are of reasonable size and events are not rare.\nMH, Mantel-Haenszel. Behaves better than inverse variance when there are few events or small studies. It is the Cochrane default for binary data. Recommended if your outcome is uncommon.\nPeto. Suits very rare events with groups of similar size. Only works with sm = OR.\nGLMM, generalized linear mixed model. Avoids the continuity corrections the other methods apply to zero cells. Slower. Only works with sm = OR, and the forest plot comes out without the Weight column, because a GLMM fit produces no per-study weight.\n\n\n\n\n\n\n\nPeto and GLMM require OR\n\n\n\nIf you leave sm = RR or sm = RD and pick Peto or GLMM, the analysis stops with an error message. Switch sm to OR first, or set the method back to inverse or MH.\n\n\n\n\nThe other fields\nOutcome name, the outcome direction and the group names work as described in Outcome settings.\nAnalysis model, Tau method, Random CI method and Prediction method work and are recommended as in Statistical settings (advanced). In this module the Prediction interval is off by default."
+  },
+  {
+    "objectID": "binary.html#step-3-export-and-results",
+    "href": "binary.html#step-3-export-and-results",
+    "title": "Binary outcomes",
+    "section": "Step 3, export and results",
+    "text": "Step 3, export and results\nThis module carries the full set of cards: forest plot, leave-one-out, funnel plot, small-study effects with Egger’s test, subgroup analysis, meta-regression and the two summary tables as XLSX. All of them are described in step 3 of the flow."
+  },
+  {
+    "objectID": "continuous.html",
+    "href": "continuous.html",
+    "title": "Continuous outcomes",
+    "section": "",
+    "text": "Use this module when the outcome is a numeric measure: blood pressure, days in hospital, quality of life score. Follow the three-step flow; this page covers what the data has to look like and what changes in step 2."
+  },
+  {
+    "objectID": "continuous.html#step-1-the-data",
+    "href": "continuous.html#step-1-the-data",
+    "title": "Continuous outcomes",
+    "section": "Step 1, the data",
+    "text": "Step 1, the data\nEvery study needs study, n.e and n.c. Then, for each group, whatever the paper actually reported.\n\nMean and standard deviation, the ideal input\n\n\n\n\n\n\n\nColumn\nWhat it is\n\n\n\n\nn.e, mean.e, sd.e\nsize, mean and SD of the experimental group\n\n\nn.c, mean.c, sd.c\nthe same for the control group\n\n\n\n\n\nA study reporting a median is accepted too\n\n\n\n\n\n\n\nColumn\nWhat it is\n\n\n\n\nn.e, median.e, q1.e, q3.e\nsize, median and quartiles of the experimental group\n\n\nn.c, median.c, q1.c, q3.c\nthe same for the control group\n\n\n\nmin.e, max.e, min.c and max.c are optional. They can stand in for the quartiles when a paper reports only a range, and the conversion is then less precise.\n\n\nThe two can be mixed in one file\nFill the columns each study reports and leave the rest empty. The example dataset does exactly that: eight studies with mean and SD, four with median and quartiles. MetaVidence converts the median studies before pooling, using the method of Luo and colleagues for the mean and that of Shi and colleagues for the standard deviation, which are the current defaults of the meta package.\nThe Data check reports how many studies were converted, so the number is in front of you before anything runs and can go straight into the methods section.\n\n\n\n\n\n\nThe conversion has limits\n\n\n\nIt assumes an approximately symmetric distribution. With strongly skewed data, which is often exactly why the paper reported a median in the first place, the estimated mean may not represent the study well. Report how many studies were converted, and consider a sensitivity analysis without them.\n\n\n\n\n\n\n\n\nA median with a standard deviation and nothing else\n\n\n\nThat pair cannot be converted, and MetaVidence refuses the file rather than accept it. Left alone, the meta package would drop those studies from the analysis without a word, and a meta-analysis that is quietly missing studies is worse than an error message.\n\n\nThe Data check otherwise works as in the binary module: it verifies the required columns, counts the studies, lists the columns left for subgroup and meta-regression and flags problems, including quartiles out of order."
+  },
+  {
+    "objectID": "continuous.html#step-2-the-parameters",
+    "href": "continuous.html#step-2-the-parameters",
+    "title": "Continuous outcomes",
+    "section": "Step 2, the parameters",
+    "text": "Step 2, the parameters\n\nOutcome settings\nOutcome name, If the outcome increases, is that beneficial or harmful?, Experimental group name and Control group name work exactly as in the binary module.\nSummary measure (sm) (default MD) is the decision that matters most here, and it is not cosmetic:\n\nMD, mean difference, when every study uses the same scale. The result comes out in the original unit, which makes it easy to interpret: “3.2 fewer days in hospital”. Recommended whenever the scales match.\nSMD, standardized mean difference, when scales differ between studies, for example different instruments measuring depression. The result comes out in standard deviations, with no unit.\n\nIf the scales are the same, prefer MD. SMD is the solution to a problem you may not have, and it is considerably harder to communicate to the reader.\n\n\nStatistical settings (advanced)\nAnalysis model, Tau method, Random CI method and Prediction method work and are recommended exactly as in the the flow.\nPrediction interval here is on by default (Yes), unlike the binary module. Turn it off if you have fewer than 3 studies, or if the interval is so wide that it gets in the way of reading the figure.\nThere is no Method field in this module. Mantel-Haenszel, Peto and GLMM are methods for event counts, and do not apply to means."
+  },
+  {
+    "objectID": "continuous.html#step-3-export-and-results",
+    "href": "continuous.html#step-3-export-and-results",
+    "title": "Continuous outcomes",
+    "section": "Step 3, export and results",
+    "text": "Step 3, export and results\nThe cards are the same as in the binary module, with the same behavior:\n\nForest plot, with each study effect, the weights and the pooled diamond.\nLeave-one-out analysis, to see whether a single study holds up the result.\nFunnel plot and Small-study effects, the latter with Egger’s test.\nSubgroup analysis, with the column selector inside the card itself.\nMeta-regression, with numeric moderators and a bubble plot.\nSubgroup summary table and Meta-regression summary table, as XLSX.\n\n\n\n\n\n\n\nCheck the sign before pooling\n\n\n\nIn continuous outcomes it is common for some studies to report change from baseline and others the final value. Mixing the two without thinking produces a meaningless pooled effect. Standardize before loading the spreadsheet."
+  },
+  {
+    "objectID": "flow.html",
+    "href": "flow.html",
+    "title": "The three-step flow",
+    "section": "",
+    "text": "Every MetaVidence module follows the same sequence, always in the same order: load the data, choose the parameters, review and export the results.\nThis page walks that whole flow, screen by screen. The images come from the binary outcomes module, but what is described here applies to all of them. Each module page covers only what changes in it."
+  },
+  {
+    "objectID": "flow.html#the-starting-point",
+    "href": "flow.html#the-starting-point",
+    "title": "The three-step flow",
+    "section": "The starting point",
+    "text": "The starting point\n\nOn the home page, click the card for the kind of data you have. The table on the tutorials home page says which module suits each format."
+  },
+  {
+    "objectID": "flow.html#step-1-the-data",
+    "href": "flow.html#step-1-the-data",
+    "title": "The three-step flow",
+    "section": "Step 1, the data",
+    "text": "Step 1, the data\n\nYou have three routes, in the tabs of the card on the left:\n\nUpload file takes an Excel or CSV file. The button to download the spreadsheet template sits next to it, already with the right column names.\nPaste data pastes straight from Google Sheets or Excel.\nExample loads 12 fictional studies, so you can explore the app without preparing anything.\n\n\nThe required columns\nThe collapsible guide just below the tabs lists what the spreadsheet needs, with the exact column names for that module. Each module page carries the same list.\nAny extra column is optional. Text columns become available for subgroup analysis, numeric ones for meta-regression. The example datasets carry Region, Design, RiskOfBias, MeanAge and FollowUpMonths.\n\n\nThe data check\n\nAs soon as the data comes in, the Data check card reports back: whether all required columns are there, how many studies were detected, which columns are left for subgroup and meta-regression, and whether there are problems, such as blank cells, events larger than the total or sample sizes of zero.\nIt is worth reading before moving on. Fixing the spreadsheet now is faster than finding the error halfway through the analysis.\nWhen everything checks out, click Next: parameters."
+  },
+  {
+    "objectID": "flow.html#step-2-the-parameters",
+    "href": "flow.html#step-2-the-parameters",
+    "title": "The three-step flow",
+    "section": "Step 2, the parameters",
+    "text": "Step 2, the parameters\n\nThe fields come in two sections. Outcome settings opens by default, because it is the one you almost always touch. Statistical settings (advanced) starts collapsed, because the defaults suit most cases.\nEvery field has a “?” next to it carrying a summary of the explanation inside the app.\n\nOutcome settings\nOutcome name (default Outcome) goes into plot titles and exported file names. It is worth replacing with something short and specific, such as 30-day mortality, because that is how the file will reach your computer.\nIf the outcome increases, is that beneficial or harmful? (default Harmful) only sets the “Favors experimental” and “Favors control” labels under the forest plot. It changes no numbers. Choose Harmful for bad outcomes, such as death, and Beneficial for good ones, such as cure.\nExperimental group name and Control group name set how the groups appear in the plots. Replacing them with real names, such as Anticoagulant and Placebo, leaves the figure ready for publication.\nSummary measure (sm) decides what gets pooled, and the options change from module to module. It is the most important choice on this screen, so it is explained on each module page.\nSingle-arm has no direction and no group names, because there is no comparison. Network has two fields of its own here, and diagnostic accuracy has almost nothing. See the module page.\n\n\nStatistical settings (advanced)\nThese fields are the same in most modules, with the same defaults and the same recommendations.\nAnalysis model (default Random-effects).\n\nRandom-effects lets the true effect vary between studies. This is the usual choice, because populations, doses and follow-up times almost always differ.\nFixed-effect assumes every study estimates exactly the same effect. It is only justified for very close replications.\nBoth draws the two lines on the same forest plot. It is a good way to show the reader that the conclusion did not depend on the model choice.\n\nRecommendation: keep Random-effects, and use Both when you want the comparison to be explicit in the paper.\nTau method (default REML) is the estimator of the between-study variance, τ², which drives the random-effects weights, I² and the prediction interval. Recommendation: keep REML. Use DL (DerSimonian-Laird) only to reproduce an older analysis, since it was the historical default. PM and SJ are defensible alternatives when there are few studies. ML tends to underestimate τ².\nI-squared method (default Q) decides how I² is computed. Q is the classic Higgins and Thompson definition, I² = (Q − df)/Q, which is what almost every published meta-analysis reports and what the meta package uses by default. From tau-squared derives it from the estimated τ² instead. The two can differ a lot: on the same four studies we get 89.9% with Q and 97.2% with τ². Neither is wrong, they answer slightly different questions, but they are not interchangeable in a manuscript. Recommendation: keep Q unless you have a stated reason, and say in the methods which one you used.\nPrediction interval adds the range where the effect of a future study is expected to fall. It needs at least 3 studies. Recommendation: turn it on when heterogeneity is relevant, because it is the most honest way to show what that heterogeneity means in practice. With 3 or 4 studies the interval comes out so wide that it rarely says anything. The default varies by module.\nRandom CI method (default classic) sets how the confidence interval of the pooled effect is computed under the random-effects model.\n\nclassic uses the normal approximation.\nHK, Hartung-Knapp, uses the t distribution and generally widens the interval, with better coverage when there are few studies.\nKR, Kenward-Roger, follows the same idea with a variance adjustment.\n\nRecommendation: consider HK when you have few studies, say fewer than 10, and heterogeneity is present. Keep classic if you need to stay comparable with a published analysis. In rare situations HK produces a narrower interval than classic, so it is worth looking at both before deciding.\nPrediction method (default V) sets how the prediction interval is computed. V uses the t distribution with k-1 degrees of freedom and HTS uses t with k-2, so it is slightly more conservative. Recommendation: keep V.\nMethod, the pooling method, exists only in the binary and single-proportion modules, with different options in each. See the module page.\n\n\nSubgroup and meta-regression\nThese two columns are not chosen here. In single-outcome analysis and in batch mode alike, you pick them in step 3, inside the result card itself, and the analysis is re-run for the column you choose.\nWhen you are ready, click Run analysis."
+  },
+  {
+    "objectID": "flow.html#step-3-export-and-results",
+    "href": "flow.html#step-3-export-and-results",
+    "title": "The three-step flow",
+    "section": "Step 3, export and results",
+    "text": "Step 3, export and results\n\nThe 3. Results and citation card at the top carries the analysis status and the citation reminder. Below it comes the results grid.\nEach result has its own card. Most carry Preview to see it on screen, Summary for the numeric output and Download to save. A few cards have no preview, and there the button reads Download plot so it cannot be mistaken for the summary. Format, width and height sit in each card: PNG exports at 600 DPI and PDF exports as vector, both suitable for submission.\n\n\n\n\n\n\nPlot came out clipped?\n\n\n\nIncrease the height on the card itself and download again. That fixes almost every clipping case, because the plot area is shared between the study rows and the footer with the statistics.\n\n\n\n\n\n\n\n\nDownload before you leave\n\n\n\nDo not reload or close the tab while you still have a result you have not downloaded. The app keeps everything in the memory of the session: reloading starts a new one, and the loaded data and the results are gone. There is no way to get them back without running the analysis again.\n\n\nNot every module carries all the cards below. Network and diagnostic accuracy have sets of their own, described on their pages.\n\nForest plot\n\nThe main plot. Each study with its effect and confidence interval, the weight it received, and the diamond of the pooled effect at the bottom. Below it come the heterogeneity statistics (τ², Q, I²) and the test of the overall effect.\n\n\nLeave-one-out analysis\nRedoes the pooling dropping one study at a time, and plots the result of each round. It answers whether a single study is holding up the conclusion. If the estimate barely moves, the result is robust. If one study flips the direction or the significance, that belongs in the paper.\n\n\nFunnel plot\nThe funnel plot, effect against precision. Asymmetry suggests publication bias, but it can also come from real heterogeneity or from small studies of differing quality. Interpret with caution below 10 studies.\n\n\nSmall-study effects\nThis card has only the Summary button, and it opens the Egger test result with an interpretation note. It is the formal test for the asymmetry you saw in the funnel.\n\n\nSubgroup analysis\n\nPick a column in the selector inside the card and the plot is redrawn immediately. There is no need to go back to step 2 or rerun the analysis.\nThe overall pooled effect does not change when you ask for subgroups. The same analysis is rerun with the same parameters, only partitioned. What you gain is the effect within each level and the test for subgroup differences at the bottom.\n\n\nMeta-regression\nPick a numeric moderator and the app draws the bubble plot, with each bubble sized by the study weight, and the fitted line. Summary gives the coefficient, the interval, the p value and the model R².\nThe selector lists numeric columns only, such as MeanAge or FollowUpMonths. Categorical moderators belong in the subgroup analysis, not in this card.\n\n\n\n\n\n\nMeta-regression needs studies\n\n\n\nA common rule of thumb is at least 10 studies per moderator. Below that the coefficient is unstable and the line looks more convincing than it is.\n\n\n\n\nSubgroup summary table and Meta-regression summary table\nHere you select several columns at once and get a single table. The subgroup one gives the effect per level, the number of studies, I² and the interaction p value for each variable. The meta-regression one gives the coefficients of each numeric moderator. These are the tables that usually go into the paper, and both export as XLSX."
+  },
+  {
+    "objectID": "how-to-cite.html",
+    "href": "how-to-cite.html",
+    "title": "How to cite",
+    "section": "",
+    "text": "If MetaVidence produced results you are publishing, cite it like this:\n\nCosta Filho VO (2026). MetaVidence: no-code meta-analysis in the browser and in R. Version 0.1.0. https://metavidence.com\n\nIn BibTeX:\n@Manual{metavidence,\n  title   = {MetaVidence: no-code meta-analysis in the browser and in R},\n  author  = {Valbert Oliveira Costa Filho},\n  year    = {2026},\n  note    = {R package version 0.1.0},\n  url     = {https://metavidence.com}\n}"
+  },
+  {
+    "objectID": "how-to-cite.html#cite-metavidence",
+    "href": "how-to-cite.html#cite-metavidence",
+    "title": "How to cite",
+    "section": "",
+    "text": "If MetaVidence produced results you are publishing, cite it like this:\n\nCosta Filho VO (2026). MetaVidence: no-code meta-analysis in the browser and in R. Version 0.1.0. https://metavidence.com\n\nIn BibTeX:\n@Manual{metavidence,\n  title   = {MetaVidence: no-code meta-analysis in the browser and in R},\n  author  = {Valbert Oliveira Costa Filho},\n  year    = {2026},\n  note    = {R package version 0.1.0},\n  url     = {https://metavidence.com}\n}"
+  },
+  {
+    "objectID": "how-to-cite.html#cite-the-analysis-packages-too",
+    "href": "how-to-cite.html#cite-the-analysis-packages-too",
+    "title": "How to cite",
+    "section": "Cite the analysis packages too",
+    "text": "Cite the analysis packages too\nMetaVidence does not do the maths itself. It calls meta, metafor, netmeta and mada, and those packages implement the models. Cite the ones your analysis used, and record each version.\nIn R, citation(\"meta\") gives the exact wording for each. Which ones apply depends on the module:\n\n\n\n\n\n\n\nModule\nPackages behind it\n\n\n\n\nBinary, continuous, pre-calculated, single-arm\nmeta, and metafor for meta-regression\n\n\nNetwork meta-analysis\nnetmeta\n\n\nDiagnostic test accuracy\nmada, and meta for the forest plots"
+  },
+  {
+    "objectID": "multiple-outcomes.html",
+    "href": "multiple-outcomes.html",
+    "title": "Multiple outcomes at once",
+    "section": "",
+    "text": "Follow the steps on this page to analyse mortality, recurrence and adverse events in a single run, and download each kind of plot with every outcome already inside one ZIP.\nIt works in these modules: binary outcomes, continuous outcomes, the three pre-calculated ones, single proportions and single means. Network and diagnostic accuracy do not have this mode."
+  },
+  {
+    "objectID": "multiple-outcomes.html#download-the-template",
+    "href": "multiple-outcomes.html#download-the-template",
+    "title": "Multiple outcomes at once",
+    "section": "1. Download the template",
+    "text": "1. Download the template\n\nOpen the module you are going to use.\nIn the Data step, go to the card on the right, More than one outcome.\nClick Download XLSX template, next to the file field.\n\nYou get a workbook with three sheets already filled in and in the right format. Start from that file, not from the template in the left card, which is for a single outcome and has a different structure."
+  },
+  {
+    "objectID": "multiple-outcomes.html#build-your-workbook",
+    "href": "multiple-outcomes.html#build-your-workbook",
+    "title": "Multiple outcomes at once",
+    "section": "2. Build your workbook",
+    "text": "2. Build your workbook\nOpen the template and follow these rules:\n\nKeep one sheet per outcome. Add or delete sheets until you have as many as you have outcomes.\nRename each sheet with the outcome name. Write 30-day mortality, not Sheet1. That name goes into the plot titles and into the exported file names.\nFill each sheet as if it were a separate analysis. Every study for that outcome, with every required column of the module.\nUse the same column names in every sheet, exactly as they appear in the template.\nRepeat a study in as many sheets as it belongs to. Sheets do not talk to each other: no study is linked to its counterpart in another sheet.\nSave as .xlsx.\n\n\n\n\n\n\n\nSheet name rules\n\n\n\nExcel caps sheet names at 31 characters and rejects : \\ / ? * [ ]. When generating files, MetaVidence replaces anything that is not a letter or a digit with _, so Progression-free survival reaches your computer as Progression_free_survival.\n\n\n\n\n\n\n\n\nGoing to use subgroups or meta-regression?\n\n\n\nInclude the column in every sheet where you want that result. If it is missing from one sheet, that outcome runs without the subgroup and the app records why, instead of stopping the whole run."
+  },
+  {
+    "objectID": "multiple-outcomes.html#upload-the-workbook",
+    "href": "multiple-outcomes.html#upload-the-workbook",
+    "title": "Multiple outcomes at once",
+    "section": "3. Upload the workbook",
+    "text": "3. Upload the workbook\n\nGo back to the More than one outcome card.\nClick Browse under Import multi-outcome workbook (.xlsx).\nPick your file.\n\nDo not use the field in the left card. It reads only the first sheet and treats the file as a single outcome."
+  },
+  {
+    "objectID": "multiple-outcomes.html#check-the-data-check",
+    "href": "multiple-outcomes.html#check-the-data-check",
+    "title": "Multiple outcomes at once",
+    "section": "4. Check the Data check",
+    "text": "4. Check the Data check\nThe Data check card now shows one row per outcome, with the number of studies found in each.\nRead it before moving on. If a sheet has a missing column or an invalid value, fix the workbook and upload again. That is faster than finding the error after running everything."
+  },
+  {
+    "objectID": "multiple-outcomes.html#set-the-parameters",
+    "href": "multiple-outcomes.html#set-the-parameters",
+    "title": "Multiple outcomes at once",
+    "section": "5. Set the parameters",
+    "text": "5. Set the parameters\nClick Next: parameters. One thing changes on this screen in batch mode: the Outcome name field disappears, because the sheet name now names each outcome.\nChoose the sm, the model and the rest as usual. One single set of parameters applies to every outcome. Subgroup and meta-regression are not set here: you pick those columns in step 3, inside the result card, exactly as in single-outcome mode.\n\n\n\n\n\n\nOne sm for all\n\n\n\nIf one outcome needs RR and another needs MD, do not put both in the same file. Split them into two workbooks and do two runs."
+  },
+  {
+    "objectID": "multiple-outcomes.html#run-the-analysis",
+    "href": "multiple-outcomes.html#run-the-analysis",
+    "title": "Multiple outcomes at once",
+    "section": "6. Run the analysis",
+    "text": "6. Run the analysis\nClick Run analysis. The app processes each sheet, one at a time, and moves on to step 3."
+  },
+  {
+    "objectID": "multiple-outcomes.html#download-the-results",
+    "href": "multiple-outcomes.html#download-the-results",
+    "title": "Multiple outcomes at once",
+    "section": "7. Download the results",
+    "text": "7. Download the results\nIn batch mode each result card gains an extra button. For every plot you want:\n\nClick 1. Run analysis, inside the card.\nWait for the button beside it to stop showing 2. Download locked.\nClick 2. Download.\n\nThe Subgroup analysis and Meta-regression cards also carry a column picker. Pick the column there, then click 1. Run analysis in that same card. Changing the column locks the download again, so click 1. Run analysis once more to rebuild the files for the new column.\nChoose the format, the width and the height before downloading, in the fields of that card. They apply to every outcome in that ZIP.\nYou get a file named Forest_Batch.zip, and inside it one plot per outcome, with the sheet name in the file name. Repeat for the funnel, the leave-one-out and whatever else you need.\n\n\n\n\n\n\nPrepare only what you will use\n\n\n\nEach click on 1. Run analysis draws that plot for every outcome. With many outcomes that takes time, so prepare only the cards that go into the paper."
+  },
+  {
+    "objectID": "precalculated.html",
+    "href": "precalculated.html",
+    "title": "Pre-calculated effects",
+    "section": "",
+    "text": "Use this module when you extracted the already calculated effect from the papers, rather than the raw counts. That is the typical case for hazard ratios (HR) from survival analyses, which rarely come with enough data to recompute.\nFollow the three-step flow. Here I cover the three input formats and the field that decides whether your analysis comes out right."
+  },
+  {
+    "objectID": "precalculated.html#step-1-the-data",
+    "href": "precalculated.html#step-1-the-data",
+    "title": "Pre-calculated effects",
+    "section": "Step 1, the data",
+    "text": "Step 1, the data\nThere are three submodules, chosen on the previous page. Pick the one that matches what you managed to extract from the papers.\n\n\n\nFormat\nRequired columns\nNeeds a standard error?\n\n\n\n\nTE with 95% CI\nstudy, TE, lower, upper\nno\n\n\nTE with standard error\nstudy, TE, seTE\nyes\n\n\nFull set\nstudy, TE, seTE, lower, upper\nyes\n\n\n\nn.e and n.c are optional in all three formats and appear in the forest plot when present. Any other column stays available for subgroup analysis and meta-regression.\n\n\n\n\n\n\nWhich format to choose\n\n\n\nPrefer TE with 95% CI. It is the only one where you type no standard error at all: the app derives it from the interval, always on the right scale. The other two ask for seTE, and that is where arithmetic and scale errors creep in.\n\n\nThe Data check verifies the columns, counts the studies and validates the interval, requiring lower &lt;= TE &lt;= upper. If you swapped two columns, it warns you here, before the analysis runs."
+  },
+  {
+    "objectID": "precalculated.html#step-2-the-parameters",
+    "href": "precalculated.html#step-2-the-parameters",
+    "title": "Pre-calculated effects",
+    "section": "Step 2, the parameters",
+    "text": "Step 2, the parameters\n\nOutcome settings\nOutcome name, If the outcome increases, is that beneficial or harmful?, Experimental group name and Control group name work as in the binary module.\nSummary measure (sm) (default HR) offers six options, and here it does more than label the axis: it decides whether your numbers go through a log transformation.\n\nRatio measures: HR, RR, OR. Pooling happens on the log scale and the result returns to the original scale in the plots.\nDifference measures: RD, MD, SMD. No transformation.\n\n\n\nThe scale of TE\nThis is where mistakes happen most, and it is worth reading carefully.\nFor ratio measures, MetaVidence expects the value as reported in the paper, not the logarithm. If the paper says “HR 0.76 (95% CI 0.61 to 0.95)”, you type 0.76, 0.61 and 0.95. Typing the logarithm makes the app reject the spreadsheet, since it requires positive values for ratio measures.\nFor difference measures, the value is already on the right scale and nothing is transformed.\n\n\n\n\n\n\nCheck sm before running\n\n\n\nThe sm chosen in Outcome settings decides whether your numbers go through the log transformation. Choosing MD when the data are ratios, or the other way round, produces a result that looks plausible and is wrong. It is the kind of error no validation catches, because every number is valid.\n\n\n\n\n\n\n\n\nCareful: seTE goes on a different scale from TE\n\n\n\nFor ratio measures the two fields do not share a scale. TE goes in as reported, 0.76. seTE goes in on the log scale, which is how papers report it and how the calculation uses it. For the example above, seTE would be 0.113, not 0.087.\nGetting this wrong raises no error at all: you get a plausible confidence interval that is wrong. The way to avoid the decision altogether is the TE with 95% CI format, which needs no seTE.\n\n\n\n\nStatistical settings (advanced)\nAnalysis model, Tau method, Random CI method and Prediction method work and are recommended exactly as in the the flow.\nPrediction interval is off by default (No) in all three submodules.\nThere is no Method field: the effect already comes calculated, so pooling is always by inverse variance."
+  },
+  {
+    "objectID": "precalculated.html#step-3-export-and-results",
+    "href": "precalculated.html#step-3-export-and-results",
+    "title": "Pre-calculated effects",
+    "section": "Step 3, export and results",
+    "text": "Step 3, export and results\nEvery card from the binary module is here, with the same behavior: Forest plot, Leave-one-out analysis, Funnel plot, Small-study effects with Egger’s test, Subgroup analysis and Meta-regression, plus the two summary tables as XLSX."
+  }
+]

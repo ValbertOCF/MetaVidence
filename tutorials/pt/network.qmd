@@ -1,0 +1,111 @@
+---
+title: "Meta-análise em rede"
+subtitle: "Comparar três ou mais tratamentos, incluindo os que nunca foram testados entre si"
+---
+
+Use este módulo quando você tem vários tratamentos e nem todos foram comparados
+diretamente. A rede usa as comparações diretas para estimar as indiretas: se A
+foi comparado com B, e B com C, dá para estimar A contra C.
+
+Siga [o fluxo em três passos](flow.qmd), mas tanto a entrada quanto a saída são
+diferentes aqui.
+
+## Passo 1, os dados
+
+O formato é longo, uma linha por braço, e não por estudo. Não há colunas `.e` e
+`.c`: os estudos se repetem, uma vez para cada braço.
+
+| `study` | `treatment` | `responders` | `sampleSize` |
+|---|---|---|---|
+| Study A | Drug A | 12 | 120 |
+| Study A | Drug B | 20 | 118 |
+| Study B | Drug A | 15 | 130 |
+| Study B | Placebo | 23 | 128 |
+
+São três submódulos:
+
+| Submódulo | Colunas obrigatórias |
+|---|---|
+| Binário | `study`, `treatment`, `responders`, `sampleSize` |
+| Contínuo | `study`, `treatment`, `mean`, `std.dev`, `sampleSize` |
+| Pré-calculado | `study`, `treat1`, `treat2`, `TE`, `lower`, `upper` |
+
+No submódulo pré-calculado a linha é uma comparação, não um braço, por isso
+existem `treat1` e `treat2`.
+
+::: {.callout-important}
+## O nome do tratamento precisa ser idêntico
+`Drug A`, `drug A` e `Drug-A` viram três nós diferentes na rede. É o erro mais
+comum aqui, e a rede sai desconexa sem que nada acuse o motivo. Padronize os
+nomes na planilha antes de carregar.
+:::
+
+Cada estudo precisa de pelo menos dois braços. Estudos com três ou mais são
+aceitos, e o **Data check** informa quantos existem, porque eles exigem
+tratamento estatístico especial, que o `netmeta` já faz.
+
+## Passo 2, os parâmetros
+
+### Outcome settings
+
+**Outcome name** entra nos títulos e nomes de arquivo.
+
+**Summary measure (sm)** depende do submódulo: `RR`, `OR` e `RD` no binário, `MD`
+e `SMD` no contínuo, e `HR`, `RR`, `OR`, `MD`, `SMD` no pré-calculado. As
+recomendações são as mesmas dos módulos pareados.
+
+**Reference treatment (optional)** define contra qual tratamento os demais são
+comparados no forest plot. Deixando em branco, o app escolhe sozinho.
+Recomendação: aponte o comparador clínico relevante, em geral placebo ou cuidado
+padrão. Isso não muda a rede, só o ponto de vista da figura.
+
+**For ranking, smaller values are** (padrão `Good`) informa se valores menores
+são bons ou ruins. É o que faz o ranqueamento por P-score apontar na direção
+certa. Numa meta-análise de mortalidade, menor é melhor, então `Good`. Numa de
+resposta ao tratamento, maior é melhor, então `Bad`.
+
+::: {.callout-important}
+## Este campo inverte o ranking inteiro
+Errar aqui não gera erro nem aviso. O P-score sai calculado, bonito, e com a
+ordem invertida. Confira antes de reportar qualquer ranking.
+:::
+
+### Statistical settings (advanced)
+
+**Analysis model** (padrão `Random-effects`) e **Tau method** (padrão `REML`)
+funcionam como no módulo binário. Em rede o modelo aleatório é quase sempre a
+escolha certa, porque a rede reúne estudos ainda mais diversos que uma
+comparação par a par.
+
+Não há **Prediction interval**, **Random CI method** nem **Prediction method**
+neste módulo.
+
+## Passo 3, exportação e resultados
+
+Esta é a parte mais diferente dos outros módulos. São oito cartões.
+
+**Forest plot** compara todos os tratamentos contra a referência escolhida.
+
+**Network graph** desenha a rede: os tratamentos são os nós e as comparações
+diretas são as arestas, com espessura proporcional à quantidade de evidência
+direta. Vale ser a primeira coisa que você olha, porque mostra de imediato se a
+rede é conexa e onde a evidência é fina.
+
+**League table** traz todas as comparações par a par numa tabela única, que sai
+em Excel. É a tabela que costuma ir para o material suplementar.
+
+**Between-study heterogeneity** abre a decomposição por desenho e as estatísticas
+Q, que separam a heterogeneidade dentro dos desenhos da inconsistência entre
+eles.
+
+**Node splitting** compara evidência direta e indireta para cada comparação em
+que as duas existem. É o teste local de inconsistência.
+
+**P-score ranking** ordena os tratamentos. O P-score vai de 0 a 1 e resume a
+probabilidade de um tratamento ser melhor que os outros.
+
+**Comparison-adjusted funnel plot** examina efeitos de estudo pequeno ao longo
+das comparações da rede.
+
+**Pairwise object** baixa o objeto de comparações par a par usado para montar a
+rede, útil para conferência e reprodutibilidade.

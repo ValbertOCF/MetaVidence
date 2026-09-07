@@ -1,0 +1,86 @@
+---
+title: "Desfechos binários"
+subtitle: "Risco relativo, razão de chances e diferença de risco a partir de contagens de eventos"
+---
+
+Use este módulo quando cada estudo reporta quantos eventos ocorreram em cada
+grupo e o tamanho de cada grupo. É o caso de desfechos do tipo sim ou não:
+mortalidade, recidiva, resposta ao tratamento.
+
+Se o seu efeito já vem calculado do artigo, o módulo certo é o de
+[efeitos pré-calculados](precalculated.qmd), não este.
+
+Esta página trata do que é próprio deste módulo. As telas e os botões estão em
+[o fluxo em três passos](flow.qmd).
+
+## Passo 1, os dados
+
+São cinco colunas obrigatórias, com estes nomes exatos:
+
+| Coluna | O que é |
+|---|---|
+| `study` | o rótulo do estudo, por exemplo "Silva 2019" |
+| `event.e` | eventos no grupo experimental |
+| `n.e` | tamanho do grupo experimental |
+| `event.c` | eventos no grupo controle |
+| `n.c` | tamanho do grupo controle |
+
+Qualquer coluna a mais é opcional e fica disponível depois, para análise de
+subgrupo e meta-regressão. No conjunto de exemplo há `Region`, `Design`,
+`RiskOfBias`, `MeanAge` e `FollowUpMonths`.
+
+## Passo 2, os parâmetros
+
+### Summary measure (sm)
+
+Padrão `RR`. Decide o que será agrupado:
+
+* `RR`, risco relativo. É o mais fácil de comunicar e o mais usado em ensaios
+  clínicos. Recomendado como ponto de partida.
+* `OR`, razão de chances. Necessário se você vai comparar com literatura que usa
+  OR, ou se pretende usar os métodos Peto ou GLMM, que só funcionam com `OR`.
+  Lembre que a OR se afasta da RR quando o evento é frequente.
+* `RD`, diferença de risco, na escala absoluta. Útil para comunicar impacto
+  clínico ("7 eventos a menos por 100 pacientes"), mas costuma ser mais
+  heterogênea entre estudos que as medidas relativas.
+
+### Method
+
+Padrão `inverse`. É o método de agrupamento, e só existe neste módulo e no de
+proporções únicas:
+
+* `inverse`, inverso da variância. É o padrão do app e serve bem quando os
+  estudos têm tamanho razoável e os eventos não são raros.
+* `MH`, Mantel-Haenszel. Comporta-se melhor que o inverso da variância quando há
+  poucos eventos ou estudos pequenos. É o padrão da Cochrane para dados
+  binários. Recomendado se o seu desfecho é pouco frequente.
+* `Peto`. Serve a eventos muito raros com grupos de tamanho parecido. Só
+  funciona com `sm = OR`.
+* `GLMM`, modelo linear generalizado misto. Evita as correções de continuidade
+  que os outros métodos aplicam a células com zero. Mais lento. Só funciona com
+  `sm = OR`, e o forest sai sem a coluna de peso, porque um ajuste GLMM não
+  produz peso por estudo.
+
+::: {.callout-important}
+## Peto e GLMM exigem OR
+Se você deixar `sm = RR` ou `sm = RD` e escolher `Peto` ou `GLMM`, a análise
+para com uma mensagem de erro. Troque o `sm` para `OR` antes, ou volte o método
+para `inverse` ou `MH`.
+:::
+
+### Os demais campos
+
+**Outcome name**, a direção do desfecho e os nomes dos grupos funcionam como
+descrito em [Outcome settings](flow.qmd#outcome-settings).
+
+**Analysis model**, **Tau method**, **Random CI method** e **Prediction method**
+funcionam e são recomendados como em
+[Statistical settings (advanced)](flow.qmd#statistical-settings-advanced). Neste
+módulo o **Prediction interval** vem desligado por padrão.
+
+## Passo 3, exportação e resultados
+
+Este módulo traz o conjunto completo de cartões: forest plot, leave-one-out,
+funnel plot, small-study effects com o teste de Egger, análise de subgrupo,
+meta-regressão e as duas tabelas-resumo em XLSX. Todos estão descritos no
+[passo 3 do fluxo](flow.qmd).

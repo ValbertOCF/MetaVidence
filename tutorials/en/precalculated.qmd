@@ -1,0 +1,104 @@
+---
+title: "Pre-calculated effects"
+subtitle: "When the paper already gives the effect and you only need to pool"
+---
+
+Use this module when you extracted the already calculated effect from the
+papers, rather than the raw counts. That is the typical case for hazard ratios
+(HR) from survival analyses, which rarely come with enough data to recompute.
+
+Follow [the three-step flow](flow.qmd). Here I cover the three input formats and
+the field that decides whether your analysis comes out right.
+
+## Step 1, the data
+
+There are three submodules, chosen on the previous page. Pick the one that
+matches what you managed to extract from the papers.
+
+| Format | Required columns | Needs a standard error? |
+|---|---|:---:|
+| TE with 95% CI | `study`, `TE`, `lower`, `upper` | no |
+| TE with standard error | `study`, `TE`, `seTE` | yes |
+| Full set | `study`, `TE`, `seTE`, `lower`, `upper` | yes |
+
+`n.e` and `n.c` are optional in all three formats and appear in the forest plot
+when present. Any other column stays available for subgroup analysis and
+meta-regression.
+
+::: {.callout-tip}
+## Which format to choose
+Prefer **TE with 95% CI**. It is the only one where you type no standard error
+at all: the app derives it from the interval, always on the right scale. The
+other two ask for `seTE`, and that is where arithmetic and scale errors creep
+in.
+:::
+
+The **Data check** verifies the columns, counts the studies and validates the
+interval, requiring `lower <= TE <= upper`. If you swapped two columns, it warns
+you here, before the analysis runs.
+
+## Step 2, the parameters
+
+### Outcome settings
+
+**Outcome name**, **If the outcome increases, is that beneficial or harmful?**,
+**Experimental group name** and **Control group name** work as in the binary
+module.
+
+**Summary measure (sm)** (default `HR`) offers six options, and here it does
+more than label the axis: it decides whether your numbers go through a log
+transformation.
+
+* Ratio measures: `HR`, `RR`, `OR`. Pooling happens on the log scale and the
+  result returns to the original scale in the plots.
+* Difference measures: `RD`, `MD`, `SMD`. No transformation.
+
+### The scale of TE
+
+This is where mistakes happen most, and it is worth reading carefully.
+
+For ratio measures, MetaVidence expects the value **as reported in the paper**,
+not the logarithm. If the paper says "HR 0.76 (95% CI 0.61 to 0.95)", you type
+0.76, 0.61 and 0.95. Typing the logarithm makes the app reject the spreadsheet,
+since it requires positive values for ratio measures.
+
+For difference measures, the value is already on the right scale and nothing is
+transformed.
+
+::: {.callout-important}
+## Check sm before running
+The `sm` chosen in **Outcome settings** decides whether your numbers go through
+the log transformation. Choosing `MD` when the data are ratios, or the other way
+round, produces a result that looks plausible and is wrong. It is the kind of
+error no validation catches, because every number is valid.
+:::
+
+::: {.callout-important}
+## Careful: `seTE` goes on a different scale from `TE`
+For ratio measures the two fields do not share a scale. `TE` goes in as
+reported, 0.76. `seTE` goes in on the **log scale**, which is how papers report
+it and how the calculation uses it. For the example above, `seTE` would be
+0.113, not 0.087.
+
+Getting this wrong raises no error at all: you get a plausible confidence
+interval that is wrong. The way to avoid the decision altogether is the **TE
+with 95% CI** format, which needs no `seTE`.
+:::
+
+### Statistical settings (advanced)
+
+**Analysis model**, **Tau method**, **Random CI method** and **Prediction
+method** work and are recommended exactly as in the
+[the flow](flow.qmd#statistical-settings-advanced).
+
+**Prediction interval** is off by default (`No`) in all three submodules.
+
+There is no **Method** field: the effect already comes calculated, so pooling is
+always by inverse variance.
+
+## Step 3, export and results
+
+Every card from the binary module is here, with the same behavior: **Forest
+plot**, **Leave-one-out analysis**, **Funnel plot**, **Small-study effects**
+with Egger's test, **Subgroup analysis** and **Meta-regression**, plus the two
+summary tables as XLSX.

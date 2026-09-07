@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Single-arm meta-analysis – MetaVidence</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">MetaVidence</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./get-started.html"> 
+<span class="menu-text">Get started</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./flow.html"> 
+<span class="menu-text">The flow</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-modules" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Modules</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-modules">    
+        <li>
+    <a class="dropdown-item" href="./binary.html">
+ <span class="dropdown-text">Binary outcomes</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./continuous.html">
+ <span class="dropdown-text">Continuous outcomes</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./precalculated.html">
+ <span class="dropdown-text">Pre-calculated effects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./single-arm.html">
+ <span class="dropdown-text">Single arm</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./network.html">
+ <span class="dropdown-text">Network meta-analysis</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./diagnostic.html">
+ <span class="dropdown-text">Diagnostic accuracy</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./multiple-outcomes.html"> 
+<span class="menu-text">Multiple outcomes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./how-to-cite.html"> 
+<span class="menu-text">How to cite</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./../pt/"> 
+<span class="menu-text">Português</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./../../"> 
+<span class="menu-text">Open MetaVidence</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#step-1-the-data" id="toc-step-1-the-data" class="nav-link active" data-scroll-target="#step-1-the-data">Step 1, the data</a></li>
+  <li><a href="#step-2-the-parameters" id="toc-step-2-the-parameters" class="nav-link" data-scroll-target="#step-2-the-parameters">Step 2, the parameters</a>
+  <ul class="collapse">
+  <li><a href="#single-proportions" id="toc-single-proportions" class="nav-link" data-scroll-target="#single-proportions">Single proportions</a></li>
+  <li><a href="#single-means" id="toc-single-means" class="nav-link" data-scroll-target="#single-means">Single means</a></li>
+  </ul></li>
+  <li><a href="#step-3-export-and-results" id="toc-step-3-export-and-results" class="nav-link" data-scroll-target="#step-3-export-and-results">Step 3, export and results</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Single-arm meta-analysis</h1>
+<p class="subtitle lead">Pooling a proportion or a mean, with no comparison group</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Use this module when there is no comparison: you want the pooled prevalence of a condition, the complication rate of a procedure, or the average value of a measure in a population. Follow <a href="./flow.html">the three-step flow</a>, with a much shorter step 2, because without a control group several fields stop making sense.</p>
+<section id="step-1-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-the-data">Step 1, the data</h2>
+<p>Two submodules, chosen on the previous page.</p>
+<p><strong>Single proportions</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>study</code></td>
+<td>the study label</td>
+</tr>
+<tr class="even">
+<td><code>event</code></td>
+<td>number of participants with the outcome</td>
+</tr>
+<tr class="odd">
+<td><code>n</code></td>
+<td>sample size of the arm</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Single means</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>study</code></td>
+<td>the study label</td>
+</tr>
+<tr class="even">
+<td><code>n</code></td>
+<td>sample size</td>
+</tr>
+<tr class="odd">
+<td><code>mean</code></td>
+<td>mean value of the outcome</td>
+</tr>
+<tr class="even">
+<td><code>sd</code></td>
+<td>standard deviation of the outcome</td>
+</tr>
+</tbody>
+</table>
+<section id="a-study-reporting-a-median-is-accepted-too" class="level4">
+<h4 class="anchored" data-anchor-id="a-study-reporting-a-median-is-accepted-too">A study reporting a median is accepted too</h4>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>study</code>, <code>n</code></td>
+<td>as above</td>
+</tr>
+<tr class="even">
+<td><code>median</code>, <code>q1</code>, <code>q3</code></td>
+<td>median and quartiles of the outcome</td>
+</tr>
+</tbody>
+</table>
+<p><code>min</code> and <code>max</code> are optional. They can stand in for the quartiles when a paper reports only a range, and the conversion is then less precise.</p>
+<p>A median with <code>sd</code> and nothing else is refused, and on purpose. A median cannot be turned into a mean without the quartiles or the range, and <code>meta</code> does not complain about it: it drops the study from the pooling with no message. Better to hear it here than to publish a review missing studies you never knew were excluded.</p>
+</section>
+<section id="the-two-can-be-mixed-in-one-file" class="level4">
+<h4 class="anchored" data-anchor-id="the-two-can-be-mixed-in-one-file">The two can be mixed in one file</h4>
+<p>Fill the columns each study reports and leave the rest empty. The example dataset does exactly that: eight studies with mean and SD, four with median and quartiles. MetaVidence converts the median studies before pooling, using the method of Luo and colleagues for the mean and that of Shi and colleagues for the standard deviation, which are the current defaults of the <code>meta</code> package.</p>
+<p>The <strong>Data check</strong> reports how many studies were converted, so the number is in front of you before anything runs and can go straight into the methods section.</p>
+<p>Mean and SD remains the ideal input: it is what the study measured, with nothing estimated. The conversion is there so that a study reporting a median can join the analysis instead of being left out, not as an equivalent choice.</p>
+<p>Extra columns stay available for subgroup analysis and meta-regression, as in the other modules. The <strong>Data check</strong> verifies the required ones, counts the studies and flags problems, including <code>event</code> larger than <code>n</code>.</p>
+</section>
+</section>
+<section id="step-2-the-parameters" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-the-parameters">Step 2, the parameters</h2>
+<p>The outcome direction field and the group name fields do not exist here: with no comparison, there is no “favors experimental” or “favors control” to label.</p>
+<section id="single-proportions" class="level3">
+<h3 class="anchored" data-anchor-id="single-proportions">Single proportions</h3>
+<p><strong>Outcome name</strong> goes into titles and file names, as always.</p>
+<p><strong>Summary measure (sm)</strong> (default <code>PLOGIT</code>) chooses the transformation. Proportions near 0% or 100% have too small a variance and distort the pooling if used raw, which is why the transformation exists:</p>
+<ul>
+<li><code>PLOGIT</code>, logit. The default, and the recommendation for most cases.</li>
+<li><code>PFT</code>, Freeman-Tukey double arcsine. Stabilizes the variance when there are proportions very close to the extremes, but the way back to the percentage scale is problematic when sample sizes vary a lot between studies. Use it knowing that.</li>
+<li><code>PAS</code>, plain arcsine.</li>
+<li><code>PLN</code>, log of the proportion.</li>
+<li><code>PRAW</code>, raw proportion, untransformed. Only sensible when every proportion is far from 0% and 100%.</li>
+</ul>
+<p>Results always return to the percentage scale in plots and tables, so the transformation is a choice of method, not of presentation.</p>
+<p><strong>Method</strong> (default <code>Inverse</code>) chooses between <code>Inverse</code>, inverse variance, and <code>GLMM</code>, a random-intercept logistic model.</p>
+<p>Recommendation: keep <code>Inverse</code>, which is what the large majority of published prevalence meta-analyses use, and leave <code>Tau method</code> at <code>REML</code>.</p>
+<p>Switch to <code>GLMM</code> with <code>Tau method</code> at <code>ML</code> when your dataset has:</p>
+<ul>
+<li>studies with zero events, or</li>
+<li>proportions very close to 0% or 100%.</li>
+</ul>
+<p>In those two situations <code>Inverse</code> has to add 0.5 to each cell, a continuity correction that shifts precisely the extreme studies, which are the ones you are trying to estimate well. <code>GLMM</code> models the counts directly and needs no such correction.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+GLMM has no weight column
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A GLMM fit produces no per-study weight, so the forest plot comes out without the Weight column and with every square the same size. This is not a defect of the plot: the weight simply does not exist in that model. If the weight column matters for the figure in your paper, that is an argument in favour of <code>Inverse</code>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+GLMM requires PLOGIT
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you switch <code>sm</code> to <code>PFT</code>, <code>PAS</code>, <code>PLN</code> or <code>PRAW</code> and leave the method at <code>GLMM</code>, the analysis stops with an error message. When you change <code>sm</code>, set the method back to <code>Inverse</code>.</p>
+</div>
+</div>
+<p><strong>Analysis model</strong> and <strong>Tau method</strong> work as in the binary module.</p>
+<p>This submodule has no <strong>Prediction interval</strong>, no <strong>Random CI method</strong> and no <strong>Prediction method</strong>.</p>
+</section>
+<section id="single-means" class="level3">
+<h3 class="anchored" data-anchor-id="single-means">Single means</h3>
+<p><strong>Summary measure (sm)</strong> (default <code>MRAW</code>) has two options. <code>MRAW</code> pools the raw mean, in the original unit, and is the recommendation. <code>MLN</code> pools the log of the mean, useful when the measure is positive and strongly skewed, such as time to an event or serum concentration.</p>
+<p><strong>Analysis model</strong>, <strong>Tau method</strong> (default <code>REML</code>) and <strong>Prediction interval</strong> (default <code>Yes</code>) work as in the binary module. There is no <strong>Method</strong> field, no <strong>Random CI method</strong> and no <strong>Prediction method</strong>.</p>
+</section>
+</section>
+<section id="step-3-export-and-results" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-export-and-results">Step 3, export and results</h2>
+<p>Both submodules carry the same cards as the paired modules: <strong>Forest plot</strong>, <strong>Leave-one-out analysis</strong>, <strong>Funnel plot</strong>, <strong>Small-study effects</strong> with Egger’s test, <strong>Subgroup analysis</strong>, <strong>Meta-regression</strong> and the two summary tables as XLSX.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>MetaVidence</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

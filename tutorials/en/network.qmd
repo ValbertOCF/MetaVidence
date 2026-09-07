@@ -1,0 +1,116 @@
+---
+title: "Network meta-analysis"
+subtitle: "Comparing three or more treatments, including ones never tested against each other"
+---
+
+Use this module when you have several treatments and not all of them were
+compared directly. The network uses the direct comparisons to estimate the
+indirect ones: if A was compared with B, and B with C, then A against C can be
+estimated.
+
+Follow [the three-step flow](flow.qmd), but both the input and the output are
+different here.
+
+## Step 1, the data
+
+The format is long, one row per arm rather than per study. There are no `.e` and
+`.c` columns: studies repeat, once for each arm.
+
+| `study` | `treatment` | `responders` | `sampleSize` |
+|---|---|---|---|
+| Study A | Drug A | 12 | 120 |
+| Study A | Drug B | 20 | 118 |
+| Study B | Drug A | 15 | 130 |
+| Study B | Placebo | 23 | 128 |
+
+There are three submodules:
+
+| Submodule | Required columns |
+|---|---|
+| Binary | `study`, `treatment`, `responders`, `sampleSize` |
+| Continuous | `study`, `treatment`, `mean`, `std.dev`, `sampleSize` |
+| Pre-calculated | `study`, `treat1`, `treat2`, `TE`, `lower`, `upper` |
+
+In the pre-calculated submodule a row is a comparison, not an arm, which is why
+`treat1` and `treat2` exist.
+
+::: {.callout-important}
+## The treatment name must match exactly
+`Drug A`, `drug A` and `Drug-A` become three different nodes in the network. It
+is the most common error here, and the network comes out disconnected with
+nothing pointing at the reason. Standardize the names in the spreadsheet before
+loading.
+:::
+
+Each study needs at least two arms. Studies with three or more are accepted, and
+the **Data check** reports how many there are, because they require special
+statistical handling, which `netmeta` already does.
+
+## Step 2, the parameters
+
+### Outcome settings
+
+**Outcome name** goes into titles and file names.
+
+**Summary measure (sm)** depends on the submodule: `RR`, `OR` and `RD` in the
+binary one, `MD` and `SMD` in the continuous one, and `HR`, `RR`, `OR`, `MD`,
+`SMD` in the pre-calculated one. The recommendations are the same as in the
+paired modules.
+
+**Reference treatment (optional)** sets which treatment the others are compared
+against in the forest plot. Left blank, the app picks one on its own.
+Recommendation: name the clinically relevant comparator, usually placebo or
+standard care. This does not change the network, only the point of view of the
+figure.
+
+**For ranking, smaller values are** (default `Good`) tells the app whether
+smaller values are good or bad. It is what makes the P-score ranking point the
+right way. In a mortality meta-analysis, smaller is better, so `Good`. In one
+about treatment response, larger is better, so `Bad`.
+
+::: {.callout-important}
+## This field flips the whole ranking
+Getting it wrong raises no error and no warning. The P-score comes out computed,
+neat, and in reverse order. Check it before reporting any ranking.
+:::
+
+### Statistical settings (advanced)
+
+**Analysis model** (default `Random-effects`) and **Tau method** (default
+`REML`) work as in the binary module. In a network the random-effects model is
+almost always the right choice, because the network gathers studies that are
+even more diverse than in a pairwise comparison.
+
+There is no **Prediction interval**, **Random CI method** or **Prediction
+method** in this module.
+
+## Step 3, export and results
+
+This is the part that differs most from the other modules. There are eight
+cards.
+
+**Forest plot** compares every treatment against the chosen reference.
+
+**Network graph** draws the network: treatments are the nodes and direct
+comparisons are the edges, with thickness proportional to the amount of direct
+evidence. It is worth being the first thing you look at, because it shows at
+once whether the network is connected and where the evidence is thin.
+
+**League table** puts every pairwise comparison into a single table, exported to
+Excel. It is the table that usually goes into supplementary material.
+
+**Between-study heterogeneity** opens the design-based decomposition and the Q
+statistics, which separate heterogeneity within designs from inconsistency
+between them.
+
+**Node splitting** compares direct and indirect evidence for each comparison
+where both exist. It is the local test of inconsistency.
+
+**P-score ranking** orders the treatments. The P-score runs from 0 to 1 and
+summarizes how likely a treatment is to be better than the others.
+
+**Comparison-adjusted funnel plot** examines small-study effects across the
+network comparisons.
+
+**Pairwise object** downloads the pairwise object used to build the network,
+useful for checking and reproducibility.

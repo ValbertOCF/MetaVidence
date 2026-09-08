@@ -106,9 +106,6 @@ If MetaVidence produced results you are publishing, cite it like this:
 | `loading_screen.html` | Screen shown while R loads in the browser |
 | `DEPLOY.md` | How to rebuild and publish |
 
-`docs/` is build output, not source. After editing `app.R`, `easymeta.css` or
-`easymeta.js`, run `build_shinylive.R` before committing, or the site goes up
-with the previous version.
 
 ## Credits
 

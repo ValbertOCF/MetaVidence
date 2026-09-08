@@ -33,14 +33,6 @@ metavidence::run_app()
 
 Once it is on CRAN this becomes `install.packages("metavidence")`.
 
-Or from a clone of this repository:
-
-```r
-install.packages(c("shiny", "meta", "metafor", "netmeta", "mada",
-                   "lme4", "lmtest", "ggplot2", "readxl", "openxlsx", "zip"))
-shiny::runApp()
-```
-
 Step-by-step instructions, including how to install R and RStudio from scratch,
 are in the [Get started](https://metavidence.com/tutorials/en/get-started.html)
 tutorial.

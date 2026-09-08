@@ -102,7 +102,7 @@
      so it works for every module without touching the R markup.
      ------------------------------------------------------------ */
 
-  var FOREST_RE = /(col_square|col_square_lines|col_points|col_a$|col_b$|forest_cols)/;
+  var FOREST_RE = /(col_square|col_square_lines|col_points|col_a$|col_b$|forest_cols|forest_sort)/;
   /* What the outcome IS: its name, which direction is bad, the effect measure,
      how the arms are called, which two tests are being compared, and which
      treatment is the reference. Everything else describes how the model is
@@ -338,16 +338,16 @@
       ? Array.prototype.map.call(input.options, function (o) { return o.value; })
       : [];
     if (opts.indexOf('PLOGIT') !== -1) {
-      return 'Transformation used to pool proportions. PLOGIT (logit) is the common default; PFT (Freeman-Tukey) stabilises the variance when proportions are close to 0% or 100%; PRAW pools raw proportions.';
+      return 'Scale on which the proportions are pooled. PLOGIT pools on the logit scale, PFT applies the Freeman-Tukey double arcsine transformation, PRAW pools the proportions untransformed.';
     }
     if (opts.indexOf('MRAW') !== -1) {
-      return 'MRAW pools raw means in the original measurement unit; MLN pools log-transformed means (useful for skewed, strictly positive data).';
+      return 'MRAW pools the means in the original measurement unit. MLN pools the means on the log scale.';
     }
     if (opts.indexOf('OR') !== -1 || opts.indexOf('RR') !== -1 || opts.indexOf('HR') !== -1) {
       return 'The pooled effect metric: RR = risk ratio, OR = odds ratio, RD = risk difference (absolute), HR = hazard ratio (time-to-event). Ratio measures are pooled on the log scale.';
     }
     if (opts.indexOf('SMD') !== -1) {
-      return 'MD = mean difference in the original unit. Use it when all studies measure the outcome on the same scale. SMD = standardized mean difference (Hedges’ g). Use it when studies use different scales.';
+      return 'MD = mean difference, expressed in the original measurement unit. SMD = standardized mean difference (Hedges’ g), expressed in standard deviation units.';
     }
     return 'The effect metric that will be pooled across studies.';
   }
@@ -357,10 +357,10 @@
       ? Array.prototype.map.call(input.options, function (o) { return o.value.toUpperCase(); })
       : [];
     if (opts.indexOf('MH') !== -1 || opts.indexOf('PETO') !== -1) {
-      return 'How studies are combined: Mantel-Haenszel (MH) handles few events well and is a common default for binary data; Inverse is the general inverse-variance method; Peto suits rare events with balanced groups.';
+      return 'How the study estimates are weighted and combined. Inverse uses inverse-variance weighting, MH uses the Mantel-Haenszel weights, Peto uses the one-step Peto odds ratio, GLMM fits a generalized linear mixed model to the counts.';
     }
     if (opts.indexOf('GLMM') !== -1) {
-      return 'GLMM models the event counts directly and is recommended, especially when some studies have 0% or 100% events. Inverse uses classic inverse-variance weighting of the transformed proportions.';
+      return 'GLMM fits a generalized linear mixed model to the event counts. Inverse applies inverse-variance weighting to the transformed proportions.';
     }
     return 'How the individual study estimates are weighted and combined into the pooled result.';
   }
@@ -368,18 +368,18 @@
   var HELP_TIPS = [
     { re: /_outcome_direction$/, tip: 'Tells MetaVidence whether higher values of this outcome are good or bad. It only sets the “Favors experimental / Favors control” labels under the forest plot. It does not change any numbers.' },
     { re: /_outcome$/, tip: 'Free text used in plot titles and exported file names, for example “Mortality”.' },
-    { re: /_model$/, tip: 'Fixed-effect assumes every study estimates the same true effect. Random-effects lets the true effect vary between studies and is the usual choice in practice. “Both” reports the two models side by side.' },
-    { re: /_method_tau$/, tip: 'Estimator of the between-study variance (τ²), which drives the random-effects weights, I² and the prediction interval. REML is the usual recommendation; DL is the classic DerSimonian-Laird estimator.' },
-    { re: /_method_i2$/, tip: 'How I² is computed. “Q” is the classic Higgins and Thompson definition, I² = (Q − df)/Q, which is what most published meta-analyses report and what the meta package uses by default. “From tau-squared” derives it from the estimated τ² instead. The two can differ a lot on the same data, so state in your methods which one you used.' },
-    { re: /_method_random_ci$/, tip: 'How the confidence interval of the random-effects estimate is computed. “classic” is the standard Wald-type CI; “HK” (Hartung-Knapp) gives a wider, more conservative CI, often recommended when there are few studies.' },
+    { re: /_model$/, tip: 'Fixed-effect assumes every study estimates the same true effect. Random-effects lets the true effect vary between studies. “Both” reports the two models side by side.' },
+    { re: /_method_tau$/, tip: 'Estimator of the between-study variance (τ²), which drives the random-effects weights, I² and the prediction interval. REML is restricted maximum likelihood; DL is the DerSimonian-Laird estimator.' },
+    { re: /_method_i2$/, tip: 'How I² is computed. “Q” uses the Higgins and Thompson definition, I² = (Q − df)/Q. “From tau-squared” derives I² from the estimated τ². The two can give different values on the same data.' },
+    { re: /_method_random_ci$/, tip: 'How the confidence interval of the random-effects estimate is computed. “classic” is the Wald-type interval, “HK” the Hartung-Knapp interval, “KR” the Kenward-Roger interval.' },
     { re: /_method_predict$/, tip: 'Method used to compute the prediction interval. Only relevant when the prediction interval is enabled.' },
     { re: /_method$/, tip: methodTip },
     { re: /_sm$/, tip: smTip },
-    { re: /_prediction$/, tip: 'Adds a prediction interval to the forest plot: the range where the true effect of a new, future study is expected to fall. Recommended when heterogeneity is present (needs at least 3 studies).' },
+    { re: /_prediction$/, tip: 'Adds a prediction interval to the forest plot: the range where the true effect of a new study is expected to fall. Needs at least 3 studies.' },
     { re: /_label_e$/, tip: 'Label shown for the experimental (intervention) group in plots and tables.' },
     { re: /_label_c$/, tip: 'Label shown for the control (comparator) group in plots and tables.' },
     { re: /_reference$/, tip: 'The comparator treatment: every other treatment in the network is contrasted against it in the forest plot and league table.' },
-    { re: /_small_values$/, tip: 'Tells the treatment ranking which direction is better: choose “good” when smaller outcome values are desirable (e.g. mortality, pain) and “bad” when larger values are desirable (e.g. cure rate). It affects rankograms and P-scores, not the pooled estimates.' },
+    { re: /_small_values$/, tip: 'Declares which direction of your outcome counts as favourable: “good” when smaller values are desirable, “bad” when larger values are desirable. It affects rankograms and P-scores, not the pooled estimates.' },
     { re: /_test_a$/, tip: 'Which value of your “test” column is treated as Test A in the comparison, plots and summary tables.' },
     { re: /_test_b$/, tip: 'Which value of your “test” column is treated as Test B in the comparison, plots and summary tables.' },
     { re: /_subgroup$/, tip: 'Optional. Pick a categorical column from your data (e.g. Region) to pool each group separately and test whether the effect differs between groups.' },

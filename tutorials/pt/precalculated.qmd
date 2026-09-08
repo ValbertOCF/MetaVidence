@@ -25,10 +25,9 @@ que você conseguiu extrair dos artigos.
 presentes. Qualquer outra coluna fica disponível para subgrupo e meta-regressão.
 
 ::: {.callout-tip}
-## Qual formato escolher
-Prefira o **TE com IC 95%**. É o único em que você não digita erro-padrão
-nenhum: o app o deriva do intervalo, sempre na escala certa. Os outros dois
-pedem o `seTE`, e é aí que entram os erros de aritmética e de escala.
+## O que cada formato pede
+O **TE com IC 95%** é o único em que você não digita erro-padrão nenhum: o app o
+deriva do intervalo. Os outros dois pedem o `seTE` diretamente.
 :::
 
 O **Data check** confere as colunas, conta os estudos e valida a coerência do
@@ -86,7 +85,7 @@ errado. O jeito de não passar por essa decisão é usar o formato **TE com IC
 ### Statistical settings (advanced)
 
 **Analysis model**, **Tau method**, **Random CI method** e **Prediction method**
-funcionam e são recomendados exatamente como no
+funcionam exatamente como em
 [o fluxo](flow.qmd#statistical-settings-advanced).
 
 **Prediction interval** vem desligado por padrão (`No`) nos três submódulos.

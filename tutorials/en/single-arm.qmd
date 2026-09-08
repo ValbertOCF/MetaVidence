@@ -56,9 +56,9 @@ standard deviation, which are the current defaults of the `meta` package.
 The **Data check** reports how many studies were converted, so the number is in
 front of you before anything runs and can go straight into the methods section.
 
-Mean and SD remains the ideal input: it is what the study measured, with nothing
-estimated. The conversion is there so that a study reporting a median can join
-the analysis instead of being left out, not as an equivalent choice.
+Mean and SD are the values the study measured directly. The conversion estimates
+them from the median and quartiles, so that a study reporting a median can join
+the analysis.
 
 Extra columns stay available for subgroup analysis and meta-regression, as in
 the other modules. The **Data check** verifies the required ones, counts the
@@ -73,19 +73,17 @@ comparison, there is no "favors experimental" or "favors control" to label.
 
 **Outcome name** goes into titles and file names, as always.
 
-**Summary measure (sm)** (default `PLOGIT`) chooses the transformation.
-Proportions near 0% or 100% have too small a variance and distort the pooling if
-used raw, which is why the transformation exists:
+**Summary measure (sm)** (default `PLOGIT`) chooses the scale on which the
+proportions are pooled. Proportions near 0% or 100% have a very small variance on
+the raw scale, which is what the transformations address:
 
-* `PLOGIT`, logit. The default, and the recommendation for most cases.
-* `PFT`, Freeman-Tukey double arcsine. Stabilizes the variance when there are
-  proportions very close to the extremes, but the way back to the percentage
-  scale is problematic when sample sizes vary a lot between studies. Use it
-  knowing that.
+* `PLOGIT`, logit. The default.
+* `PFT`, Freeman-Tukey double arcsine. Stabilizes the variance at proportions
+  close to the extremes. The back-transformation to the percentage scale depends
+  on the study sample sizes.
 * `PAS`, plain arcsine.
 * `PLN`, log of the proportion.
-* `PRAW`, raw proportion, untransformed. Only sensible when every proportion is
-  far from 0% and 100%.
+* `PRAW`, raw proportion, untransformed.
 
 Results always return to the percentage scale in plots and tables, so the
 transformation is a choice of method, not of presentation.
@@ -93,26 +91,18 @@ transformation is a choice of method, not of presentation.
 **Method** (default `Inverse`) chooses between `Inverse`, inverse variance, and
 `GLMM`, a random-intercept logistic model.
 
-Recommendation: keep `Inverse`, which is what the large majority of published
-prevalence meta-analyses use, and leave `Tau method` at `REML`.
-
-Switch to `GLMM` with `Tau method` at `ML` when your dataset has:
-
-* studies with zero events, or
-* proportions very close to 0% or 100%.
-
-In those two situations `Inverse` has to add 0.5 to each cell, a continuity
-correction that shifts precisely the extreme studies, which are the ones you are
-trying to estimate well. `GLMM` models the counts directly and needs no such
-correction.
+`Inverse` applies inverse-variance weighting to the transformed proportions. With
+studies that have zero events, or proportions very close to 0% or 100%, it adds
+0.5 to each cell as a continuity correction. `GLMM` models the counts directly
+and applies no such correction. `GLMM` is normally paired with `Tau method` at
+`ML`, and `Inverse` with `REML`.
 
 ::: {.callout-note}
 ## GLMM has no weight column
 A GLMM fit produces no per-study weight, so the forest plot comes out without
 the Weight column and with every square the same size. This is not a defect of
-the plot: the weight simply does not exist in that model. If the weight column
-matters for the figure in your paper, that is an argument in favour of
-`Inverse`.
+the plot: the weight simply does not exist in that model. The `Inverse` method does produce
+per-study weights, so the column is present there.
 :::
 
 ::: {.callout-important}
@@ -129,10 +119,9 @@ This submodule has no **Prediction interval**, no **Random CI method** and no
 
 ### Single means
 
-**Summary measure (sm)** (default `MRAW`) has two options. `MRAW` pools the raw
-mean, in the original unit, and is the recommendation. `MLN` pools the log of
-the mean, useful when the measure is positive and strongly skewed, such as time
-to an event or serum concentration.
+**Summary measure (sm)** (default `MRAW`) has two options. `MRAW` pools the mean in
+the original measurement unit. `MLN` pools the mean on the log scale, which
+requires strictly positive values.
 
 **Analysis model**, **Tau method** (default `REML`) and **Prediction interval**
 (default `Yes`) work as in the binary module. There is no **Method** field, no

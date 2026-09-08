@@ -244,18 +244,18 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="summary-measure-sm">Summary measure (sm)</h3>
 <p>Padrão <code>RR</code>. Decide o que será agrupado:</p>
 <ul>
-<li><code>RR</code>, risco relativo. É o mais fácil de comunicar e o mais usado em ensaios clínicos. Recomendado como ponto de partida.</li>
+<li><code>RR</code>, risco relativo. A razão entre os riscos do evento nos dois grupos.</li>
 <li><code>OR</code>, razão de chances. Necessário se você vai comparar com literatura que usa OR, ou se pretende usar os métodos Peto ou GLMM, que só funcionam com <code>OR</code>. Lembre que a OR se afasta da RR quando o evento é frequente.</li>
-<li><code>RD</code>, diferença de risco, na escala absoluta. Útil para comunicar impacto clínico (“7 eventos a menos por 100 pacientes”), mas costuma ser mais heterogênea entre estudos que as medidas relativas.</li>
+<li><code>RD</code>, diferença de risco, na escala absoluta: a diferença entre os dois riscos do evento, lida como eventos por 100 pacientes.</li>
 </ul>
 </section>
 <section id="method" class="level3">
 <h3 class="anchored" data-anchor-id="method">Method</h3>
 <p>Padrão <code>inverse</code>. É o método de agrupamento, e só existe neste módulo e no de proporções únicas:</p>
 <ul>
-<li><code>inverse</code>, inverso da variância. É o padrão do app e serve bem quando os estudos têm tamanho razoável e os eventos não são raros.</li>
-<li><code>MH</code>, Mantel-Haenszel. Comporta-se melhor que o inverso da variância quando há poucos eventos ou estudos pequenos. É o padrão da Cochrane para dados binários. Recomendado se o seu desfecho é pouco frequente.</li>
-<li><code>Peto</code>. Serve a eventos muito raros com grupos de tamanho parecido. Só funciona com <code>sm = OR</code>.</li>
+<li><code>inverse</code>, inverso da variância. É o padrão do app. Cada estudo é ponderado pelo inverso da variância da sua estimativa de efeito.</li>
+<li><code>MH</code>, Mantel-Haenszel. Usa os pesos de Mantel-Haenszel, calculados a partir das contagens das células e não da variância da estimativa de efeito.</li>
+<li><code>Peto</code>. Usa a razão de chances de Peto, de um passo. Só funciona com <code>sm = OR</code>.</li>
 <li><code>GLMM</code>, modelo linear generalizado misto. Evita as correções de continuidade que os outros métodos aplicam a células com zero. Mais lento. Só funciona com <code>sm = OR</code>, e o forest sai sem a coluna de peso, porque um ajuste GLMM não produz peso por estudo.</li>
 </ul>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -275,7 +275,7 @@ Peto e GLMM exigem OR
 <section id="os-demais-campos" class="level3">
 <h3 class="anchored" data-anchor-id="os-demais-campos">Os demais campos</h3>
 <p><strong>Outcome name</strong>, a direção do desfecho e os nomes dos grupos funcionam como descrito em <a href="./flow.html#outcome-settings">Outcome settings</a>.</p>
-<p><strong>Analysis model</strong>, <strong>Tau method</strong>, <strong>Random CI method</strong> e <strong>Prediction method</strong> funcionam e são recomendados como em <a href="./flow.html#statistical-settings-advanced">Statistical settings (advanced)</a>. Neste módulo o <strong>Prediction interval</strong> vem desligado por padrão.</p>
+<p><strong>Analysis model</strong>, <strong>Tau method</strong>, <strong>Random CI method</strong> e <strong>Prediction method</strong> funcionam como descrito em <a href="./flow.html#statistical-settings-advanced">Statistical settings (advanced)</a>. Neste módulo o <strong>Prediction interval</strong> vem desligado por padrão.</p>
 </section>
 </section>
 <section id="passo-3-exportação-e-resultados" class="level2">

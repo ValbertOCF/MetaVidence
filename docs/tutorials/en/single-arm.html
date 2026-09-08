@@ -280,7 +280,7 @@ ul.task-list li input[type="checkbox"] {
 <h4 class="anchored" data-anchor-id="the-two-can-be-mixed-in-one-file">The two can be mixed in one file</h4>
 <p>Fill the columns each study reports and leave the rest empty. The example dataset does exactly that: eight studies with mean and SD, four with median and quartiles. MetaVidence converts the median studies before pooling, using the method of Luo and colleagues for the mean and that of Shi and colleagues for the standard deviation, which are the current defaults of the <code>meta</code> package.</p>
 <p>The <strong>Data check</strong> reports how many studies were converted, so the number is in front of you before anything runs and can go straight into the methods section.</p>
-<p>Mean and SD remains the ideal input: it is what the study measured, with nothing estimated. The conversion is there so that a study reporting a median can join the analysis instead of being left out, not as an equivalent choice.</p>
+<p>Mean and SD are the values the study measured directly. The conversion estimates them from the median and quartiles, so that a study reporting a median can join the analysis.</p>
 <p>Extra columns stay available for subgroup analysis and meta-regression, as in the other modules. The <strong>Data check</strong> verifies the required ones, counts the studies and flags problems, including <code>event</code> larger than <code>n</code>.</p>
 </section>
 </section>
@@ -290,23 +290,17 @@ ul.task-list li input[type="checkbox"] {
 <section id="single-proportions" class="level3">
 <h3 class="anchored" data-anchor-id="single-proportions">Single proportions</h3>
 <p><strong>Outcome name</strong> goes into titles and file names, as always.</p>
-<p><strong>Summary measure (sm)</strong> (default <code>PLOGIT</code>) chooses the transformation. Proportions near 0% or 100% have too small a variance and distort the pooling if used raw, which is why the transformation exists:</p>
+<p><strong>Summary measure (sm)</strong> (default <code>PLOGIT</code>) chooses the scale on which the proportions are pooled. Proportions near 0% or 100% have a very small variance on the raw scale, which is what the transformations address:</p>
 <ul>
-<li><code>PLOGIT</code>, logit. The default, and the recommendation for most cases.</li>
-<li><code>PFT</code>, Freeman-Tukey double arcsine. Stabilizes the variance when there are proportions very close to the extremes, but the way back to the percentage scale is problematic when sample sizes vary a lot between studies. Use it knowing that.</li>
+<li><code>PLOGIT</code>, logit. The default.</li>
+<li><code>PFT</code>, Freeman-Tukey double arcsine. Stabilizes the variance at proportions close to the extremes. The back-transformation to the percentage scale depends on the study sample sizes.</li>
 <li><code>PAS</code>, plain arcsine.</li>
 <li><code>PLN</code>, log of the proportion.</li>
-<li><code>PRAW</code>, raw proportion, untransformed. Only sensible when every proportion is far from 0% and 100%.</li>
+<li><code>PRAW</code>, raw proportion, untransformed.</li>
 </ul>
 <p>Results always return to the percentage scale in plots and tables, so the transformation is a choice of method, not of presentation.</p>
 <p><strong>Method</strong> (default <code>Inverse</code>) chooses between <code>Inverse</code>, inverse variance, and <code>GLMM</code>, a random-intercept logistic model.</p>
-<p>Recommendation: keep <code>Inverse</code>, which is what the large majority of published prevalence meta-analyses use, and leave <code>Tau method</code> at <code>REML</code>.</p>
-<p>Switch to <code>GLMM</code> with <code>Tau method</code> at <code>ML</code> when your dataset has:</p>
-<ul>
-<li>studies with zero events, or</li>
-<li>proportions very close to 0% or 100%.</li>
-</ul>
-<p>In those two situations <code>Inverse</code> has to add 0.5 to each cell, a continuity correction that shifts precisely the extreme studies, which are the ones you are trying to estimate well. <code>GLMM</code> models the counts directly and needs no such correction.</p>
+<p><code>Inverse</code> applies inverse-variance weighting to the transformed proportions. With studies that have zero events, or proportions very close to 0% or 100%, it adds 0.5 to each cell as a continuity correction. <code>GLMM</code> models the counts directly and applies no such correction. <code>GLMM</code> is normally paired with <code>Tau method</code> at <code>ML</code>, and <code>Inverse</code> with <code>REML</code>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -317,7 +311,7 @@ GLMM has no weight column
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A GLMM fit produces no per-study weight, so the forest plot comes out without the Weight column and with every square the same size. This is not a defect of the plot: the weight simply does not exist in that model. If the weight column matters for the figure in your paper, that is an argument in favour of <code>Inverse</code>.</p>
+<p>A GLMM fit produces no per-study weight, so the forest plot comes out without the Weight column and with every square the same size. This is not a defect of the plot: the weight simply does not exist in that model. The <code>Inverse</code> method does produce per-study weights, so the column is present there.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -338,7 +332,7 @@ GLMM requires PLOGIT
 </section>
 <section id="single-means" class="level3">
 <h3 class="anchored" data-anchor-id="single-means">Single means</h3>
-<p><strong>Summary measure (sm)</strong> (default <code>MRAW</code>) has two options. <code>MRAW</code> pools the raw mean, in the original unit, and is the recommendation. <code>MLN</code> pools the log of the mean, useful when the measure is positive and strongly skewed, such as time to an event or serum concentration.</p>
+<p><strong>Summary measure (sm)</strong> (default <code>MRAW</code>) has two options. <code>MRAW</code> pools the mean in the original measurement unit. <code>MLN</code> pools the mean on the log scale, which requires strictly positive values.</p>
 <p><strong>Analysis model</strong>, <strong>Tau method</strong> (default <code>REML</code>) and <strong>Prediction interval</strong> (default <code>Yes</code>) work as in the binary module. There is no <strong>Method</strong> field, no <strong>Random CI method</strong> and no <strong>Prediction method</strong>.</p>
 </section>
 </section>

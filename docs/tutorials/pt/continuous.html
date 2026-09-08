@@ -168,7 +168,7 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#passo-1-os-dados" id="toc-passo-1-os-dados" class="nav-link active" data-scroll-target="#passo-1-os-dados">Passo 1, os dados</a>
   <ul class="collapse">
-  <li><a href="#média-e-desvio-padrão-a-entrada-ideal" id="toc-média-e-desvio-padrão-a-entrada-ideal" class="nav-link" data-scroll-target="#média-e-desvio-padrão-a-entrada-ideal">Média e desvio-padrão, a entrada ideal</a></li>
+  <li><a href="#média-e-desvio-padrão" id="toc-média-e-desvio-padrão" class="nav-link" data-scroll-target="#média-e-desvio-padrão">Média e desvio-padrão</a></li>
   <li><a href="#estudo-que-reporta-mediana-também-entra" id="toc-estudo-que-reporta-mediana-também-entra" class="nav-link" data-scroll-target="#estudo-que-reporta-mediana-também-entra">Estudo que reporta mediana também entra</a></li>
   <li><a href="#os-dois-podem-se-misturar-no-mesmo-arquivo" id="toc-os-dois-podem-se-misturar-no-mesmo-arquivo" class="nav-link" data-scroll-target="#os-dois-podem-se-misturar-no-mesmo-arquivo">Os dois podem se misturar no mesmo arquivo</a></li>
   </ul></li>
@@ -208,8 +208,8 @@ ul.task-list li input[type="checkbox"] {
 <section id="passo-1-os-dados" class="level2">
 <h2 class="anchored" data-anchor-id="passo-1-os-dados">Passo 1, os dados</h2>
 <p>Todo estudo precisa de <code>study</code>, <code>n.e</code> e <code>n.c</code>. Depois, para cada grupo, o que o artigo de fato reportou.</p>
-<section id="média-e-desvio-padrão-a-entrada-ideal" class="level3">
-<h3 class="anchored" data-anchor-id="média-e-desvio-padrão-a-entrada-ideal">Média e desvio-padrão, a entrada ideal</h3>
+<section id="média-e-desvio-padrão" class="level3">
+<h3 class="anchored" data-anchor-id="média-e-desvio-padrão">Média e desvio-padrão</h3>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -293,16 +293,15 @@ Mediana com desvio-padrão e nada mais
 <section id="outcome-settings" class="level3">
 <h3 class="anchored" data-anchor-id="outcome-settings">Outcome settings</h3>
 <p><strong>Outcome name</strong>, <strong>If the outcome increases, is that beneficial or harmful?</strong>, <strong>Experimental group name</strong> e <strong>Control group name</strong> funcionam exatamente como no módulo binário.</p>
-<p><strong>Summary measure (sm)</strong> (padrão <code>MD</code>) é a decisão que mais importa aqui, e não é cosmética:</p>
+<p><strong>Summary measure (sm)</strong> (padrão <code>MD</code>) define a escala do resultado agrupado:</p>
 <ul>
-<li><code>MD</code>, diferença de médias, quando todos os estudos usam a mesma escala. O resultado sai na unidade original, o que facilita a interpretação: “3,2 dias a menos de internação”. Recomendado sempre que as escalas coincidem.</li>
-<li><code>SMD</code>, diferença de médias padronizada, quando as escalas diferem entre estudos, por exemplo instrumentos diferentes medindo depressão. O resultado sai em desvios-padrão, sem unidade.</li>
+<li><code>MD</code>, diferença de médias. O resultado sai na unidade de medida original, por exemplo “3,2 dias a menos de internação”. Pressupõe que todos os estudos usaram a mesma escala.</li>
+<li><code>SMD</code>, diferença de médias padronizada. O resultado sai em unidades de desvio-padrão, sem unidade de medida, o que permite combinar estudos que usaram instrumentos diferentes.</li>
 </ul>
-<p>Se as escalas são iguais, prefira <code>MD</code>. O <code>SMD</code> é a solução para um problema que você talvez não tenha, e é bem mais difícil de comunicar ao leitor.</p>
 </section>
 <section id="statistical-settings-advanced" class="level3">
 <h3 class="anchored" data-anchor-id="statistical-settings-advanced">Statistical settings (advanced)</h3>
-<p><strong>Analysis model</strong>, <strong>Tau method</strong>, <strong>Random CI method</strong> e <strong>Prediction method</strong> funcionam e são recomendados exatamente como no <a href="./flow.html#statistical-settings-advanced">o fluxo</a>.</p>
+<p><strong>Analysis model</strong>, <strong>Tau method</strong>, <strong>Random CI method</strong> e <strong>Prediction method</strong> funcionam exatamente como em <a href="./flow.html#statistical-settings-advanced">o fluxo</a>.</p>
 <p><strong>Prediction interval</strong> aqui vem ligado por padrão (<code>Yes</code>), ao contrário do módulo binário. Desligue se tiver menos de 3 estudos ou se o intervalo estiver tão largo que atrapalhe a leitura da figura.</p>
 <p>Não existe campo <strong>Method</strong> neste módulo. Mantel-Haenszel, Peto e GLMM são métodos para contagens de eventos, e não se aplicam a médias.</p>
 </section>

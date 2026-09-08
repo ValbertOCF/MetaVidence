@@ -54,19 +54,17 @@ statistical handling, which `netmeta` already does.
 
 **Summary measure (sm)** depends on the submodule: `RR`, `OR` and `RD` in the
 binary one, `MD` and `SMD` in the continuous one, and `HR`, `RR`, `OR`, `MD`,
-`SMD` in the pre-calculated one. The recommendations are the same as in the
-paired modules.
+`SMD` in the pre-calculated one. Each behaves as in the paired modules.
 
 **Reference treatment (optional)** sets which treatment the others are compared
 against in the forest plot. Left blank, the app picks one on its own.
-Recommendation: name the clinically relevant comparator, usually placebo or
-standard care. This does not change the network, only the point of view of the
-figure.
+This does not change the network, only the point of view of the figure.
 
 **For ranking, smaller values are** (default `Good`) tells the app whether
-smaller values are good or bad. It is what makes the P-score ranking point the
-right way. In a mortality meta-analysis, smaller is better, so `Good`. In one
-about treatment response, larger is better, so `Bad`.
+smaller values are good or bad. It sets the direction of the P-score
+ranking. For an outcome such as mortality, where smaller values are desirable,
+choose `Good`; for one such as treatment response, where larger values are
+desirable, choose `Bad`.
 
 ::: {.callout-important}
 ## This field flips the whole ranking

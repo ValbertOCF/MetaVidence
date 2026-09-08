@@ -26,11 +26,9 @@ when present. Any other column stays available for subgroup analysis and
 meta-regression.
 
 ::: {.callout-tip}
-## Which format to choose
-Prefer **TE with 95% CI**. It is the only one where you type no standard error
-at all: the app derives it from the interval, always on the right scale. The
-other two ask for `seTE`, and that is where arithmetic and scale errors creep
-in.
+## What each format asks for
+**TE with 95% CI** is the only one where you type no standard error at all: the
+app derives it from the interval. The other two ask for `seTE` directly.
 :::
 
 The **Data check** verifies the columns, counts the studies and validates the
@@ -88,7 +86,7 @@ with 95% CI** format, which needs no `seTE`.
 ### Statistical settings (advanced)
 
 **Analysis model**, **Tau method**, **Random CI method** and **Prediction
-method** work and are recommended exactly as in the
+method** work exactly as in
 [the flow](flow.qmd#statistical-settings-advanced).
 
 **Prediction interval** is off by default (`No`) in all three submodules.

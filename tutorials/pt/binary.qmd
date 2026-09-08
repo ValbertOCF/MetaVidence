@@ -35,27 +35,24 @@ subgrupo e meta-regressão. No conjunto de exemplo há `Region`, `Design`,
 
 Padrão `RR`. Decide o que será agrupado:
 
-* `RR`, risco relativo. É o mais fácil de comunicar e o mais usado em ensaios
-  clínicos. Recomendado como ponto de partida.
+* `RR`, risco relativo. A razão entre os riscos do evento nos dois grupos.
 * `OR`, razão de chances. Necessário se você vai comparar com literatura que usa
   OR, ou se pretende usar os métodos Peto ou GLMM, que só funcionam com `OR`.
   Lembre que a OR se afasta da RR quando o evento é frequente.
-* `RD`, diferença de risco, na escala absoluta. Útil para comunicar impacto
-  clínico ("7 eventos a menos por 100 pacientes"), mas costuma ser mais
-  heterogênea entre estudos que as medidas relativas.
+* `RD`, diferença de risco, na escala absoluta: a diferença entre os dois riscos
+  do evento, lida como eventos por 100 pacientes.
 
 ### Method
 
 Padrão `inverse`. É o método de agrupamento, e só existe neste módulo e no de
 proporções únicas:
 
-* `inverse`, inverso da variância. É o padrão do app e serve bem quando os
-  estudos têm tamanho razoável e os eventos não são raros.
-* `MH`, Mantel-Haenszel. Comporta-se melhor que o inverso da variância quando há
-  poucos eventos ou estudos pequenos. É o padrão da Cochrane para dados
-  binários. Recomendado se o seu desfecho é pouco frequente.
-* `Peto`. Serve a eventos muito raros com grupos de tamanho parecido. Só
-  funciona com `sm = OR`.
+* `inverse`, inverso da variância. É o padrão do app. Cada estudo é ponderado
+  pelo inverso da variância da sua estimativa de efeito.
+* `MH`, Mantel-Haenszel. Usa os pesos de Mantel-Haenszel, calculados a partir
+  das contagens das células e não da variância da estimativa de efeito.
+* `Peto`. Usa a razão de chances de Peto, de um passo. Só funciona com
+  `sm = OR`.
 * `GLMM`, modelo linear generalizado misto. Evita as correções de continuidade
   que os outros métodos aplicam a células com zero. Mais lento. Só funciona com
   `sm = OR`, e o forest sai sem a coluna de peso, porque um ajuste GLMM não
@@ -74,7 +71,7 @@ para `inverse` ou `MH`.
 descrito em [Outcome settings](flow.qmd#outcome-settings).
 
 **Analysis model**, **Tau method**, **Random CI method** e **Prediction method**
-funcionam e são recomendados como em
+funcionam como descrito em
 [Statistical settings (advanced)](flow.qmd#statistical-settings-advanced). Neste
 módulo o **Prediction interval** vem desligado por padrão.
 

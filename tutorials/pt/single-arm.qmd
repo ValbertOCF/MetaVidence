@@ -55,9 +55,9 @@ que são os padrões atuais do pacote `meta`.
 O **Data check** informa quantos estudos foram convertidos, então o número está
 na sua frente antes de qualquer coisa rodar e vai direto para a seção de métodos.
 
-Média e desvio continua sendo a entrada ideal: é o que o estudo mediu, sem nada
-estimado. A conversão existe para que um estudo que reportou mediana participe da
-análise em vez de ficar de fora, não como escolha equivalente.
+Média e desvio são os valores que o estudo mediu diretamente. A conversão os
+estima a partir da mediana e dos quartis, para que um estudo que reportou mediana
+participe da análise.
 
 Colunas extras ficam disponíveis para subgrupo e meta-regressão, como nos demais
 módulos. O **Data check** confere as obrigatórias, conta os estudos e aponta
@@ -72,19 +72,17 @@ comparação, não há "favorece experimental" nem "favorece controle" a rotular
 
 **Outcome name** entra nos títulos e nos nomes de arquivo, como sempre.
 
-**Summary measure (sm)** (padrão `PLOGIT`) escolhe a transformação. Proporções
-perto de 0% ou de 100% têm variância pequena demais e distorcem o agrupamento se
-usadas cruas, por isso a transformação existe:
+**Summary measure (sm)** (padrão `PLOGIT`) escolhe a escala em que as proporções
+são agrupadas. Proporções perto de 0% ou de 100% têm variância muito pequena na
+escala crua, e é isso que as transformações endereçam:
 
-* `PLOGIT`, logito. É o padrão e a recomendação para a maioria dos casos.
-* `PFT`, Freeman-Tukey duplo arco-seno. Estabiliza a variância quando há
-  proporções muito próximas dos extremos, mas a volta para a escala de
-  porcentagem é problemática quando os tamanhos amostrais variam muito entre
-  estudos. Use com consciência disso.
+* `PLOGIT`, logito. É o padrão.
+* `PFT`, Freeman-Tukey duplo arco-seno. Estabiliza a variância em proporções
+  próximas dos extremos. A volta para a escala de porcentagem depende dos
+  tamanhos amostrais dos estudos.
 * `PAS`, arco-seno simples.
 * `PLN`, logaritmo da proporção.
-* `PRAW`, proporção crua, sem transformar. Só faz sentido quando todas as
-  proporções estão longe de 0% e de 100%.
+* `PRAW`, proporção crua, sem transformar.
 
 Os resultados sempre voltam para a escala de porcentagem nos gráficos e tabelas,
 então a transformação é uma escolha de método, não de apresentação.
@@ -92,25 +90,18 @@ então a transformação é uma escolha de método, não de apresentação.
 **Method** (padrão `Inverse`) escolhe entre `Inverse`, o inverso da variância, e
 `GLMM`, um modelo logístico de intercepto aleatório.
 
-Recomendação: mantenha `Inverse`, que é o que a grande maioria das
-meta-análises de prevalência publicadas usa, e deixe `Tau method` em `REML`.
-
-Troque para `GLMM` com `Tau method` em `ML` quando o seu conjunto tiver:
-
-* estudos com zero eventos, ou
-* proporções muito próximas de 0% ou de 100%.
-
-Nessas duas situações o `Inverse` precisa somar 0,5 a cada célula, uma correção
-de continuidade que desloca justamente os estudos extremos, que são os que você
-está tentando estimar bem. O `GLMM` modela as contagens diretamente e dispensa
-essa correção.
+O `Inverse` aplica ponderação pelo inverso da variância às proporções
+transformadas. Com estudos de zero eventos, ou proporções muito próximas de 0% ou
+de 100%, ele soma 0,5 a cada célula como correção de continuidade. O `GLMM`
+modela as contagens diretamente e dispensa essa correção. O `GLMM` é normalmente
+usado com `Tau method` em `ML`, e o `Inverse` com `REML`.
 
 ::: {.callout-note}
 ## O GLMM não tem coluna de peso
 Um ajuste GLMM não produz peso por estudo, então o forest plot sai sem a coluna
 Weight e com todos os quadrados do mesmo tamanho. Não é um defeito do gráfico: o
-peso simplesmente não existe nesse modelo. Se a coluna de peso for importante
-para a figura do seu artigo, esse é um argumento a favor do `Inverse`.
+peso simplesmente não existe nesse modelo. O método `Inverse` produz peso por
+estudo, então lá a coluna aparece.
 :::
 
 ::: {.callout-important}
@@ -127,10 +118,9 @@ Este submódulo não tem **Prediction interval**, nem **Random CI method**, nem
 
 ### Médias únicas
 
-**Summary measure (sm)** (padrão `MRAW`) tem duas opções. `MRAW` agrupa a média
-crua, na unidade original, e é a recomendação. `MLN` agrupa o logaritmo da média,
-útil quando a medida é positiva e fortemente assimétrica, como tempo até um
-evento ou concentração sérica.
+**Summary measure (sm)** (padrão `MRAW`) tem duas opções. `MRAW` agrupa a média na
+unidade de medida original. `MLN` agrupa a média na escala logarítmica, o que
+exige valores estritamente positivos.
 
 **Analysis model**, **Tau method** (padrão `REML`) e **Prediction interval**
 (padrão `Yes`) funcionam como no módulo binário. Não há campo **Method**, nem

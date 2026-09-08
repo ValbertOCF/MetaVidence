@@ -168,7 +168,7 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#step-1-the-data" id="toc-step-1-the-data" class="nav-link active" data-scroll-target="#step-1-the-data">Step 1, the data</a>
   <ul class="collapse">
-  <li><a href="#mean-and-standard-deviation-the-ideal-input" id="toc-mean-and-standard-deviation-the-ideal-input" class="nav-link" data-scroll-target="#mean-and-standard-deviation-the-ideal-input">Mean and standard deviation, the ideal input</a></li>
+  <li><a href="#mean-and-standard-deviation" id="toc-mean-and-standard-deviation" class="nav-link" data-scroll-target="#mean-and-standard-deviation">Mean and standard deviation</a></li>
   <li><a href="#a-study-reporting-a-median-is-accepted-too" id="toc-a-study-reporting-a-median-is-accepted-too" class="nav-link" data-scroll-target="#a-study-reporting-a-median-is-accepted-too">A study reporting a median is accepted too</a></li>
   <li><a href="#the-two-can-be-mixed-in-one-file" id="toc-the-two-can-be-mixed-in-one-file" class="nav-link" data-scroll-target="#the-two-can-be-mixed-in-one-file">The two can be mixed in one file</a></li>
   </ul></li>
@@ -208,8 +208,8 @@ ul.task-list li input[type="checkbox"] {
 <section id="step-1-the-data" class="level2">
 <h2 class="anchored" data-anchor-id="step-1-the-data">Step 1, the data</h2>
 <p>Every study needs <code>study</code>, <code>n.e</code> and <code>n.c</code>. Then, for each group, whatever the paper actually reported.</p>
-<section id="mean-and-standard-deviation-the-ideal-input" class="level3">
-<h3 class="anchored" data-anchor-id="mean-and-standard-deviation-the-ideal-input">Mean and standard deviation, the ideal input</h3>
+<section id="mean-and-standard-deviation" class="level3">
+<h3 class="anchored" data-anchor-id="mean-and-standard-deviation">Mean and standard deviation</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -297,16 +297,15 @@ A median with a standard deviation and nothing else
 <section id="outcome-settings" class="level3">
 <h3 class="anchored" data-anchor-id="outcome-settings">Outcome settings</h3>
 <p><strong>Outcome name</strong>, <strong>If the outcome increases, is that beneficial or harmful?</strong>, <strong>Experimental group name</strong> and <strong>Control group name</strong> work exactly as in the binary module.</p>
-<p><strong>Summary measure (sm)</strong> (default <code>MD</code>) is the decision that matters most here, and it is not cosmetic:</p>
+<p><strong>Summary measure (sm)</strong> (default <code>MD</code>) decides the scale of the pooled result:</p>
 <ul>
-<li><code>MD</code>, mean difference, when every study uses the same scale. The result comes out in the original unit, which makes it easy to interpret: “3.2 fewer days in hospital”. Recommended whenever the scales match.</li>
-<li><code>SMD</code>, standardized mean difference, when scales differ between studies, for example different instruments measuring depression. The result comes out in standard deviations, with no unit.</li>
+<li><code>MD</code>, mean difference. The result comes out in the original measurement unit, for example “3.2 fewer days in hospital”. It assumes every study used the same scale.</li>
+<li><code>SMD</code>, standardized mean difference. The result comes out in standard deviation units, with no measurement unit, so studies that used different instruments can be combined.</li>
 </ul>
-<p>If the scales are the same, prefer <code>MD</code>. <code>SMD</code> is the solution to a problem you may not have, and it is considerably harder to communicate to the reader.</p>
 </section>
 <section id="statistical-settings-advanced" class="level3">
 <h3 class="anchored" data-anchor-id="statistical-settings-advanced">Statistical settings (advanced)</h3>
-<p><strong>Analysis model</strong>, <strong>Tau method</strong>, <strong>Random CI method</strong> and <strong>Prediction method</strong> work and are recommended exactly as in the <a href="./flow.html#statistical-settings-advanced">the flow</a>.</p>
+<p><strong>Analysis model</strong>, <strong>Tau method</strong>, <strong>Random CI method</strong> and <strong>Prediction method</strong> work exactly as in <a href="./flow.html#statistical-settings-advanced">the flow</a>.</p>
 <p><strong>Prediction interval</strong> here is on by default (<code>Yes</code>), unlike the binary module. Turn it off if you have fewer than 3 studies, or if the interval is so wide that it gets in the way of reading the figure.</p>
 <p>There is no <strong>Method</strong> field in this module. Mantel-Haenszel, Peto and GLMM are methods for event counts, and do not apply to means.</p>
 </section>

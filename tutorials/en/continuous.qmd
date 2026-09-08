@@ -12,7 +12,7 @@ page covers what the data has to look like and what changes in step 2.
 Every study needs `study`, `n.e` and `n.c`. Then, for each group, whatever the
 paper actually reported.
 
-### Mean and standard deviation, the ideal input
+### Mean and standard deviation
 
 | Column | What it is |
 |---|---|
@@ -69,23 +69,19 @@ meta-regression and flags problems, including quartiles out of order.
 **Experimental group name** and **Control group name** work exactly as in the
 binary module.
 
-**Summary measure (sm)** (default `MD`) is the decision that matters most here,
-and it is not cosmetic:
+**Summary measure (sm)** (default `MD`) decides the scale of the pooled result:
 
-* `MD`, mean difference, when every study uses the same scale. The result comes
-  out in the original unit, which makes it easy to interpret: "3.2 fewer days in
-  hospital". Recommended whenever the scales match.
-* `SMD`, standardized mean difference, when scales differ between studies, for
-  example different instruments measuring depression. The result comes out in
-  standard deviations, with no unit.
-
-If the scales are the same, prefer `MD`. `SMD` is the solution to a problem you
-may not have, and it is considerably harder to communicate to the reader.
+* `MD`, mean difference. The result comes out in the original measurement unit,
+  for example "3.2 fewer days in hospital". It assumes every study used the same
+  scale.
+* `SMD`, standardized mean difference. The result comes out in standard
+  deviation units, with no measurement unit, so studies that used different
+  instruments can be combined.
 
 ### Statistical settings (advanced)
 
 **Analysis model**, **Tau method**, **Random CI method** and **Prediction
-method** work and are recommended exactly as in the
+method** work exactly as in
 [the flow](flow.qmd#statistical-settings-advanced).
 
 **Prediction interval** here is on by default (`Yes`), unlike the binary module.

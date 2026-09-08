@@ -238,11 +238,11 @@ ul.task-list li input[type="checkbox"] {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Which format to choose
+What each format asks for
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Prefer <strong>TE with 95% CI</strong>. It is the only one where you type no standard error at all: the app derives it from the interval, always on the right scale. The other two ask for <code>seTE</code>, and that is where arithmetic and scale errors creep in.</p>
+<p><strong>TE with 95% CI</strong> is the only one where you type no standard error at all: the app derives it from the interval. The other two ask for <code>seTE</code> directly.</p>
 </div>
 </div>
 <p>The <strong>Data check</strong> verifies the columns, counts the studies and validates the interval, requiring <code>lower &lt;= TE &lt;= upper</code>. If you swapped two columns, it warns you here, before the analysis runs.</p>
@@ -293,7 +293,7 @@ Careful: <code>seTE</code> goes on a different scale from <code>TE</code>
 </section>
 <section id="statistical-settings-advanced" class="level3">
 <h3 class="anchored" data-anchor-id="statistical-settings-advanced">Statistical settings (advanced)</h3>
-<p><strong>Analysis model</strong>, <strong>Tau method</strong>, <strong>Random CI method</strong> and <strong>Prediction method</strong> work and are recommended exactly as in the <a href="./flow.html#statistical-settings-advanced">the flow</a>.</p>
+<p><strong>Analysis model</strong>, <strong>Tau method</strong>, <strong>Random CI method</strong> and <strong>Prediction method</strong> work exactly as in <a href="./flow.html#statistical-settings-advanced">the flow</a>.</p>
 <p><strong>Prediction interval</strong> is off by default (<code>No</code>) in all three submodules.</p>
 <p>There is no <strong>Method</strong> field: the effect already comes calculated, so pooling is always by inverse variance.</p>
 </section>

@@ -88,59 +88,41 @@ nothing. See the module page.
 
 ### Statistical settings (advanced) {#statistical-settings-advanced}
 
-These fields are the same in most modules, with the same defaults and the same
-recommendations.
+These fields are the same in most modules, with the same defaults.
 
 **Analysis model** (default `Random-effects`).
 
-* `Random-effects` lets the true effect vary between studies. This is the usual
-  choice, because populations, doses and follow-up times almost always differ.
-* `Fixed-effect` assumes every study estimates exactly the same effect. It is
-  only justified for very close replications.
-* `Both` draws the two lines on the same forest plot. It is a good way to show
-  the reader that the conclusion did not depend on the model choice.
-
-Recommendation: keep `Random-effects`, and use `Both` when you want the
-comparison to be explicit in the paper.
+* `Random-effects` lets the true effect vary between studies.
+* `Fixed-effect` assumes every study estimates exactly the same effect.
+* `Both` draws the two lines on the same forest plot.
 
 **Tau method** (default `REML`) is the estimator of the between-study variance,
 τ², which drives the random-effects weights, I² and the prediction interval.
-Recommendation: keep `REML`. Use `DL` (DerSimonian-Laird) only to reproduce an
-older analysis, since it was the historical default. `PM` and `SJ` are
-defensible alternatives when there are few studies. `ML` tends to underestimate
-τ².
+`REML` is restricted maximum likelihood, `ML` maximum likelihood, `DL` the
+DerSimonian-Laird estimator, and `PM`, `SJ`, `HE`, `HS` and `EB` the remaining
+estimators implemented in `meta`.
 
-**I-squared method** (default `Q`) decides how I² is computed. `Q` is the classic
-Higgins and Thompson definition, I² = (Q − df)/Q, which is what almost every
-published meta-analysis reports and what the `meta` package uses by default.
-`From tau-squared` derives it from the estimated τ² instead. The two can differ a
-lot: on the same four studies we get 89.9% with `Q` and 97.2% with τ². Neither is
-wrong, they answer slightly different questions, but they are not interchangeable
-in a manuscript. Recommendation: keep `Q` unless you have a stated reason, and
-say in the methods which one you used.
+**I-squared method** (default `Q`) decides how I² is computed. `Q` uses the
+Higgins and Thompson definition, I² = (Q − df)/Q. `From tau-squared` derives it
+from the estimated τ² instead. The two answer different questions and can differ
+substantially on the same data: on the same four studies we get 89.9% with `Q`
+and 97.2% with τ².
 
 **Prediction interval** adds the range where the effect of a future study is
-expected to fall. It needs at least 3 studies. Recommendation: turn it on when
-heterogeneity is relevant, because it is the most honest way to show what that
-heterogeneity means in practice. With 3 or 4 studies the interval comes out so
-wide that it rarely says anything. The default varies by module.
+expected to fall. It needs at least 3 studies, and with 3 or 4 the interval comes
+out very wide. The default varies by module.
 
 **Random CI method** (default `classic`) sets how the confidence interval of the
 pooled effect is computed under the random-effects model.
 
 * `classic` uses the normal approximation.
-* `HK`, Hartung-Knapp, uses the t distribution and generally widens the
-  interval, with better coverage when there are few studies.
+* `HK`, Hartung-Knapp, uses the t distribution, which usually widens the
+  interval.
 * `KR`, Kenward-Roger, follows the same idea with a variance adjustment.
-
-Recommendation: consider `HK` when you have few studies, say fewer than 10, and
-heterogeneity is present. Keep `classic` if you need to stay comparable with a
-published analysis. In rare situations `HK` produces a narrower interval than
-`classic`, so it is worth looking at both before deciding.
 
 **Prediction method** (default `V`) sets how the prediction interval is
 computed. `V` uses the t distribution with k-1 degrees of freedom and `HTS` uses
-t with k-2, so it is slightly more conservative. Recommendation: keep `V`.
+t with k-2.
 
 **Method**, the pooling method, exists only in the binary and single-proportion
 modules, with different options in each. See the module page.

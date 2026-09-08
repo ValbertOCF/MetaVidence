@@ -51,18 +51,18 @@ tratamento estatístico especial, que o `netmeta` já faz.
 **Outcome name** entra nos títulos e nomes de arquivo.
 
 **Summary measure (sm)** depende do submódulo: `RR`, `OR` e `RD` no binário, `MD`
-e `SMD` no contínuo, e `HR`, `RR`, `OR`, `MD`, `SMD` no pré-calculado. As
-recomendações são as mesmas dos módulos pareados.
+e `SMD` no contínuo, e `HR`, `RR`, `OR`, `MD`, `SMD` no pré-calculado. Cada um
+se comporta como nos módulos pareados.
 
 **Reference treatment (optional)** define contra qual tratamento os demais são
 comparados no forest plot. Deixando em branco, o app escolhe sozinho.
-Recomendação: aponte o comparador clínico relevante, em geral placebo ou cuidado
-padrão. Isso não muda a rede, só o ponto de vista da figura.
+Isso não muda a rede, só o ponto de vista da figura.
 
 **For ranking, smaller values are** (padrão `Good`) informa se valores menores
-são bons ou ruins. É o que faz o ranqueamento por P-score apontar na direção
-certa. Numa meta-análise de mortalidade, menor é melhor, então `Good`. Numa de
-resposta ao tratamento, maior é melhor, então `Bad`.
+são bons ou ruins. Define a direção do ranqueamento por
+P-score. Para um desfecho como mortalidade, em que valores menores são
+desejáveis, escolha `Good`; para um como resposta ao tratamento, em que valores
+maiores são desejáveis, escolha `Bad`.
 
 ::: {.callout-important}
 ## Este campo inverte o ranking inteiro

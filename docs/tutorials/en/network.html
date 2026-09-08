@@ -284,9 +284,9 @@ The treatment name must match exactly
 <section id="outcome-settings" class="level3">
 <h3 class="anchored" data-anchor-id="outcome-settings">Outcome settings</h3>
 <p><strong>Outcome name</strong> goes into titles and file names.</p>
-<p><strong>Summary measure (sm)</strong> depends on the submodule: <code>RR</code>, <code>OR</code> and <code>RD</code> in the binary one, <code>MD</code> and <code>SMD</code> in the continuous one, and <code>HR</code>, <code>RR</code>, <code>OR</code>, <code>MD</code>, <code>SMD</code> in the pre-calculated one. The recommendations are the same as in the paired modules.</p>
-<p><strong>Reference treatment (optional)</strong> sets which treatment the others are compared against in the forest plot. Left blank, the app picks one on its own. Recommendation: name the clinically relevant comparator, usually placebo or standard care. This does not change the network, only the point of view of the figure.</p>
-<p><strong>For ranking, smaller values are</strong> (default <code>Good</code>) tells the app whether smaller values are good or bad. It is what makes the P-score ranking point the right way. In a mortality meta-analysis, smaller is better, so <code>Good</code>. In one about treatment response, larger is better, so <code>Bad</code>.</p>
+<p><strong>Summary measure (sm)</strong> depends on the submodule: <code>RR</code>, <code>OR</code> and <code>RD</code> in the binary one, <code>MD</code> and <code>SMD</code> in the continuous one, and <code>HR</code>, <code>RR</code>, <code>OR</code>, <code>MD</code>, <code>SMD</code> in the pre-calculated one. Each behaves as in the paired modules.</p>
+<p><strong>Reference treatment (optional)</strong> sets which treatment the others are compared against in the forest plot. Left blank, the app picks one on its own. This does not change the network, only the point of view of the figure.</p>
+<p><strong>For ranking, smaller values are</strong> (default <code>Good</code>) tells the app whether smaller values are good or bad. It sets the direction of the P-score ranking. For an outcome such as mortality, where smaller values are desirable, choose <code>Good</code>; for one such as treatment response, where larger values are desirable, choose <code>Bad</code>.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

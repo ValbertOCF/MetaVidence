@@ -12,7 +12,7 @@ esta página trata de como os dados precisam estar e do que muda no passo 2.
 Todo estudo precisa de `study`, `n.e` e `n.c`. Depois, para cada grupo, o que o
 artigo de fato reportou.
 
-### Média e desvio-padrão, a entrada ideal
+### Média e desvio-padrão
 
 | Coluna | O que é |
 |---|---|
@@ -68,23 +68,19 @@ meta-regressão e aponta problemas, incluindo quartis fora de ordem.
 **Experimental group name** e **Control group name** funcionam exatamente como
 no módulo binário.
 
-**Summary measure (sm)** (padrão `MD`) é a decisão que mais importa aqui, e não
-é cosmética:
+**Summary measure (sm)** (padrão `MD`) define a escala do resultado agrupado:
 
-* `MD`, diferença de médias, quando todos os estudos usam a mesma escala. O
-  resultado sai na unidade original, o que facilita a interpretação: "3,2 dias a
-  menos de internação". Recomendado sempre que as escalas coincidem.
-* `SMD`, diferença de médias padronizada, quando as escalas diferem entre
-  estudos, por exemplo instrumentos diferentes medindo depressão. O resultado
-  sai em desvios-padrão, sem unidade.
-
-Se as escalas são iguais, prefira `MD`. O `SMD` é a solução para um problema que
-você talvez não tenha, e é bem mais difícil de comunicar ao leitor.
+* `MD`, diferença de médias. O resultado sai na unidade de medida original, por
+  exemplo "3,2 dias a menos de internação". Pressupõe que todos os estudos usaram
+  a mesma escala.
+* `SMD`, diferença de médias padronizada. O resultado sai em unidades de
+  desvio-padrão, sem unidade de medida, o que permite combinar estudos que usaram
+  instrumentos diferentes.
 
 ### Statistical settings (advanced)
 
 **Analysis model**, **Tau method**, **Random CI method** e **Prediction method**
-funcionam e são recomendados exatamente como no
+funcionam exatamente como em
 [o fluxo](flow.qmd#statistical-settings-advanced).
 
 **Prediction interval** aqui vem ligado por padrão (`Yes`), ao contrário do

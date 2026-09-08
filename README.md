@@ -74,15 +74,6 @@ Full documentation, in English and Portuguese, is at
 Every module offers fixed-effect and random-effects models, a forest plot and
 export to PNG (600 DPI) and vector PDF. What varies:
 
-| Feature | Pairwise and single-arm | Network | Diagnostic |
-|---|:---:|:---:|:---:|
-| Leave-one-out and Egger's test | ✅ | ✕ | ✕ |
-| Prediction interval | ✅ (except single proportions) | ✕ | ✕ |
-| Subgroup analysis | ✅ | ✕ | ✅ |
-| Meta-regression | ✅ | ✕ | ✕ |
-| Multiple outcomes in batch | ✅ | ✕ | ✕ |
-| Funnel plot | ✅ | ✅ | ✅ (Deeks' test) |
-
 ## How to cite
 
 If MetaVidence produced results you are publishing, cite it like this:

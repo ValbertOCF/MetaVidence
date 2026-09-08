@@ -284,9 +284,9 @@ O nome do tratamento precisa ser idêntico
 <section id="outcome-settings" class="level3">
 <h3 class="anchored" data-anchor-id="outcome-settings">Outcome settings</h3>
 <p><strong>Outcome name</strong> entra nos títulos e nomes de arquivo.</p>
-<p><strong>Summary measure (sm)</strong> depende do submódulo: <code>RR</code>, <code>OR</code> e <code>RD</code> no binário, <code>MD</code> e <code>SMD</code> no contínuo, e <code>HR</code>, <code>RR</code>, <code>OR</code>, <code>MD</code>, <code>SMD</code> no pré-calculado. As recomendações são as mesmas dos módulos pareados.</p>
-<p><strong>Reference treatment (optional)</strong> define contra qual tratamento os demais são comparados no forest plot. Deixando em branco, o app escolhe sozinho. Recomendação: aponte o comparador clínico relevante, em geral placebo ou cuidado padrão. Isso não muda a rede, só o ponto de vista da figura.</p>
-<p><strong>For ranking, smaller values are</strong> (padrão <code>Good</code>) informa se valores menores são bons ou ruins. É o que faz o ranqueamento por P-score apontar na direção certa. Numa meta-análise de mortalidade, menor é melhor, então <code>Good</code>. Numa de resposta ao tratamento, maior é melhor, então <code>Bad</code>.</p>
+<p><strong>Summary measure (sm)</strong> depende do submódulo: <code>RR</code>, <code>OR</code> e <code>RD</code> no binário, <code>MD</code> e <code>SMD</code> no contínuo, e <code>HR</code>, <code>RR</code>, <code>OR</code>, <code>MD</code>, <code>SMD</code> no pré-calculado. Cada um se comporta como nos módulos pareados.</p>
+<p><strong>Reference treatment (optional)</strong> define contra qual tratamento os demais são comparados no forest plot. Deixando em branco, o app escolhe sozinho. Isso não muda a rede, só o ponto de vista da figura.</p>
+<p><strong>For ranking, smaller values are</strong> (padrão <code>Good</code>) informa se valores menores são bons ou ruins. Define a direção do ranqueamento por P-score. Para um desfecho como mortalidade, em que valores menores são desejáveis, escolha <code>Good</code>; para um como resposta ao tratamento, em que valores maiores são desejáveis, escolha <code>Bad</code>.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

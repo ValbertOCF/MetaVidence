@@ -373,7 +373,7 @@ single_proportions_page <- function() {
                 "single_prop_col_square",
                 "Forest square color",
                 choices = c("Dark blue" = "darkblue", "Blue" = "blue", "Steel blue" = "steelblue", "Dodger blue" = "dodgerblue3", "Navy" = "navy", "Black" = "black", "Gray" = "gray40", "Red" = "red3", "Dark green" = "darkgreen"),
-                selected = "darkblue",
+                selected = "red3",
                 selectize = FALSE
               ),
               selectInput(
@@ -381,6 +381,13 @@ single_proportions_page <- function() {
                 "Forest square line color",
                 choices = c("Black" = "black", "Dark blue" = "darkblue", "Gray" = "gray40", "White" = "white", "Navy" = "navy"),
                 selected = "black",
+                selectize = FALSE
+              ),
+              selectInput(
+                "single_prop_forest_sort",
+                "Sort studies by effect size",
+                choices = c("No" = "no", "Yes" = "yes"),
+                selected = "no",
                 selectize = FALSE
               ),
               forest_column_selector("single_prop_forest_cols")
@@ -553,7 +560,7 @@ single_mean_page <- function() {
                 "single_mean_col_square",
                 "Forest square color",
                 choices = c("Dark blue" = "darkblue", "Blue" = "blue", "Steel blue" = "steelblue", "Dodger blue" = "dodgerblue3", "Navy" = "navy", "Black" = "black", "Gray" = "gray40", "Red" = "red3", "Dark green" = "darkgreen"),
-                selected = "darkblue",
+                selected = "red3",
                 selectize = FALSE
               ),
               selectInput(
@@ -561,6 +568,13 @@ single_mean_page <- function() {
                 "Forest square line color",
                 choices = c("Black" = "black", "Dark blue" = "darkblue", "Gray" = "gray40", "White" = "white", "Navy" = "navy"),
                 selected = "black",
+                selectize = FALSE
+              ),
+              selectInput(
+                "single_mean_forest_sort",
+                "Sort studies by effect size",
+                choices = c("No" = "no", "Yes" = "yes"),
+                selected = "no",
                 selectize = FALSE
               ),
               forest_column_selector("single_mean_forest_cols"),
@@ -738,7 +752,7 @@ binary_page <- function() {
                 "binary_col_square",
                 "Forest square color",
                 choices = c("Dark blue" = "darkblue", "Blue" = "blue", "Steel blue" = "steelblue", "Dodger blue" = "dodgerblue3", "Navy" = "navy", "Black" = "black", "Gray" = "gray40", "Red" = "red3", "Dark green" = "darkgreen"),
-                selected = "darkblue",
+                selected = "red3",
                 selectize = FALSE
               ),
               selectInput(
@@ -746,6 +760,13 @@ binary_page <- function() {
                 "Forest square line color",
                 choices = c("Black" = "black", "Dark blue" = "darkblue", "Gray" = "gray40", "White" = "white", "Navy" = "navy"),
                 selected = "black",
+                selectize = FALSE
+              ),
+              selectInput(
+                "binary_forest_sort",
+                "Sort studies by effect size",
+                choices = c("No" = "no", "Yes" = "yes"),
+                selected = "no",
                 selectize = FALSE
               ),
               forest_column_selector("binary_forest_cols")
@@ -917,7 +938,7 @@ continuous_mean_sd_page <- function() {
                 "cont_mean_col_square",
                 "Forest square color",
                 choices = c("Dark blue" = "darkblue", "Blue" = "blue", "Steel blue" = "steelblue", "Dodger blue" = "dodgerblue3", "Navy" = "navy", "Black" = "black", "Gray" = "gray40", "Red" = "red3", "Dark green" = "darkgreen"),
-                selected = "darkblue",
+                selected = "red3",
                 selectize = FALSE
               ),
               selectInput(
@@ -925,6 +946,13 @@ continuous_mean_sd_page <- function() {
                 "Forest square line color",
                 choices = c("Black" = "black", "Dark blue" = "darkblue", "Gray" = "gray40", "White" = "white", "Navy" = "navy"),
                 selected = "black",
+                selectize = FALSE
+              ),
+              selectInput(
+                "cont_mean_forest_sort",
+                "Sort studies by effect size",
+                choices = c("No" = "no", "Yes" = "yes"),
+                selected = "no",
                 selectize = FALSE
               ),
               forest_column_selector("cont_mean_forest_cols")
@@ -2741,7 +2769,7 @@ diagnostic_single_page <- function() {
               class = "parameter-grid",
               textInput("diagnostic_single_outcome", "Outcome name", value = "Outcome"),
               selectInput("diagnostic_single_model", "Analysis model", choices = c("Random-effects" = "random", "Fixed-effect" = "fixed", "Both" = "both"), selected = "random"),
-              selectInput("diagnostic_single_col_square", "Forest square color", choices = c("Dark blue" = "darkblue", "Blue" = "blue", "Steel blue" = "steelblue", "Black" = "black", "Red" = "red3", "Dark green" = "darkgreen"), selected = "darkblue", selectize = FALSE),
+              selectInput("diagnostic_single_col_square", "Forest square color", choices = c("Dark blue" = "darkblue", "Blue" = "blue", "Steel blue" = "steelblue", "Black" = "black", "Red" = "red3", "Dark green" = "darkgreen"), selected = "red3", selectize = FALSE),
               selectInput("diagnostic_single_col_square_lines", "Forest square line color", choices = c("Black" = "black", "Dark blue" = "darkblue", "Gray" = "gray40", "White" = "white", "Navy" = "navy"), selected = "black", selectize = FALSE)
             ),
             tags$div(class = "status-message prominent-status", textOutput("diagnostic_single_run_status")),
@@ -2888,7 +2916,7 @@ diagnostic_comparative_page <- function() {
               selectInput("diagnostic_comparative_test_b", "Test B", choices = character(0), selected = NULL, selectize = FALSE),
               selectInput("diagnostic_comparative_col_a", "Test A color", choices = c("Black" = "black", "Dark blue" = "darkblue", "Blue" = "blue", "Steel blue" = "steelblue", "Red" = "red3", "Dark green" = "darkgreen"), selected = "darkblue", selectize = FALSE),
               selectInput("diagnostic_comparative_col_b", "Test B color", choices = c("Dark blue" = "darkblue", "Blue" = "blue", "Steel blue" = "steelblue", "Black" = "black", "Red" = "red3", "Dark green" = "darkgreen"), selected = "red3", selectize = FALSE),
-              selectInput("diagnostic_comparative_col_square", "Forest square color", choices = c("Dark blue" = "darkblue", "Blue" = "blue", "Steel blue" = "steelblue", "Black" = "black", "Red" = "red3", "Dark green" = "darkgreen"), selected = "darkblue", selectize = FALSE),
+              selectInput("diagnostic_comparative_col_square", "Forest square color", choices = c("Dark blue" = "darkblue", "Blue" = "blue", "Steel blue" = "steelblue", "Black" = "black", "Red" = "red3", "Dark green" = "darkgreen"), selected = "red3", selectize = FALSE),
               selectInput("diagnostic_comparative_col_square_lines", "Forest square line color", choices = c("Black" = "black", "Dark blue" = "darkblue", "Gray" = "gray40", "White" = "white", "Navy" = "navy"), selected = "black", selectize = FALSE)
             ),
             tags$div(class = "status-message prominent-status", textOutput("diagnostic_comparative_run_status")),
@@ -3209,7 +3237,7 @@ precalc_te_ci_page <- function() {
                 "precalc_te_ci_col_square",
                 "Forest square color",
                 choices = c("Dark blue" = "darkblue", "Blue" = "blue", "Steel blue" = "steelblue", "Dodger blue" = "dodgerblue3", "Navy" = "navy", "Black" = "black", "Gray" = "gray40", "Red" = "red3", "Dark green" = "darkgreen"),
-                selected = "darkblue",
+                selected = "red3",
                 selectize = FALSE
               ),
               selectInput(
@@ -3217,6 +3245,13 @@ precalc_te_ci_page <- function() {
                 "Forest square line color",
                 choices = c("Black" = "black", "Dark blue" = "darkblue", "Gray" = "gray40", "White" = "white", "Navy" = "navy"),
                 selected = "black",
+                selectize = FALSE
+              ),
+              selectInput(
+                "precalc_te_ci_forest_sort",
+                "Sort studies by effect size",
+                choices = c("No" = "no", "Yes" = "yes"),
+                selected = "no",
                 selectize = FALSE
               ),
               forest_column_selector("precalc_te_ci_forest_cols")
@@ -3394,7 +3429,7 @@ precalc_te_sete_page <- function() {
                 "precalc_te_sete_col_square",
                 "Forest square color",
                 choices = c("Dark blue" = "darkblue", "Blue" = "blue", "Steel blue" = "steelblue", "Dodger blue" = "dodgerblue3", "Navy" = "navy", "Black" = "black", "Gray" = "gray40", "Red" = "red3", "Dark green" = "darkgreen"),
-                selected = "darkblue",
+                selected = "red3",
                 selectize = FALSE
               ),
               selectInput(
@@ -3402,6 +3437,13 @@ precalc_te_sete_page <- function() {
                 "Forest square line color",
                 choices = c("Black" = "black", "Dark blue" = "darkblue", "Gray" = "gray40", "White" = "white", "Navy" = "navy"),
                 selected = "black",
+                selectize = FALSE
+              ),
+              selectInput(
+                "precalc_te_sete_forest_sort",
+                "Sort studies by effect size",
+                choices = c("No" = "no", "Yes" = "yes"),
+                selected = "no",
                 selectize = FALSE
               ),
               forest_column_selector("precalc_te_sete_forest_cols")
@@ -3577,7 +3619,7 @@ precalc_te_sete_ci_page <- function() {
                 "precalc_te_sete_ci_col_square",
                 "Forest square color",
                 choices = c("Dark blue" = "darkblue", "Blue" = "blue", "Steel blue" = "steelblue", "Dodger blue" = "dodgerblue3", "Navy" = "navy", "Black" = "black", "Gray" = "gray40", "Red" = "red3", "Dark green" = "darkgreen"),
-                selected = "darkblue",
+                selected = "red3",
                 selectize = FALSE
               ),
               selectInput(
@@ -3585,6 +3627,13 @@ precalc_te_sete_ci_page <- function() {
                 "Forest square line color",
                 choices = c("Black" = "black", "Dark blue" = "darkblue", "Gray" = "gray40", "White" = "white", "Navy" = "navy"),
                 selected = "black",
+                selectize = FALSE
+              ),
+              selectInput(
+                "precalc_te_sete_ci_forest_sort",
+                "Sort studies by effect size",
+                choices = c("No" = "no", "Yes" = "yes"),
+                selected = "no",
                 selectize = FALSE
               ),
               forest_column_selector("precalc_te_sete_ci_forest_cols")
@@ -4169,7 +4218,7 @@ precalc_left_columns <- function(result) {
 # fitted on values the user supplied rather than computed from raw counts, so
 # the labels come from the summary measure chosen in step 2 and not from the
 # data. On a ratio measure everything is back-transformed before it is drawn.
-plot_precalc_te_ci_forest <- function(result, col_square, col_square_lines) {
+plot_precalc_te_ci_forest <- function(result, col_square, col_square_lines, sort_studies = FALSE) {
   cols <- precalc_left_columns(result)
   meta::forest(
     result$meta,
@@ -4181,36 +4230,34 @@ plot_precalc_te_ci_forest <- function(result, col_square, col_square_lines) {
     just = "center",
     test.overall.random = result$model_choice %in% c("random", "both"),
     test.overall.common = result$model_choice %in% c("fixed", "both"),
-    colgap = "3mm",
+    colgap = "2mm",
     col.square = col_square,
     col.square.lines = col_square_lines,
-    sortvar = result$meta$TE
+    sortvar = if (sort_studies) result$meta$TE else NULL
   )
 }
 
 # Leave-one-out: refits without each study in turn, to see whether any single one is carrying the result.
-plot_precalc_te_ci_loo <- function(result) {
+plot_precalc_te_ci_loo <- function(result, col_square = "lightblue") {
   meta_loo <- meta::metainf(result$meta, pooled = resolve_metainf_pool(result$model_choice))
   meta::forest(
     meta_loo,
-    col.bg = "lightblue",
-    col.diamond = "gray",
+    col.bg = col_square,
+    col.diamond = "black",
     xlab = paste(result$label_left, "   ", result$label_right),
     ff.xlab = "bold",
     rightcols = c("effect", "ci", "I2", "pval"),
-    colgap.right = "6mm",
+    colgap.right = "4mm",
     just = "center"
   )
 }
 
 # Funnel plot for small-study effects. It is offered regardless of the number of studies, but reading it below about ten is guesswork.
-plot_precalc_te_ci_funnel <- function(result) {
+plot_precalc_te_ci_funnel <- function(result, col_square = "red") {
   meta::funnel(
     result$meta,
     studlab = TRUE,
-    bg = "red",
-    cex = 2,
-    cex.studlab = 1,
+    bg = col_square,
     random = result$model_choice %in% c("random", "both"),
     common = result$model_choice %in% c("fixed", "both"),
     backtransf = FALSE
@@ -4218,7 +4265,7 @@ plot_precalc_te_ci_funnel <- function(result) {
 }
 
 # The forest split by the chosen column, with the test for subgroup differences in the footer.
-plot_precalc_te_ci_subgroup <- function(result, col_square, col_square_lines) {
+plot_precalc_te_ci_subgroup <- function(result, col_square, col_square_lines, sort_studies = FALSE) {
   cols <- precalc_left_columns(result)
   meta::forest(
     result$subgroup,
@@ -4230,10 +4277,10 @@ plot_precalc_te_ci_subgroup <- function(result, col_square, col_square_lines) {
     just = "center",
     test.overall.random = FALSE,
     test.overall.common = FALSE,
-    colgap = "3mm",
+    colgap = "2mm",
     col.square = col_square,
     col.square.lines = col_square_lines,
-    sortvar = result$subgroup$TE,
+    sortvar = if (sort_studies) result$subgroup$TE else NULL,
     print.subgroup.name = FALSE,
     test.effect.subgroup.random = result$model_choice %in% c("random", "both"),
     test.effect.subgroup.common = result$model_choice %in% c("fixed", "both"),
@@ -4243,7 +4290,7 @@ plot_precalc_te_ci_subgroup <- function(result, col_square, col_square_lines) {
 }
 
 # Bubble plot: each study is a bubble sized by its weight, against the moderator.
-plot_precalc_te_ci_metareg <- function(result) {
+plot_precalc_te_ci_metareg <- function(result, col_square = "red") {
   table_df <- extract_precalc_te_ci_metareg_table(result)
   plot_metareg_with_header(table_df, function() {
     y_axis_label <- if (isTRUE(result$ratio_scale)) paste("Log", result$sm) else result$sm
@@ -4256,7 +4303,7 @@ plot_precalc_te_ci_metareg <- function(result) {
       xlab = result$metareg_col,
       ylab = y_axis_label,
       studlab = TRUE,
-      bg = "red",
+      bg = col_square,
       backtransf = FALSE
     )
   })
@@ -4314,7 +4361,7 @@ extract_precalc_te_ci_metareg_table <- function(result) {
 # Single-arm proportions. The pooled value is stored on the model scale, logit
 # by default, so every plot here goes through the back-transformation before
 # drawing, and the axis is a proportion, not a log-odds.
-plot_single_prop_forest <- function(result, col_square, col_square_lines) {
+plot_single_prop_forest <- function(result, col_square, col_square_lines, sort_studies = FALSE) {
   extra_cols <- forest_extra_columns(result)
   weight_col <- forest_weight_column(result$meta)
   meta::forest(
@@ -4322,41 +4369,38 @@ plot_single_prop_forest <- function(result, col_square, col_square_lines) {
     layout = "Revman5",
     leftcols = c("studlab", extra_cols, "event", "n", weight_col, "effect", "ci"),
     leftlabs = c("Studies", extra_cols, NA, NA, rep(NA, length(weight_col)), "Prevalence", NA),
-    colgap = "3mm",
+    colgap = "2mm",
     pscale = 100,
     pooled.events = TRUE,
-    pooled.totals = TRUE,
     colgap.forest.left = "6mm",
     just = "center",
     col.square = col_square,
     col.square.lines = col_square_lines,
-    sortvar = result$meta$TE
+    sortvar = if (sort_studies) result$meta$TE else NULL
   )
 }
 
 # Leave-one-out for proportions.
-plot_single_prop_loo <- function(result) {
+plot_single_prop_loo <- function(result, col_square = "lightblue") {
   meta_loo <- meta::metainf(result$meta, pooled = resolve_metainf_pool(result$model_choice))
   meta::forest(
     meta_loo,
-    col.bg = "lightblue",
-    col.diamond = "gray",
+    col.bg = col_square,
+    col.diamond = "black",
     pscale = 100,
     ff.xlab = "bold",
     rightcols = c("effect", "ci", "I2"),
-    colgap.right = "6mm",
+    colgap.right = "4mm",
     just = "center"
   )
 }
 
 # Funnel plot for proportions.
-plot_single_prop_funnel <- function(result) {
+plot_single_prop_funnel <- function(result, col_square = "red") {
   meta::funnel(
     result$meta,
     studlab = TRUE,
-    bg = "red",
-    cex = 2,
-    cex.studlab = 1,
+    bg = col_square,
     random = result$model_choice %in% c("random", "both"),
     common = result$model_choice %in% c("fixed", "both"),
     backtransf = FALSE
@@ -4364,7 +4408,7 @@ plot_single_prop_funnel <- function(result) {
 }
 
 # Subgroup forest for proportions.
-plot_single_prop_subgroup <- function(result, col_square, col_square_lines) {
+plot_single_prop_subgroup <- function(result, col_square, col_square_lines, sort_studies = FALSE) {
   extra_cols <- forest_extra_columns(result)
   weight_col <- forest_weight_column(result$subgroup)
   meta::forest(
@@ -4372,15 +4416,14 @@ plot_single_prop_subgroup <- function(result, col_square, col_square_lines) {
     layout = "Revman5",
     leftcols = c("studlab", extra_cols, "event", "n", weight_col, "effect", "ci"),
     leftlabs = c("Studies", extra_cols, NA, NA, rep(NA, length(weight_col)), "Prevalence", NA),
-    colgap = "3mm",
+    colgap = "2mm",
     pscale = 100,
     pooled.events = TRUE,
-    pooled.totals = TRUE,
     colgap.forest.left = "6mm",
     just = "center",
     col.square = col_square,
     col.square.lines = col_square_lines,
-    sortvar = result$subgroup$TE,
+    sortvar = if (sort_studies) result$subgroup$TE else NULL,
     print.subgroup.name = FALSE,
     overall = FALSE,
     overall.hetstat = FALSE,
@@ -4389,7 +4432,7 @@ plot_single_prop_subgroup <- function(result, col_square, col_square_lines) {
 }
 
 # Bubble plot for proportions.
-plot_single_prop_metareg <- function(result) {
+plot_single_prop_metareg <- function(result, col_square = "red") {
   table_df <- extract_single_prop_metareg_table(result)
   plot_metareg_with_header(table_df, function() {
     bubble_object <- meta::metareg(result$meta, stats::as.formula(paste0("~ `", result$metareg_col, "`")))
@@ -4398,7 +4441,7 @@ plot_single_prop_metareg <- function(result) {
       xlab = result$metareg_col,
       ylab = "Logit proportion",
       studlab = TRUE,
-      bg = "red",
+      bg = col_square,
       backtransf = FALSE
     )
   })
@@ -4406,46 +4449,43 @@ plot_single_prop_metareg <- function(result) {
 
 # Single-arm means. Same five plots, no back-transformation needed: the effect
 # is already on the scale the user reads.
-plot_single_mean_forest <- function(result, col_square, col_square_lines) {
+plot_single_mean_forest <- function(result, col_square, col_square_lines, sort_studies = FALSE) {
   extra_cols <- forest_extra_columns(result)
   meta::forest(
     result$meta,
     layout = "Revman5",
     leftcols = c("studlab", extra_cols, "mean", "sd", "n", "w.random", "effect", "ci"),
     leftlabs = c("Studies", extra_cols, NA, NA, NA, NA, "Mean", NA),
-    colgap = "3mm",
-    pooled.totals = TRUE,
+    colgap = "2mm",
     digits = 2,
     digits.sd = 2,
     colgap.forest.left = "6mm",
     just = "center",
     col.square = col_square,
     col.square.lines = col_square_lines,
-    sortvar = result$meta$TE
+    sortvar = if (sort_studies) result$meta$TE else NULL
   )
 }
 
 # Leave-one-out for single-arm means.
-plot_single_mean_loo <- function(result) {
+plot_single_mean_loo <- function(result, col_square = "lightblue") {
   meta_loo <- meta::metainf(result$meta, pooled = resolve_metainf_pool(result$model_choice))
   meta::forest(
     meta_loo,
-    col.bg = "lightblue",
-    col.diamond = "gray",
+    col.bg = col_square,
+    col.diamond = "black",
     rightcols = c("effect", "ci", "I2"),
-    colgap.right = "6mm",
+    colgap.right = "4mm",
     just = "center"
   )
 }
 
 # Funnel plot for single-arm means.
-plot_single_mean_funnel <- function(result) {
+plot_single_mean_funnel <- function(result, col_square = "red") {
   meta::funnel(
     result$meta,
     studlab = TRUE,
-    bg = "red",
-    cex = 2,
-    cex.studlab = 1,
+    bg = col_square,
     random = result$model_choice %in% c("random", "both"),
     common = result$model_choice %in% c("fixed", "both"),
     backtransf = FALSE
@@ -4453,22 +4493,21 @@ plot_single_mean_funnel <- function(result) {
 }
 
 # Subgroup forest for single-arm means.
-plot_single_mean_subgroup <- function(result, col_square, col_square_lines) {
+plot_single_mean_subgroup <- function(result, col_square, col_square_lines, sort_studies = FALSE) {
   extra_cols <- forest_extra_columns(result)
   meta::forest(
     result$subgroup,
     layout = "Revman5",
     leftcols = c("studlab", extra_cols, "mean", "sd", "n", "w.random", "effect", "ci"),
     leftlabs = c("Studies", extra_cols, NA, NA, NA, NA, "Mean", NA),
-    colgap = "3mm",
-    pooled.totals = TRUE,
+    colgap = "2mm",
     digits = 2,
     digits.sd = 2,
     colgap.forest.left = "6mm",
     just = "center",
     col.square = col_square,
     col.square.lines = col_square_lines,
-    sortvar = result$subgroup$TE,
+    sortvar = if (sort_studies) result$subgroup$TE else NULL,
     print.subgroup.name = FALSE,
     overall = FALSE,
     overall.hetstat = FALSE,
@@ -4477,7 +4516,7 @@ plot_single_mean_subgroup <- function(result, col_square, col_square_lines) {
 }
 
 # Bubble plot for single-arm means.
-plot_single_mean_metareg <- function(result) {
+plot_single_mean_metareg <- function(result, col_square = "red") {
   table_df <- extract_single_mean_metareg_table(result)
   plot_metareg_with_header(table_df, function() {
     y_axis_label <- if (identical(result$sm, "MLN")) "Log mean" else "Mean"
@@ -4487,7 +4526,7 @@ plot_single_mean_metareg <- function(result) {
       xlab = result$metareg_col,
       ylab = y_axis_label,
       studlab = TRUE,
-      bg = "red",
+      bg = col_square,
       backtransf = FALSE
     )
   })
@@ -4896,7 +4935,7 @@ plot_diagnostic_single_dor <- function(result, col_square = "darkblue", col_squa
     test.overall.random = FALSE,
     test.overall.common = FALSE,
     just = "center",
-    colgap = "3mm",
+    colgap = "2mm",
     colgap.forest.left = "8mm",
     col.square = col_square,
     col.square.lines = col_square_lines
@@ -5530,14 +5569,14 @@ plot_network_binary_graph <- function(result, col_points = "darkblue") {
 
   netmeta::netgraph(
     result$nma,
-    lwd = 2,
+    lwd = 3,
     plastic = FALSE,
     points = TRUE,
     cex = 1,
     cex.points = 1,
     col.points = col_points,
-    points.min = 5,
-    points.max = 10,
+    points.min = 6,
+    points.max = 12,
     col = "black",
     number.of.studies = TRUE,
     labels = graph_labels,
@@ -5572,7 +5611,7 @@ network_binary_qtest_text <- function(result) {
 }
 
 # Direct against indirect evidence per comparison, drawn from netsplit.
-plot_network_binary_split <- function(result) {
+plot_network_binary_split <- function(result, col_points = "darkblue") {
   split_object <- netmeta::netsplit(
     result$nma,
     random = result$model_choice %in% c("random", "both"),
@@ -5593,9 +5632,9 @@ plot_network_binary_split <- function(result) {
     split_object,
     just = "center",
     col.studlab = "10mm",
-    col.square = "#3d6e84",
+    col.square = col_points,
     col.square.lines = "black",
-    col.diamond.random = "black",
+    col.diamond = "black",
     rightcols = c("effect", "ci", "p"),
     rightlabs = c(NA, NA, "P-value")
   )
@@ -5689,7 +5728,7 @@ network_binary_rank_scores <- function(result) {
 }
 
 # The ranking as probabilities per position, rather than as a single ordering.
-plot_network_binary_rankogram <- function(result) {
+plot_network_binary_rankogram <- function(result, col_points = "darkblue") {
   rank_df <- network_binary_rank_scores(result)
   if (nrow(rank_df) == 0) {
     graphics::plot.new()
@@ -5699,7 +5738,7 @@ plot_network_binary_rankogram <- function(result) {
 
   rank_df$Treatment <- factor(rank_df$Treatment, levels = rev(rank_df$Treatment))
   plot_object <- ggplot2::ggplot(rank_df, ggplot2::aes(x = Treatment, y = P_score)) +
-    ggplot2::geom_col(width = 0.72, fill = "#1769E0") +
+    ggplot2::geom_col(width = 0.72, fill = col_points) +
     ggplot2::geom_text(
       ggplot2::aes(label = paste0(round(P_score * 100, 1), "%")),
       hjust = -0.12,
@@ -6067,7 +6106,7 @@ network_precalc_ci_page <- function() {
 # Two-arm binary outcome. The forest carries both arms' counts, and the labels
 # under it come from resolve_comparison_labels(), which is what decides which
 # side reads Favors the experimental group.
-plot_binary_forest <- function(result, col_square, col_square_lines) {
+plot_binary_forest <- function(result, col_square, col_square_lines, sort_studies = FALSE) {
   extra_cols <- forest_extra_columns(result)
   weight_col <- forest_weight_column(result$meta)
   meta::forest(
@@ -6081,38 +6120,35 @@ plot_binary_forest <- function(result, col_square, col_square_lines) {
     leftlabs = c("Studies", extra_cols, NA, NA, NA, NA, rep(NA, length(weight_col)), NA, NA),
     test.overall.random = result$model_choice %in% c("random", "both"),
     test.overall.common = result$model_choice %in% c("fixed", "both"),
-    colgap = "3mm",
+    colgap = "2mm",
     pooled.events = TRUE,
-    pooled.totals = TRUE,
     col.square = col_square,
     col.square.lines = col_square_lines,
-    sortvar = result$meta$TE
+    sortvar = if (sort_studies) result$meta$TE else NULL
   )
 }
 
 # Leave-one-out for the binary module.
-plot_binary_loo <- function(result) {
+plot_binary_loo <- function(result, col_square = "lightblue") {
   meta_loo <- meta::metainf(result$meta, pooled = resolve_metainf_pool(result$model_choice))
   meta::forest(
     meta_loo,
-    col.bg = "lightblue",
-    col.diamond = "gray",
+    col.bg = col_square,
+    col.diamond = "black",
     xlab = paste(result$label_left, "   ", result$label_right),
     ff.xlab = "bold",
     rightcols = c("effect", "ci", "I2", "pval"),
-    colgap.right = "6mm",
+    colgap.right = "4mm",
     just = "center"
   )
 }
 
 # Funnel plot for the binary module.
-plot_binary_funnel <- function(result) {
+plot_binary_funnel <- function(result, col_square = "red") {
   meta::funnel(
     result$meta,
     studlab = TRUE,
-    bg = "red",
-    cex = 2,
-    cex.studlab = 1,
+    bg = col_square,
     random = result$model_choice %in% c("random", "both"),
     common = result$model_choice %in% c("fixed", "both"),
     backtransf = FALSE
@@ -6120,7 +6156,7 @@ plot_binary_funnel <- function(result) {
 }
 
 # Subgroup forest for the binary module.
-plot_binary_subgroup <- function(result, col_square, col_square_lines) {
+plot_binary_subgroup <- function(result, col_square, col_square_lines, sort_studies = FALSE) {
   extra_cols <- forest_extra_columns(result)
   weight_col <- forest_weight_column(result$subgroup)
   meta::forest(
@@ -6132,12 +6168,11 @@ plot_binary_subgroup <- function(result, col_square, col_square_lines) {
     label.right = result$label_right,
     leftcols = c("studlab", extra_cols, "event.e", "n.e", "event.c", "n.c", weight_col, "effect", "ci"),
     leftlabs = c("Studies", extra_cols, NA, NA, NA, NA, rep(NA, length(weight_col)), NA, NA),
-    colgap = "3mm",
+    colgap = "2mm",
     pooled.events = TRUE,
-    pooled.totals = TRUE,
     col.square = col_square,
     col.square.lines = col_square_lines,
-    sortvar = result$subgroup$TE,
+    sortvar = if (sort_studies) result$subgroup$TE else NULL,
     print.subgroup.name = FALSE,
     test.effect.subgroup.random = result$model_choice %in% c("random", "both"),
     test.effect.subgroup.common = result$model_choice %in% c("fixed", "both"),
@@ -6149,7 +6184,7 @@ plot_binary_subgroup <- function(result, col_square, col_square_lines) {
 }
 
 # Bubble plot for the binary module.
-plot_binary_metareg <- function(result) {
+plot_binary_metareg <- function(result, col_square = "red") {
   table_df <- extract_binary_metareg_table(result)
   plot_metareg_with_header(table_df, function() {
     ylab_value <- if (result$sm %in% c("RR", "OR")) paste("Log", result$sm) else result$sm
@@ -6159,7 +6194,7 @@ plot_binary_metareg <- function(result) {
       xlab = result$metareg_col,
       ylab = ylab_value,
       studlab = TRUE,
-      bg = "red",
+      bg = col_square,
       backtransf = FALSE
     )
   })
@@ -6206,12 +6241,12 @@ extract_binary_metareg_table <- function(result) {
 # Two-arm continuous outcome. The median and IQR module reuses these same
 # plotters: by the time an analysis exists, the quartiles have already been
 # converted to a mean and an SD, so there is nothing left to distinguish.
-plot_cont_mean_forest <- function(result, col_square, col_square_lines) {
+plot_cont_mean_forest <- function(result, col_square, col_square_lines, sort_studies = FALSE) {
   extra_cols <- forest_extra_columns(result)
   meta::forest(
     result$meta,
     layout = "Revman",
-    sortvar = result$meta$TE,
+    sortvar = if (sort_studies) result$meta$TE else NULL,
     label.e = result$label_e,
     label.c = result$label_c,
     label.left = result$label_left,
@@ -6220,39 +6255,36 @@ plot_cont_mean_forest <- function(result, col_square, col_square_lines) {
     leftlabs = c("Studies", extra_cols, "Mean", "SD", "Total", "Mean", "SD", "Total", "Weight", result$sm, "95% CI"),
     test.overall.random = result$model_choice %in% c("random", "both"),
     test.overall.common = result$model_choice %in% c("fixed", "both"),
-    colgap = "3mm",
+    colgap = "2mm",
     digits = 2,
     digits.sd = 2,
     digits.pval = 2,
-    pooled.totals = TRUE,
     col.square = col_square,
     col.square.lines = col_square_lines
   )
 }
 
 # Leave-one-out for the continuous module.
-plot_cont_mean_loo <- function(result) {
+plot_cont_mean_loo <- function(result, col_square = "lightblue") {
   meta_loo <- meta::metainf(result$meta, pooled = resolve_metainf_pool(result$model_choice))
   meta::forest(
     meta_loo,
-    col.bg = "lightblue",
-    col.diamond = "gray",
+    col.bg = col_square,
+    col.diamond = "black",
     xlab = paste(result$label_left, "   ", result$label_right),
     ff.xlab = "bold",
     rightcols = c("effect", "ci", "I2", "pval"),
-    colgap.right = "6mm",
+    colgap.right = "4mm",
     just = "center"
   )
 }
 
 # Funnel plot for the continuous module.
-plot_cont_mean_funnel <- function(result) {
+plot_cont_mean_funnel <- function(result, col_square = "red") {
   meta::funnel(
     result$meta,
     studlab = TRUE,
-    bg = "red",
-    cex = 2,
-    cex.studlab = 1,
+    bg = col_square,
     random = result$model_choice %in% c("random", "both"),
     common = result$model_choice %in% c("fixed", "both"),
     backtransf = FALSE
@@ -6260,23 +6292,22 @@ plot_cont_mean_funnel <- function(result) {
 }
 
 # Subgroup forest for the continuous module.
-plot_cont_mean_subgroup <- function(result, col_square, col_square_lines) {
+plot_cont_mean_subgroup <- function(result, col_square, col_square_lines, sort_studies = FALSE) {
   extra_cols <- forest_extra_columns(result)
   meta::forest(
     result$subgroup,
     layout = "Revman",
-    sortvar = result$subgroup$TE,
+    sortvar = if (sort_studies) result$subgroup$TE else NULL,
     label.e = result$label_e,
     label.c = result$label_c,
     label.left = result$label_left,
     label.right = result$label_right,
     leftcols = c("studlab", extra_cols, "mean.e", "sd.e", "n.e", "mean.c", "sd.c", "n.c", "w.random", "effect", "ci"),
     leftlabs = c("Studies", extra_cols, "Mean", "SD", "Total", "Mean", "SD", "Total", "Weight", result$sm, "95% CI"),
-    colgap = "3mm",
+    colgap = "2mm",
     digits = 2,
     digits.sd = 2,
     digits.pval = 2,
-    pooled.totals = TRUE,
     col.square = col_square,
     col.square.lines = col_square_lines,
     print.subgroup.name = FALSE,
@@ -6290,7 +6321,7 @@ plot_cont_mean_subgroup <- function(result, col_square, col_square_lines) {
 }
 
 # Bubble plot for the continuous module.
-plot_cont_mean_metareg <- function(result) {
+plot_cont_mean_metareg <- function(result, col_square = "red") {
   table_df <- extract_cont_mean_metareg_table(result)
   plot_metareg_with_header(table_df, function() {
     y_axis_label <- if (identical(result$sm, "SMD")) "Standardized mean difference" else "Mean difference"
@@ -6300,7 +6331,7 @@ plot_cont_mean_metareg <- function(result) {
       xlab = result$metareg_col,
       ylab = y_axis_label,
       studlab = TRUE,
-      bg = "red",
+      bg = col_square,
       backtransf = FALSE
     )
   })
@@ -6742,7 +6773,7 @@ ui <- fluidPage(
       })();
     ")),
     tags$link(rel = "stylesheet", href = "assets/easymeta.css?v=54"),
-    tags$script(src = "assets/easymeta.js?v=54")
+    tags$script(src = "assets/easymeta.js?v=56")
   ),
   tabsetPanel(
     id = "pages",
@@ -7849,47 +7880,47 @@ server <- function(input, output, session) {
   register_download_gates(batch_plot_download_ids)
   register_download_notifications(batch_plot_download_ids)
 
-  register_batch_prepare_button("prepare_single_prop_forest", "download_single_prop_forest", function() single_prop_result_dyn(), "single_prop", function() input$single_prop_forest_format, function() input$single_prop_forest_width, function() input$single_prop_forest_height, list(label = "Forestplot", plot_function = function(x) plot_single_prop_forest(x, input$single_prop_col_square, input$single_prop_col_square_lines), require_component = NULL))
-  register_batch_prepare_button("prepare_single_prop_loo", "download_single_prop_loo", function() single_prop_result_dyn(), "single_prop", function() input$single_prop_loo_format, function() input$single_prop_loo_width, function() input$single_prop_loo_height, list(label = "Leave-one-out", plot_function = plot_single_prop_loo, require_component = NULL))
-  register_batch_prepare_button("prepare_single_prop_funnel", "download_single_prop_funnel", function() single_prop_result_dyn(), "single_prop", function() input$single_prop_funnel_format, function() input$single_prop_funnel_width, function() input$single_prop_funnel_height, list(label = "FunnelPlot", plot_function = plot_single_prop_funnel, require_component = NULL))
-  register_batch_prepare_button("prepare_single_prop_subgroup", "download_single_prop_subgroup", function() single_prop_result_dyn(), "single_prop", function() input$single_prop_subgroup_format, function() input$single_prop_subgroup_width, function() input$single_prop_subgroup_height, list(label = "Subgroup", plot_function = function(x) plot_single_prop_subgroup(x, input$single_prop_col_square, input$single_prop_col_square_lines), require_component = "subgroup"))
-  register_batch_prepare_button("prepare_single_prop_metareg", "download_single_prop_metareg", function() single_prop_result_dyn(), "single_prop", function() input$single_prop_metareg_format, function() input$single_prop_metareg_width, function() input$single_prop_metareg_height, list(label = "Metarregression", plot_function = plot_single_prop_metareg, require_component = "metareg"))
+  register_batch_prepare_button("prepare_single_prop_forest", "download_single_prop_forest", function() single_prop_result_dyn(), "single_prop", function() input$single_prop_forest_format, function() input$single_prop_forest_width, function() input$single_prop_forest_height, list(label = "Forestplot", plot_function = function(x) plot_single_prop_forest(x, input$single_prop_col_square, input$single_prop_col_square_lines, identical(input$single_prop_forest_sort, "yes")), require_component = NULL))
+  register_batch_prepare_button("prepare_single_prop_loo", "download_single_prop_loo", function() single_prop_result_dyn(), "single_prop", function() input$single_prop_loo_format, function() input$single_prop_loo_width, function() input$single_prop_loo_height, list(label = "Leave-one-out", plot_function = function(x) plot_single_prop_loo(x, input$single_prop_col_square), require_component = NULL))
+  register_batch_prepare_button("prepare_single_prop_funnel", "download_single_prop_funnel", function() single_prop_result_dyn(), "single_prop", function() input$single_prop_funnel_format, function() input$single_prop_funnel_width, function() input$single_prop_funnel_height, list(label = "FunnelPlot", plot_function = function(x) plot_single_prop_funnel(x, input$single_prop_col_square), require_component = NULL))
+  register_batch_prepare_button("prepare_single_prop_subgroup", "download_single_prop_subgroup", function() single_prop_result_dyn(), "single_prop", function() input$single_prop_subgroup_format, function() input$single_prop_subgroup_width, function() input$single_prop_subgroup_height, list(label = "Subgroup", plot_function = function(x) plot_single_prop_subgroup(x, input$single_prop_col_square, input$single_prop_col_square_lines, identical(input$single_prop_forest_sort, "yes")), require_component = "subgroup"))
+  register_batch_prepare_button("prepare_single_prop_metareg", "download_single_prop_metareg", function() single_prop_result_dyn(), "single_prop", function() input$single_prop_metareg_format, function() input$single_prop_metareg_width, function() input$single_prop_metareg_height, list(label = "Metarregression", plot_function = function(x) plot_single_prop_metareg(x, input$single_prop_col_square), require_component = "metareg"))
 
-  register_batch_prepare_button("prepare_single_mean_forest", "download_single_mean_forest", function() single_mean_result_dyn(), "single_mean", function() input$single_mean_forest_format, function() input$single_mean_forest_width, function() input$single_mean_forest_height, list(label = "Forestplot", plot_function = function(x) plot_single_mean_forest(x, input$single_mean_col_square, input$single_mean_col_square_lines), require_component = NULL))
-  register_batch_prepare_button("prepare_single_mean_loo", "download_single_mean_loo", function() single_mean_result_dyn(), "single_mean", function() input$single_mean_loo_format, function() input$single_mean_loo_width, function() input$single_mean_loo_height, list(label = "Leave_one_out", plot_function = plot_single_mean_loo, require_component = NULL))
-  register_batch_prepare_button("prepare_single_mean_funnel", "download_single_mean_funnel", function() single_mean_result_dyn(), "single_mean", function() input$single_mean_funnel_format, function() input$single_mean_funnel_width, function() input$single_mean_funnel_height, list(label = "FunnelPlot", plot_function = plot_single_mean_funnel, require_component = NULL))
-  register_batch_prepare_button("prepare_single_mean_subgroup", "download_single_mean_subgroup", function() single_mean_result_dyn(), "single_mean", function() input$single_mean_subgroup_format, function() input$single_mean_subgroup_width, function() input$single_mean_subgroup_height, list(label = "Subgroup", plot_function = function(x) plot_single_mean_subgroup(x, input$single_mean_col_square, input$single_mean_col_square_lines), require_component = "subgroup"))
-  register_batch_prepare_button("prepare_single_mean_metareg", "download_single_mean_metareg", function() single_mean_result_dyn(), "single_mean", function() input$single_mean_metareg_format, function() input$single_mean_metareg_width, function() input$single_mean_metareg_height, list(label = "Metarregression", plot_function = plot_single_mean_metareg, require_component = "metareg"))
+  register_batch_prepare_button("prepare_single_mean_forest", "download_single_mean_forest", function() single_mean_result_dyn(), "single_mean", function() input$single_mean_forest_format, function() input$single_mean_forest_width, function() input$single_mean_forest_height, list(label = "Forestplot", plot_function = function(x) plot_single_mean_forest(x, input$single_mean_col_square, input$single_mean_col_square_lines, identical(input$single_mean_forest_sort, "yes")), require_component = NULL))
+  register_batch_prepare_button("prepare_single_mean_loo", "download_single_mean_loo", function() single_mean_result_dyn(), "single_mean", function() input$single_mean_loo_format, function() input$single_mean_loo_width, function() input$single_mean_loo_height, list(label = "Leave_one_out", plot_function = function(x) plot_single_mean_loo(x, input$single_mean_col_square), require_component = NULL))
+  register_batch_prepare_button("prepare_single_mean_funnel", "download_single_mean_funnel", function() single_mean_result_dyn(), "single_mean", function() input$single_mean_funnel_format, function() input$single_mean_funnel_width, function() input$single_mean_funnel_height, list(label = "FunnelPlot", plot_function = function(x) plot_single_mean_funnel(x, input$single_mean_col_square), require_component = NULL))
+  register_batch_prepare_button("prepare_single_mean_subgroup", "download_single_mean_subgroup", function() single_mean_result_dyn(), "single_mean", function() input$single_mean_subgroup_format, function() input$single_mean_subgroup_width, function() input$single_mean_subgroup_height, list(label = "Subgroup", plot_function = function(x) plot_single_mean_subgroup(x, input$single_mean_col_square, input$single_mean_col_square_lines, identical(input$single_mean_forest_sort, "yes")), require_component = "subgroup"))
+  register_batch_prepare_button("prepare_single_mean_metareg", "download_single_mean_metareg", function() single_mean_result_dyn(), "single_mean", function() input$single_mean_metareg_format, function() input$single_mean_metareg_width, function() input$single_mean_metareg_height, list(label = "Metarregression", plot_function = function(x) plot_single_mean_metareg(x, input$single_mean_col_square), require_component = "metareg"))
 
-  register_batch_prepare_button("prepare_binary_forest", "download_binary_forest", function() binary_result_dyn(), "binary", function() input$binary_forest_format, function() input$binary_forest_width, function() input$binary_forest_height, list(label = "Forestplot", plot_function = function(x) plot_binary_forest(x, input$binary_col_square, input$binary_col_square_lines), require_component = NULL))
-  register_batch_prepare_button("prepare_binary_loo", "download_binary_loo", function() binary_result_dyn(), "binary", function() input$binary_loo_format, function() input$binary_loo_width, function() input$binary_loo_height, list(label = "Leave_one_out", plot_function = plot_binary_loo, require_component = NULL))
-  register_batch_prepare_button("prepare_binary_funnel", "download_binary_funnel", function() binary_result_dyn(), "binary", function() input$binary_funnel_format, function() input$binary_funnel_width, function() input$binary_funnel_height, list(label = "FunnelPlot", plot_function = plot_binary_funnel, require_component = NULL))
-  register_batch_prepare_button("prepare_binary_subgroup", "download_binary_subgroup", function() binary_result_dyn(), "binary", function() input$binary_subgroup_format, function() input$binary_subgroup_width, function() input$binary_subgroup_height, list(label = "Subgroup", plot_function = function(x) plot_binary_subgroup(x, input$binary_col_square, input$binary_col_square_lines), require_component = "subgroup"))
-  register_batch_prepare_button("prepare_binary_metareg", "download_binary_metareg", function() binary_result_dyn(), "binary", function() input$binary_metareg_format, function() input$binary_metareg_width, function() input$binary_metareg_height, list(label = "Metarregression", plot_function = plot_binary_metareg, require_component = "metareg"))
+  register_batch_prepare_button("prepare_binary_forest", "download_binary_forest", function() binary_result_dyn(), "binary", function() input$binary_forest_format, function() input$binary_forest_width, function() input$binary_forest_height, list(label = "Forestplot", plot_function = function(x) plot_binary_forest(x, input$binary_col_square, input$binary_col_square_lines, identical(input$binary_forest_sort, "yes")), require_component = NULL))
+  register_batch_prepare_button("prepare_binary_loo", "download_binary_loo", function() binary_result_dyn(), "binary", function() input$binary_loo_format, function() input$binary_loo_width, function() input$binary_loo_height, list(label = "Leave_one_out", plot_function = function(x) plot_binary_loo(x, input$binary_col_square), require_component = NULL))
+  register_batch_prepare_button("prepare_binary_funnel", "download_binary_funnel", function() binary_result_dyn(), "binary", function() input$binary_funnel_format, function() input$binary_funnel_width, function() input$binary_funnel_height, list(label = "FunnelPlot", plot_function = function(x) plot_binary_funnel(x, input$binary_col_square), require_component = NULL))
+  register_batch_prepare_button("prepare_binary_subgroup", "download_binary_subgroup", function() binary_result_dyn(), "binary", function() input$binary_subgroup_format, function() input$binary_subgroup_width, function() input$binary_subgroup_height, list(label = "Subgroup", plot_function = function(x) plot_binary_subgroup(x, input$binary_col_square, input$binary_col_square_lines, identical(input$binary_forest_sort, "yes")), require_component = "subgroup"))
+  register_batch_prepare_button("prepare_binary_metareg", "download_binary_metareg", function() binary_result_dyn(), "binary", function() input$binary_metareg_format, function() input$binary_metareg_width, function() input$binary_metareg_height, list(label = "Metarregression", plot_function = function(x) plot_binary_metareg(x, input$binary_col_square), require_component = "metareg"))
 
-  register_batch_prepare_button("prepare_cont_mean_forest", "download_cont_mean_forest", function() cont_mean_result_dyn(), "cont_mean", function() input$cont_mean_forest_format, function() input$cont_mean_forest_width, function() input$cont_mean_forest_height, list(label = "Forestplot", plot_function = function(x) plot_cont_mean_forest(x, input$cont_mean_col_square, input$cont_mean_col_square_lines), require_component = NULL))
-  register_batch_prepare_button("prepare_cont_mean_loo", "download_cont_mean_loo", function() cont_mean_result_dyn(), "cont_mean", function() input$cont_mean_loo_format, function() input$cont_mean_loo_width, function() input$cont_mean_loo_height, list(label = "Leave_one_out", plot_function = plot_cont_mean_loo, require_component = NULL))
-  register_batch_prepare_button("prepare_cont_mean_funnel", "download_cont_mean_funnel", function() cont_mean_result_dyn(), "cont_mean", function() input$cont_mean_funnel_format, function() input$cont_mean_funnel_width, function() input$cont_mean_funnel_height, list(label = "FunnelPlot", plot_function = plot_cont_mean_funnel, require_component = NULL))
-  register_batch_prepare_button("prepare_cont_mean_subgroup", "download_cont_mean_subgroup", function() cont_mean_result_dyn(), "cont_mean", function() input$cont_mean_subgroup_format, function() input$cont_mean_subgroup_width, function() input$cont_mean_subgroup_height, list(label = "Subgroup", plot_function = function(x) plot_cont_mean_subgroup(x, input$cont_mean_col_square, input$cont_mean_col_square_lines), require_component = "subgroup"))
-  register_batch_prepare_button("prepare_cont_mean_metareg", "download_cont_mean_metareg", function() cont_mean_result_dyn(), "cont_mean", function() input$cont_mean_metareg_format, function() input$cont_mean_metareg_width, function() input$cont_mean_metareg_height, list(label = "Metarregression", plot_function = plot_cont_mean_metareg, require_component = "metareg"))
+  register_batch_prepare_button("prepare_cont_mean_forest", "download_cont_mean_forest", function() cont_mean_result_dyn(), "cont_mean", function() input$cont_mean_forest_format, function() input$cont_mean_forest_width, function() input$cont_mean_forest_height, list(label = "Forestplot", plot_function = function(x) plot_cont_mean_forest(x, input$cont_mean_col_square, input$cont_mean_col_square_lines, identical(input$cont_mean_forest_sort, "yes")), require_component = NULL))
+  register_batch_prepare_button("prepare_cont_mean_loo", "download_cont_mean_loo", function() cont_mean_result_dyn(), "cont_mean", function() input$cont_mean_loo_format, function() input$cont_mean_loo_width, function() input$cont_mean_loo_height, list(label = "Leave_one_out", plot_function = function(x) plot_cont_mean_loo(x, input$cont_mean_col_square), require_component = NULL))
+  register_batch_prepare_button("prepare_cont_mean_funnel", "download_cont_mean_funnel", function() cont_mean_result_dyn(), "cont_mean", function() input$cont_mean_funnel_format, function() input$cont_mean_funnel_width, function() input$cont_mean_funnel_height, list(label = "FunnelPlot", plot_function = function(x) plot_cont_mean_funnel(x, input$cont_mean_col_square), require_component = NULL))
+  register_batch_prepare_button("prepare_cont_mean_subgroup", "download_cont_mean_subgroup", function() cont_mean_result_dyn(), "cont_mean", function() input$cont_mean_subgroup_format, function() input$cont_mean_subgroup_width, function() input$cont_mean_subgroup_height, list(label = "Subgroup", plot_function = function(x) plot_cont_mean_subgroup(x, input$cont_mean_col_square, input$cont_mean_col_square_lines, identical(input$cont_mean_forest_sort, "yes")), require_component = "subgroup"))
+  register_batch_prepare_button("prepare_cont_mean_metareg", "download_cont_mean_metareg", function() cont_mean_result_dyn(), "cont_mean", function() input$cont_mean_metareg_format, function() input$cont_mean_metareg_width, function() input$cont_mean_metareg_height, list(label = "Metarregression", plot_function = function(x) plot_cont_mean_metareg(x, input$cont_mean_col_square), require_component = "metareg"))
 
-  register_batch_prepare_button("prepare_precalc_te_ci_forest", "download_precalc_te_ci_forest", function() precalc_te_ci_result_dyn(), "precalc_te_ci", function() input$precalc_te_ci_forest_format, function() input$precalc_te_ci_forest_width, function() input$precalc_te_ci_forest_height, list(label = "Forestplot", plot_function = function(x) plot_precalc_te_ci_forest(x, input$precalc_te_ci_col_square, input$precalc_te_ci_col_square_lines), require_component = NULL))
-  register_batch_prepare_button("prepare_precalc_te_ci_loo", "download_precalc_te_ci_loo", function() precalc_te_ci_result_dyn(), "precalc_te_ci", function() input$precalc_te_ci_loo_format, function() input$precalc_te_ci_loo_width, function() input$precalc_te_ci_loo_height, list(label = "Leave_one_out", plot_function = plot_precalc_te_ci_loo, require_component = NULL))
-  register_batch_prepare_button("prepare_precalc_te_ci_funnel", "download_precalc_te_ci_funnel", function() precalc_te_ci_result_dyn(), "precalc_te_ci", function() input$precalc_te_ci_funnel_format, function() input$precalc_te_ci_funnel_width, function() input$precalc_te_ci_funnel_height, list(label = "FunnelPlot", plot_function = plot_precalc_te_ci_funnel, require_component = NULL))
-  register_batch_prepare_button("prepare_precalc_te_ci_subgroup", "download_precalc_te_ci_subgroup", function() precalc_te_ci_result_dyn(), "precalc_te_ci", function() input$precalc_te_ci_subgroup_format, function() input$precalc_te_ci_subgroup_width, function() input$precalc_te_ci_subgroup_height, list(label = "Subgroup", plot_function = function(x) plot_precalc_te_ci_subgroup(x, input$precalc_te_ci_col_square, input$precalc_te_ci_col_square_lines), require_component = "subgroup"))
-  register_batch_prepare_button("prepare_precalc_te_ci_metareg", "download_precalc_te_ci_metareg", function() precalc_te_ci_result_dyn(), "precalc_te_ci", function() input$precalc_te_ci_metareg_format, function() input$precalc_te_ci_metareg_width, function() input$precalc_te_ci_metareg_height, list(label = "Metarregression", plot_function = plot_precalc_te_ci_metareg, require_component = "metareg"))
+  register_batch_prepare_button("prepare_precalc_te_ci_forest", "download_precalc_te_ci_forest", function() precalc_te_ci_result_dyn(), "precalc_te_ci", function() input$precalc_te_ci_forest_format, function() input$precalc_te_ci_forest_width, function() input$precalc_te_ci_forest_height, list(label = "Forestplot", plot_function = function(x) plot_precalc_te_ci_forest(x, input$precalc_te_ci_col_square, input$precalc_te_ci_col_square_lines, identical(input$precalc_te_ci_forest_sort, "yes")), require_component = NULL))
+  register_batch_prepare_button("prepare_precalc_te_ci_loo", "download_precalc_te_ci_loo", function() precalc_te_ci_result_dyn(), "precalc_te_ci", function() input$precalc_te_ci_loo_format, function() input$precalc_te_ci_loo_width, function() input$precalc_te_ci_loo_height, list(label = "Leave_one_out", plot_function = function(x) plot_precalc_te_ci_loo(x, input$precalc_te_ci_col_square), require_component = NULL))
+  register_batch_prepare_button("prepare_precalc_te_ci_funnel", "download_precalc_te_ci_funnel", function() precalc_te_ci_result_dyn(), "precalc_te_ci", function() input$precalc_te_ci_funnel_format, function() input$precalc_te_ci_funnel_width, function() input$precalc_te_ci_funnel_height, list(label = "FunnelPlot", plot_function = function(x) plot_precalc_te_ci_funnel(x, input$precalc_te_ci_col_square), require_component = NULL))
+  register_batch_prepare_button("prepare_precalc_te_ci_subgroup", "download_precalc_te_ci_subgroup", function() precalc_te_ci_result_dyn(), "precalc_te_ci", function() input$precalc_te_ci_subgroup_format, function() input$precalc_te_ci_subgroup_width, function() input$precalc_te_ci_subgroup_height, list(label = "Subgroup", plot_function = function(x) plot_precalc_te_ci_subgroup(x, input$precalc_te_ci_col_square, input$precalc_te_ci_col_square_lines, identical(input$precalc_te_ci_forest_sort, "yes")), require_component = "subgroup"))
+  register_batch_prepare_button("prepare_precalc_te_ci_metareg", "download_precalc_te_ci_metareg", function() precalc_te_ci_result_dyn(), "precalc_te_ci", function() input$precalc_te_ci_metareg_format, function() input$precalc_te_ci_metareg_width, function() input$precalc_te_ci_metareg_height, list(label = "Metarregression", plot_function = function(x) plot_precalc_te_ci_metareg(x, input$precalc_te_ci_col_square), require_component = "metareg"))
 
-  register_batch_prepare_button("prepare_precalc_te_sete_forest", "download_precalc_te_sete_forest", function() precalc_te_sete_result_dyn(), "precalc_te_sete", function() input$precalc_te_sete_forest_format, function() input$precalc_te_sete_forest_width, function() input$precalc_te_sete_forest_height, list(label = "Forestplot", plot_function = function(x) plot_precalc_te_ci_forest(x, input$precalc_te_sete_col_square, input$precalc_te_sete_col_square_lines), require_component = NULL))
-  register_batch_prepare_button("prepare_precalc_te_sete_loo", "download_precalc_te_sete_loo", function() precalc_te_sete_result_dyn(), "precalc_te_sete", function() input$precalc_te_sete_loo_format, function() input$precalc_te_sete_loo_width, function() input$precalc_te_sete_loo_height, list(label = "Leave_one_out", plot_function = plot_precalc_te_ci_loo, require_component = NULL))
-  register_batch_prepare_button("prepare_precalc_te_sete_funnel", "download_precalc_te_sete_funnel", function() precalc_te_sete_result_dyn(), "precalc_te_sete", function() input$precalc_te_sete_funnel_format, function() input$precalc_te_sete_funnel_width, function() input$precalc_te_sete_funnel_height, list(label = "FunnelPlot", plot_function = plot_precalc_te_ci_funnel, require_component = NULL))
-  register_batch_prepare_button("prepare_precalc_te_sete_subgroup", "download_precalc_te_sete_subgroup", function() precalc_te_sete_result_dyn(), "precalc_te_sete", function() input$precalc_te_sete_subgroup_format, function() input$precalc_te_sete_subgroup_width, function() input$precalc_te_sete_subgroup_height, list(label = "Subgroup", plot_function = function(x) plot_precalc_te_ci_subgroup(x, input$precalc_te_sete_col_square, input$precalc_te_sete_col_square_lines), require_component = "subgroup"))
-  register_batch_prepare_button("prepare_precalc_te_sete_metareg", "download_precalc_te_sete_metareg", function() precalc_te_sete_result_dyn(), "precalc_te_sete", function() input$precalc_te_sete_metareg_format, function() input$precalc_te_sete_metareg_width, function() input$precalc_te_sete_metareg_height, list(label = "Metarregression", plot_function = plot_precalc_te_ci_metareg, require_component = "metareg"))
+  register_batch_prepare_button("prepare_precalc_te_sete_forest", "download_precalc_te_sete_forest", function() precalc_te_sete_result_dyn(), "precalc_te_sete", function() input$precalc_te_sete_forest_format, function() input$precalc_te_sete_forest_width, function() input$precalc_te_sete_forest_height, list(label = "Forestplot", plot_function = function(x) plot_precalc_te_ci_forest(x, input$precalc_te_sete_col_square, input$precalc_te_sete_col_square_lines, identical(input$precalc_te_sete_forest_sort, "yes")), require_component = NULL))
+  register_batch_prepare_button("prepare_precalc_te_sete_loo", "download_precalc_te_sete_loo", function() precalc_te_sete_result_dyn(), "precalc_te_sete", function() input$precalc_te_sete_loo_format, function() input$precalc_te_sete_loo_width, function() input$precalc_te_sete_loo_height, list(label = "Leave_one_out", plot_function = function(x) plot_precalc_te_ci_loo(x, input$precalc_te_sete_col_square), require_component = NULL))
+  register_batch_prepare_button("prepare_precalc_te_sete_funnel", "download_precalc_te_sete_funnel", function() precalc_te_sete_result_dyn(), "precalc_te_sete", function() input$precalc_te_sete_funnel_format, function() input$precalc_te_sete_funnel_width, function() input$precalc_te_sete_funnel_height, list(label = "FunnelPlot", plot_function = function(x) plot_precalc_te_ci_funnel(x, input$precalc_te_sete_col_square), require_component = NULL))
+  register_batch_prepare_button("prepare_precalc_te_sete_subgroup", "download_precalc_te_sete_subgroup", function() precalc_te_sete_result_dyn(), "precalc_te_sete", function() input$precalc_te_sete_subgroup_format, function() input$precalc_te_sete_subgroup_width, function() input$precalc_te_sete_subgroup_height, list(label = "Subgroup", plot_function = function(x) plot_precalc_te_ci_subgroup(x, input$precalc_te_sete_col_square, input$precalc_te_sete_col_square_lines, identical(input$precalc_te_sete_forest_sort, "yes")), require_component = "subgroup"))
+  register_batch_prepare_button("prepare_precalc_te_sete_metareg", "download_precalc_te_sete_metareg", function() precalc_te_sete_result_dyn(), "precalc_te_sete", function() input$precalc_te_sete_metareg_format, function() input$precalc_te_sete_metareg_width, function() input$precalc_te_sete_metareg_height, list(label = "Metarregression", plot_function = function(x) plot_precalc_te_ci_metareg(x, input$precalc_te_sete_col_square), require_component = "metareg"))
 
-  register_batch_prepare_button("prepare_precalc_te_sete_ci_forest", "download_precalc_te_sete_ci_forest", function() precalc_te_sete_ci_result_dyn(), "precalc_te_sete_ci", function() input$precalc_te_sete_ci_forest_format, function() input$precalc_te_sete_ci_forest_width, function() input$precalc_te_sete_ci_forest_height, list(label = "Forestplot", plot_function = function(x) plot_precalc_te_ci_forest(x, input$precalc_te_sete_ci_col_square, input$precalc_te_sete_ci_col_square_lines), require_component = NULL))
-  register_batch_prepare_button("prepare_precalc_te_sete_ci_loo", "download_precalc_te_sete_ci_loo", function() precalc_te_sete_ci_result_dyn(), "precalc_te_sete_ci", function() input$precalc_te_sete_ci_loo_format, function() input$precalc_te_sete_ci_loo_width, function() input$precalc_te_sete_ci_loo_height, list(label = "Leave_one_out", plot_function = plot_precalc_te_ci_loo, require_component = NULL))
-  register_batch_prepare_button("prepare_precalc_te_sete_ci_funnel", "download_precalc_te_sete_ci_funnel", function() precalc_te_sete_ci_result_dyn(), "precalc_te_sete_ci", function() input$precalc_te_sete_ci_funnel_format, function() input$precalc_te_sete_ci_funnel_width, function() input$precalc_te_sete_ci_funnel_height, list(label = "FunnelPlot", plot_function = plot_precalc_te_ci_funnel, require_component = NULL))
-  register_batch_prepare_button("prepare_precalc_te_sete_ci_subgroup", "download_precalc_te_sete_ci_subgroup", function() precalc_te_sete_ci_result_dyn(), "precalc_te_sete_ci", function() input$precalc_te_sete_ci_subgroup_format, function() input$precalc_te_sete_ci_subgroup_width, function() input$precalc_te_sete_ci_subgroup_height, list(label = "Subgroup", plot_function = function(x) plot_precalc_te_ci_subgroup(x, input$precalc_te_sete_ci_col_square, input$precalc_te_sete_ci_col_square_lines), require_component = "subgroup"))
-  register_batch_prepare_button("prepare_precalc_te_sete_ci_metareg", "download_precalc_te_sete_ci_metareg", function() precalc_te_sete_ci_result_dyn(), "precalc_te_sete_ci", function() input$precalc_te_sete_ci_metareg_format, function() input$precalc_te_sete_ci_metareg_width, function() input$precalc_te_sete_ci_metareg_height, list(label = "Metarregression", plot_function = plot_precalc_te_ci_metareg, require_component = "metareg"))
+  register_batch_prepare_button("prepare_precalc_te_sete_ci_forest", "download_precalc_te_sete_ci_forest", function() precalc_te_sete_ci_result_dyn(), "precalc_te_sete_ci", function() input$precalc_te_sete_ci_forest_format, function() input$precalc_te_sete_ci_forest_width, function() input$precalc_te_sete_ci_forest_height, list(label = "Forestplot", plot_function = function(x) plot_precalc_te_ci_forest(x, input$precalc_te_sete_ci_col_square, input$precalc_te_sete_ci_col_square_lines, identical(input$precalc_te_sete_ci_forest_sort, "yes")), require_component = NULL))
+  register_batch_prepare_button("prepare_precalc_te_sete_ci_loo", "download_precalc_te_sete_ci_loo", function() precalc_te_sete_ci_result_dyn(), "precalc_te_sete_ci", function() input$precalc_te_sete_ci_loo_format, function() input$precalc_te_sete_ci_loo_width, function() input$precalc_te_sete_ci_loo_height, list(label = "Leave_one_out", plot_function = function(x) plot_precalc_te_ci_loo(x, input$precalc_te_sete_ci_col_square), require_component = NULL))
+  register_batch_prepare_button("prepare_precalc_te_sete_ci_funnel", "download_precalc_te_sete_ci_funnel", function() precalc_te_sete_ci_result_dyn(), "precalc_te_sete_ci", function() input$precalc_te_sete_ci_funnel_format, function() input$precalc_te_sete_ci_funnel_width, function() input$precalc_te_sete_ci_funnel_height, list(label = "FunnelPlot", plot_function = function(x) plot_precalc_te_ci_funnel(x, input$precalc_te_sete_ci_col_square), require_component = NULL))
+  register_batch_prepare_button("prepare_precalc_te_sete_ci_subgroup", "download_precalc_te_sete_ci_subgroup", function() precalc_te_sete_ci_result_dyn(), "precalc_te_sete_ci", function() input$precalc_te_sete_ci_subgroup_format, function() input$precalc_te_sete_ci_subgroup_width, function() input$precalc_te_sete_ci_subgroup_height, list(label = "Subgroup", plot_function = function(x) plot_precalc_te_ci_subgroup(x, input$precalc_te_sete_ci_col_square, input$precalc_te_sete_ci_col_square_lines, identical(input$precalc_te_sete_ci_forest_sort, "yes")), require_component = "subgroup"))
+  register_batch_prepare_button("prepare_precalc_te_sete_ci_metareg", "download_precalc_te_sete_ci_metareg", function() precalc_te_sete_ci_result_dyn(), "precalc_te_sete_ci", function() input$precalc_te_sete_ci_metareg_format, function() input$precalc_te_sete_ci_metareg_width, function() input$precalc_te_sete_ci_metareg_height, list(label = "Metarregression", plot_function = function(x) plot_precalc_te_ci_metareg(x, input$precalc_te_sete_ci_col_square), require_component = "metareg"))
 
   register_batch_export_input_watchers("single_prop_forest", single_prop_result, "single_prop", "download_single_prop_forest")
   register_batch_export_input_watchers("single_prop_loo", single_prop_result, "single_prop", "download_single_prop_loo")
@@ -9686,19 +9717,19 @@ server <- function(input, output, session) {
   output$precalc_te_ci_forest <- renderPlot({
     result <- precalc_te_ci_result_dyn()
     validate(need(!is.null(result), "Run the analysis to create the forest plot."))
-    plot_precalc_te_ci_forest(result, input$precalc_te_ci_col_square, input$precalc_te_ci_col_square_lines)
+    plot_precalc_te_ci_forest(result, input$precalc_te_ci_col_square, input$precalc_te_ci_col_square_lines, identical(input$precalc_te_ci_forest_sort, "yes"))
   })
 
   output$precalc_te_ci_loo <- renderPlot({
     result <- precalc_te_ci_result_dyn()
     validate(need(!is.null(result), "Run the analysis to create the leave-one-out plot."))
-    plot_precalc_te_ci_loo(result)
+    plot_precalc_te_ci_loo(result, input$precalc_te_ci_col_square)
   })
 
   output$precalc_te_ci_funnel <- renderPlot({
     result <- precalc_te_ci_result_dyn()
     validate(need(!is.null(result), "Run the analysis to create the funnel plot."))
-    plot_precalc_te_ci_funnel(result)
+    plot_precalc_te_ci_funnel(result, input$precalc_te_ci_col_square)
   })
 
   output$precalc_te_ci_bias <- renderPrint({
@@ -9717,7 +9748,7 @@ server <- function(input, output, session) {
   output$precalc_te_ci_subgroup_plot <- renderPlot({
     result <- precalc_te_ci_result_dyn()
     validate(need(!is.null(result) && !is.null(result$subgroup), if (is.null(result)) "Run the analysis first." else "Pick a subgroup column in this card to create this plot."))
-    plot_precalc_te_ci_subgroup(result, input$precalc_te_ci_col_square, input$precalc_te_ci_col_square_lines)
+    plot_precalc_te_ci_subgroup(result, input$precalc_te_ci_col_square, input$precalc_te_ci_col_square_lines, identical(input$precalc_te_ci_forest_sort, "yes"))
   })
 
   output$precalc_te_ci_subgroup_note <- renderPrint({
@@ -9732,7 +9763,7 @@ server <- function(input, output, session) {
   output$precalc_te_ci_metareg_plot <- renderPlot({
     result <- precalc_te_ci_result_dyn()
     validate(need(!is.null(result) && !is.null(result$metareg), if (is.null(result)) "Run the analysis first." else "Pick a moderator column in this card to create this plot."))
-    plot_precalc_te_ci_metareg(result)
+    plot_precalc_te_ci_metareg(result, input$precalc_te_ci_col_square)
   })
 
   output$precalc_te_ci_metareg_summary <- renderPrint({
@@ -9864,20 +9895,20 @@ server <- function(input, output, session) {
 
   output$download_precalc_te_ci_forest <- precalc_te_ci_download_handler(
     "Forestplot",
-    function(result) plot_precalc_te_ci_forest(result, input$precalc_te_ci_col_square, input$precalc_te_ci_col_square_lines),
+    function(result) plot_precalc_te_ci_forest(result, input$precalc_te_ci_col_square, input$precalc_te_ci_col_square_lines, identical(input$precalc_te_ci_forest_sort, "yes")),
     settings_prefix = "precalc_te_ci_forest"
   )
-  output$download_precalc_te_ci_loo <- precalc_te_ci_download_handler("Leave_one_out", plot_precalc_te_ci_loo, settings_prefix = "precalc_te_ci_loo")
-  output$download_precalc_te_ci_funnel <- precalc_te_ci_download_handler("FunnelPlot", plot_precalc_te_ci_funnel, settings_prefix = "precalc_te_ci_funnel")
+  output$download_precalc_te_ci_loo <- precalc_te_ci_download_handler("Leave_one_out", function(result) plot_precalc_te_ci_loo(result, input$precalc_te_ci_col_square), settings_prefix = "precalc_te_ci_loo")
+  output$download_precalc_te_ci_funnel <- precalc_te_ci_download_handler("FunnelPlot", function(result) plot_precalc_te_ci_funnel(result, input$precalc_te_ci_col_square), settings_prefix = "precalc_te_ci_funnel")
   output$download_precalc_te_ci_subgroup <- precalc_te_ci_download_handler(
     "Subgroup",
-    function(result) plot_precalc_te_ci_subgroup(result, input$precalc_te_ci_col_square, input$precalc_te_ci_col_square_lines),
+    function(result) plot_precalc_te_ci_subgroup(result, input$precalc_te_ci_col_square, input$precalc_te_ci_col_square_lines, identical(input$precalc_te_ci_forest_sort, "yes")),
     require_component = "subgroup",
     settings_prefix = "precalc_te_ci_subgroup"
   )
   output$download_precalc_te_ci_metareg <- precalc_te_ci_download_handler(
     "Metarregression",
-    plot_precalc_te_ci_metareg,
+    function(result) plot_precalc_te_ci_metareg(result, input$precalc_te_ci_col_square),
     require_component = "metareg",
     settings_prefix = "precalc_te_ci_metareg"
   )
@@ -10043,19 +10074,19 @@ server <- function(input, output, session) {
   output$precalc_te_sete_forest <- renderPlot({
     result <- precalc_te_sete_result_dyn()
     validate(need(!is.null(result), "Run the analysis to create the forest plot."))
-    plot_precalc_te_ci_forest(result, input$precalc_te_sete_col_square, input$precalc_te_sete_col_square_lines)
+    plot_precalc_te_ci_forest(result, input$precalc_te_sete_col_square, input$precalc_te_sete_col_square_lines, identical(input$precalc_te_sete_forest_sort, "yes"))
   })
 
   output$precalc_te_sete_loo <- renderPlot({
     result <- precalc_te_sete_result_dyn()
     validate(need(!is.null(result), "Run the analysis to create the leave-one-out plot."))
-    plot_precalc_te_ci_loo(result)
+    plot_precalc_te_ci_loo(result, input$precalc_te_sete_col_square)
   })
 
   output$precalc_te_sete_funnel <- renderPlot({
     result <- precalc_te_sete_result_dyn()
     validate(need(!is.null(result), "Run the analysis to create the funnel plot."))
-    plot_precalc_te_ci_funnel(result)
+    plot_precalc_te_ci_funnel(result, input$precalc_te_sete_col_square)
   })
 
   output$precalc_te_sete_bias <- renderPrint({
@@ -10074,7 +10105,7 @@ server <- function(input, output, session) {
   output$precalc_te_sete_subgroup_plot <- renderPlot({
     result <- precalc_te_sete_result_dyn()
     validate(need(!is.null(result) && !is.null(result$subgroup), if (is.null(result)) "Run the analysis first." else "Pick a subgroup column in this card to create this plot."))
-    plot_precalc_te_ci_subgroup(result, input$precalc_te_sete_col_square, input$precalc_te_sete_col_square_lines)
+    plot_precalc_te_ci_subgroup(result, input$precalc_te_sete_col_square, input$precalc_te_sete_col_square_lines, identical(input$precalc_te_sete_forest_sort, "yes"))
   })
 
   output$precalc_te_sete_subgroup_note <- renderPrint({
@@ -10089,7 +10120,7 @@ server <- function(input, output, session) {
   output$precalc_te_sete_metareg_plot <- renderPlot({
     result <- precalc_te_sete_result_dyn()
     validate(need(!is.null(result) && !is.null(result$metareg), if (is.null(result)) "Run the analysis first." else "Pick a moderator column in this card to create this plot."))
-    plot_precalc_te_ci_metareg(result)
+    plot_precalc_te_ci_metareg(result, input$precalc_te_sete_col_square)
   })
 
   output$precalc_te_sete_metareg_summary <- renderPrint({
@@ -10221,20 +10252,20 @@ server <- function(input, output, session) {
 
   output$download_precalc_te_sete_forest <- precalc_te_sete_download_handler(
     "Forestplot",
-    function(result) plot_precalc_te_ci_forest(result, input$precalc_te_sete_col_square, input$precalc_te_sete_col_square_lines),
+    function(result) plot_precalc_te_ci_forest(result, input$precalc_te_sete_col_square, input$precalc_te_sete_col_square_lines, identical(input$precalc_te_sete_forest_sort, "yes")),
     settings_prefix = "precalc_te_sete_forest"
   )
-  output$download_precalc_te_sete_loo <- precalc_te_sete_download_handler("Leave_one_out", plot_precalc_te_ci_loo, settings_prefix = "precalc_te_sete_loo")
-  output$download_precalc_te_sete_funnel <- precalc_te_sete_download_handler("FunnelPlot", plot_precalc_te_ci_funnel, settings_prefix = "precalc_te_sete_funnel")
+  output$download_precalc_te_sete_loo <- precalc_te_sete_download_handler("Leave_one_out", function(result) plot_precalc_te_ci_loo(result, input$precalc_te_sete_col_square), settings_prefix = "precalc_te_sete_loo")
+  output$download_precalc_te_sete_funnel <- precalc_te_sete_download_handler("FunnelPlot", function(result) plot_precalc_te_ci_funnel(result, input$precalc_te_sete_col_square), settings_prefix = "precalc_te_sete_funnel")
   output$download_precalc_te_sete_subgroup <- precalc_te_sete_download_handler(
     "Subgroup",
-    function(result) plot_precalc_te_ci_subgroup(result, input$precalc_te_sete_col_square, input$precalc_te_sete_col_square_lines),
+    function(result) plot_precalc_te_ci_subgroup(result, input$precalc_te_sete_col_square, input$precalc_te_sete_col_square_lines, identical(input$precalc_te_sete_forest_sort, "yes")),
     require_component = "subgroup",
     settings_prefix = "precalc_te_sete_subgroup"
   )
   output$download_precalc_te_sete_metareg <- precalc_te_sete_download_handler(
     "Metarregression",
-    plot_precalc_te_ci_metareg,
+    function(result) plot_precalc_te_ci_metareg(result, input$precalc_te_sete_col_square),
     require_component = "metareg",
     settings_prefix = "precalc_te_sete_metareg"
   )
@@ -10400,19 +10431,19 @@ server <- function(input, output, session) {
   output$precalc_te_sete_ci_forest <- renderPlot({
     result <- precalc_te_sete_ci_result_dyn()
     validate(need(!is.null(result), "Run the analysis to create the forest plot."))
-    plot_precalc_te_ci_forest(result, input$precalc_te_sete_ci_col_square, input$precalc_te_sete_ci_col_square_lines)
+    plot_precalc_te_ci_forest(result, input$precalc_te_sete_ci_col_square, input$precalc_te_sete_ci_col_square_lines, identical(input$precalc_te_sete_ci_forest_sort, "yes"))
   })
 
   output$precalc_te_sete_ci_loo <- renderPlot({
     result <- precalc_te_sete_ci_result_dyn()
     validate(need(!is.null(result), "Run the analysis to create the leave-one-out plot."))
-    plot_precalc_te_ci_loo(result)
+    plot_precalc_te_ci_loo(result, input$precalc_te_sete_ci_col_square)
   })
 
   output$precalc_te_sete_ci_funnel <- renderPlot({
     result <- precalc_te_sete_ci_result_dyn()
     validate(need(!is.null(result), "Run the analysis to create the funnel plot."))
-    plot_precalc_te_ci_funnel(result)
+    plot_precalc_te_ci_funnel(result, input$precalc_te_sete_ci_col_square)
   })
 
   output$precalc_te_sete_ci_bias <- renderPrint({
@@ -10431,7 +10462,7 @@ server <- function(input, output, session) {
   output$precalc_te_sete_ci_subgroup_plot <- renderPlot({
     result <- precalc_te_sete_ci_result_dyn()
     validate(need(!is.null(result) && !is.null(result$subgroup), if (is.null(result)) "Run the analysis first." else "Pick a subgroup column in this card to create this plot."))
-    plot_precalc_te_ci_subgroup(result, input$precalc_te_sete_ci_col_square, input$precalc_te_sete_ci_col_square_lines)
+    plot_precalc_te_ci_subgroup(result, input$precalc_te_sete_ci_col_square, input$precalc_te_sete_ci_col_square_lines, identical(input$precalc_te_sete_ci_forest_sort, "yes"))
   })
 
   output$precalc_te_sete_ci_subgroup_note <- renderPrint({
@@ -10446,7 +10477,7 @@ server <- function(input, output, session) {
   output$precalc_te_sete_ci_metareg_plot <- renderPlot({
     result <- precalc_te_sete_ci_result_dyn()
     validate(need(!is.null(result) && !is.null(result$metareg), if (is.null(result)) "Run the analysis first." else "Pick a moderator column in this card to create this plot."))
-    plot_precalc_te_ci_metareg(result)
+    plot_precalc_te_ci_metareg(result, input$precalc_te_sete_ci_col_square)
   })
 
   output$precalc_te_sete_ci_metareg_summary <- renderPrint({
@@ -10578,20 +10609,20 @@ server <- function(input, output, session) {
 
   output$download_precalc_te_sete_ci_forest <- precalc_te_sete_ci_download_handler(
     "Forestplot",
-    function(result) plot_precalc_te_ci_forest(result, input$precalc_te_sete_ci_col_square, input$precalc_te_sete_ci_col_square_lines),
+    function(result) plot_precalc_te_ci_forest(result, input$precalc_te_sete_ci_col_square, input$precalc_te_sete_ci_col_square_lines, identical(input$precalc_te_sete_ci_forest_sort, "yes")),
     settings_prefix = "precalc_te_sete_ci_forest"
   )
-  output$download_precalc_te_sete_ci_loo <- precalc_te_sete_ci_download_handler("Leave_one_out", plot_precalc_te_ci_loo, settings_prefix = "precalc_te_sete_ci_loo")
-  output$download_precalc_te_sete_ci_funnel <- precalc_te_sete_ci_download_handler("FunnelPlot", plot_precalc_te_ci_funnel, settings_prefix = "precalc_te_sete_ci_funnel")
+  output$download_precalc_te_sete_ci_loo <- precalc_te_sete_ci_download_handler("Leave_one_out", function(result) plot_precalc_te_ci_loo(result, input$precalc_te_sete_ci_col_square), settings_prefix = "precalc_te_sete_ci_loo")
+  output$download_precalc_te_sete_ci_funnel <- precalc_te_sete_ci_download_handler("FunnelPlot", function(result) plot_precalc_te_ci_funnel(result, input$precalc_te_sete_ci_col_square), settings_prefix = "precalc_te_sete_ci_funnel")
   output$download_precalc_te_sete_ci_subgroup <- precalc_te_sete_ci_download_handler(
     "Subgroup",
-    function(result) plot_precalc_te_ci_subgroup(result, input$precalc_te_sete_ci_col_square, input$precalc_te_sete_ci_col_square_lines),
+    function(result) plot_precalc_te_ci_subgroup(result, input$precalc_te_sete_ci_col_square, input$precalc_te_sete_ci_col_square_lines, identical(input$precalc_te_sete_ci_forest_sort, "yes")),
     require_component = "subgroup",
     settings_prefix = "precalc_te_sete_ci_subgroup"
   )
   output$download_precalc_te_sete_ci_metareg <- precalc_te_sete_ci_download_handler(
     "Metarregression",
-    plot_precalc_te_ci_metareg,
+    function(result) plot_precalc_te_ci_metareg(result, input$precalc_te_sete_ci_col_square),
     require_component = "metareg",
     settings_prefix = "precalc_te_sete_ci_metareg"
   )
@@ -10616,7 +10647,7 @@ server <- function(input, output, session) {
     validate(need(!is.null(result), "Run the analysis to create the forest plot."))
     validate(need(!is_batch_result(result), "Preview is available only for a single outcome. Use Download to export all outcomes."))
 
-    plot_single_prop_forest(result, input$single_prop_col_square, input$single_prop_col_square_lines)
+    plot_single_prop_forest(result, input$single_prop_col_square, input$single_prop_col_square_lines, identical(input$single_prop_forest_sort, "yes"))
   })
 
   output$single_prop_loo <- renderPlot({
@@ -10624,7 +10655,7 @@ server <- function(input, output, session) {
     validate(need(!is.null(result), "Run the analysis to create the leave-one-out plot."))
     validate(need(!is_batch_result(result), "Preview is available only for a single outcome. Use Download to export all outcomes."))
 
-    plot_single_prop_loo(result)
+    plot_single_prop_loo(result, input$single_prop_col_square)
   })
 
   output$single_prop_funnel <- renderPlot({
@@ -10632,7 +10663,7 @@ server <- function(input, output, session) {
     validate(need(!is.null(result), "Run the analysis to create the funnel plot."))
     validate(need(!is_batch_result(result), "Preview is available only for a single outcome. Use Download to export all outcomes."))
 
-    plot_single_prop_funnel(result)
+    plot_single_prop_funnel(result, input$single_prop_col_square)
   })
 
   output$single_prop_bias <- renderPrint({
@@ -10663,7 +10694,7 @@ server <- function(input, output, session) {
     validate(need(!is.null(result) && !is.null(result$subgroup), if (is.null(result)) "Run the analysis first." else "Pick a subgroup column in this card to create this plot."))
     validate(need(!is_batch_result(result), "Preview is available only for a single outcome. Use Download to export all outcomes."))
 
-    plot_single_prop_subgroup(result, input$single_prop_col_square, input$single_prop_col_square_lines)
+    plot_single_prop_subgroup(result, input$single_prop_col_square, input$single_prop_col_square_lines, identical(input$single_prop_forest_sort, "yes"))
   })
 
   output$single_prop_subgroup_note <- renderPrint({
@@ -10684,7 +10715,7 @@ server <- function(input, output, session) {
     validate(need(!is.null(result) && !is.null(result$metareg), if (is.null(result)) "Run the analysis first." else "Pick a moderator column in this card to create this plot."))
     validate(need(!is_batch_result(result), "Preview is available only for a single outcome. Use Download to export all outcomes."))
 
-    plot_single_prop_metareg(result)
+    plot_single_prop_metareg(result, input$single_prop_col_square)
   })
 
   output$single_prop_metareg_summary <- renderPrint({
@@ -10874,28 +10905,26 @@ server <- function(input, output, session) {
   output$download_single_prop_forest <- single_prop_download_handler(
     "forest",
     "Forestplot",
-    function(result) plot_single_prop_forest(result, input$single_prop_col_square, input$single_prop_col_square_lines),
+    function(result) plot_single_prop_forest(result, input$single_prop_col_square, input$single_prop_col_square_lines, identical(input$single_prop_forest_sort, "yes")),
     settings_prefix = "single_prop_forest"
   )
 
   output$download_single_prop_loo <- single_prop_download_handler(
     "loo",
     "Leave-one-out",
-    plot_single_prop_loo,
-    settings_prefix = "single_prop_loo"
+    function(result) plot_single_prop_loo(result, input$single_prop_col_square), settings_prefix = "single_prop_loo"
   )
 
   output$download_single_prop_funnel <- single_prop_download_handler(
     "funnel",
     "FunnelPlot",
-    plot_single_prop_funnel,
-    settings_prefix = "single_prop_funnel"
+    function(result) plot_single_prop_funnel(result, input$single_prop_col_square), settings_prefix = "single_prop_funnel"
   )
 
   output$download_single_prop_subgroup <- single_prop_download_handler(
     "subgroup",
     "Subgroup",
-    function(result) plot_single_prop_subgroup(result, input$single_prop_col_square, input$single_prop_col_square_lines),
+    function(result) plot_single_prop_subgroup(result, input$single_prop_col_square, input$single_prop_col_square_lines, identical(input$single_prop_forest_sort, "yes")),
     require_component = "subgroup",
     settings_prefix = "single_prop_subgroup"
   )
@@ -10903,7 +10932,7 @@ server <- function(input, output, session) {
   output$download_single_prop_metareg <- single_prop_download_handler(
     "metareg",
     "Metarregression",
-    plot_single_prop_metareg,
+    function(result) plot_single_prop_metareg(result, input$single_prop_col_square),
     require_component = "metareg",
     settings_prefix = "single_prop_metareg"
   )
@@ -10926,19 +10955,19 @@ server <- function(input, output, session) {
   output$single_mean_forest <- renderPlot({
     result <- single_mean_result_dyn()
     validate(need(!is.null(result), "Run the analysis to create the forest plot."))
-    plot_single_mean_forest(result, input$single_mean_col_square, input$single_mean_col_square_lines)
+    plot_single_mean_forest(result, input$single_mean_col_square, input$single_mean_col_square_lines, identical(input$single_mean_forest_sort, "yes"))
   })
 
   output$single_mean_loo <- renderPlot({
     result <- single_mean_result_dyn()
     validate(need(!is.null(result), "Run the analysis to create the leave-one-out plot."))
-    plot_single_mean_loo(result)
+    plot_single_mean_loo(result, input$single_mean_col_square)
   })
 
   output$single_mean_funnel <- renderPlot({
     result <- single_mean_result_dyn()
     validate(need(!is.null(result), "Run the analysis to create the funnel plot."))
-    plot_single_mean_funnel(result)
+    plot_single_mean_funnel(result, input$single_mean_col_square)
   })
 
   output$single_mean_bias <- renderPrint({
@@ -10957,7 +10986,7 @@ server <- function(input, output, session) {
   output$single_mean_subgroup_plot <- renderPlot({
     result <- single_mean_result_dyn()
     validate(need(!is.null(result) && !is.null(result$subgroup), if (is.null(result)) "Run the analysis first." else "Pick a subgroup column in this card to create this plot."))
-    plot_single_mean_subgroup(result, input$single_mean_col_square, input$single_mean_col_square_lines)
+    plot_single_mean_subgroup(result, input$single_mean_col_square, input$single_mean_col_square_lines, identical(input$single_mean_forest_sort, "yes"))
   })
 
   output$single_mean_subgroup_note <- renderPrint({
@@ -10972,7 +11001,7 @@ server <- function(input, output, session) {
   output$single_mean_metareg_plot <- renderPlot({
     result <- single_mean_result_dyn()
     validate(need(!is.null(result) && !is.null(result$metareg), if (is.null(result)) "Run the analysis first." else "Pick a moderator column in this card to create this plot."))
-    plot_single_mean_metareg(result)
+    plot_single_mean_metareg(result, input$single_mean_col_square)
   })
 
   output$single_mean_metareg_summary <- renderPrint({
@@ -11100,20 +11129,20 @@ server <- function(input, output, session) {
 
   output$download_single_mean_forest <- single_mean_download_handler(
     "Forestplot",
-    function(result) plot_single_mean_forest(result, input$single_mean_col_square, input$single_mean_col_square_lines),
+    function(result) plot_single_mean_forest(result, input$single_mean_col_square, input$single_mean_col_square_lines, identical(input$single_mean_forest_sort, "yes")),
     settings_prefix = "single_mean_forest"
   )
-  output$download_single_mean_loo <- single_mean_download_handler("Leave_one_out", plot_single_mean_loo, settings_prefix = "single_mean_loo")
-  output$download_single_mean_funnel <- single_mean_download_handler("FunnelPlot", plot_single_mean_funnel, settings_prefix = "single_mean_funnel")
+  output$download_single_mean_loo <- single_mean_download_handler("Leave_one_out", function(result) plot_single_mean_loo(result, input$single_mean_col_square), settings_prefix = "single_mean_loo")
+  output$download_single_mean_funnel <- single_mean_download_handler("FunnelPlot", function(result) plot_single_mean_funnel(result, input$single_mean_col_square), settings_prefix = "single_mean_funnel")
   output$download_single_mean_subgroup <- single_mean_download_handler(
     "Subgroup",
-    function(result) plot_single_mean_subgroup(result, input$single_mean_col_square, input$single_mean_col_square_lines),
+    function(result) plot_single_mean_subgroup(result, input$single_mean_col_square, input$single_mean_col_square_lines, identical(input$single_mean_forest_sort, "yes")),
     require_component = "subgroup",
     settings_prefix = "single_mean_subgroup"
   )
   output$download_single_mean_metareg <- single_mean_download_handler(
     "Metarregression",
-    plot_single_mean_metareg,
+    function(result) plot_single_mean_metareg(result, input$single_mean_col_square),
     require_component = "metareg",
     settings_prefix = "single_mean_metareg"
   )
@@ -11136,19 +11165,19 @@ server <- function(input, output, session) {
   output$binary_forest <- renderPlot({
     result <- binary_result_dyn()
     validate(need(!is.null(result), "Run the analysis to create the forest plot."))
-    plot_binary_forest(result, input$binary_col_square, input$binary_col_square_lines)
+    plot_binary_forest(result, input$binary_col_square, input$binary_col_square_lines, identical(input$binary_forest_sort, "yes"))
   })
 
   output$binary_loo <- renderPlot({
     result <- binary_result_dyn()
     validate(need(!is.null(result), "Run the analysis to create the leave-one-out plot."))
-    plot_binary_loo(result)
+    plot_binary_loo(result, input$binary_col_square)
   })
 
   output$binary_funnel <- renderPlot({
     result <- binary_result_dyn()
     validate(need(!is.null(result), "Run the analysis to create the funnel plot."))
-    plot_binary_funnel(result)
+    plot_binary_funnel(result, input$binary_col_square)
   })
 
   output$binary_bias <- renderPrint({
@@ -11167,7 +11196,7 @@ server <- function(input, output, session) {
   output$binary_subgroup_plot <- renderPlot({
     result <- binary_result_dyn()
     validate(need(!is.null(result) && !is.null(result$subgroup), if (is.null(result)) "Run the analysis first." else "Pick a subgroup column in this card to create this plot."))
-    plot_binary_subgroup(result, input$binary_col_square, input$binary_col_square_lines)
+    plot_binary_subgroup(result, input$binary_col_square, input$binary_col_square_lines, identical(input$binary_forest_sort, "yes"))
   })
 
   output$binary_subgroup_note <- renderPrint({
@@ -11182,7 +11211,7 @@ server <- function(input, output, session) {
   output$binary_metareg_plot <- renderPlot({
     result <- binary_result_dyn()
     validate(need(!is.null(result) && !is.null(result$metareg), if (is.null(result)) "Run the analysis first." else "Pick a moderator column in this card to create this plot."))
-    plot_binary_metareg(result)
+    plot_binary_metareg(result, input$binary_col_square)
   })
 
   output$binary_metareg_summary <- renderPrint({
@@ -11476,20 +11505,20 @@ server <- function(input, output, session) {
 
   output$download_binary_forest <- binary_download_handler(
     "Forestplot",
-    function(result) plot_binary_forest(result, input$binary_col_square, input$binary_col_square_lines),
+    function(result) plot_binary_forest(result, input$binary_col_square, input$binary_col_square_lines, identical(input$binary_forest_sort, "yes")),
     settings_prefix = "binary_forest"
   )
-  output$download_binary_loo <- binary_download_handler("Leave_one_out", plot_binary_loo, settings_prefix = "binary_loo")
-  output$download_binary_funnel <- binary_download_handler("FunnelPlot", plot_binary_funnel, settings_prefix = "binary_funnel")
+  output$download_binary_loo <- binary_download_handler("Leave_one_out", function(result) plot_binary_loo(result, input$binary_col_square), settings_prefix = "binary_loo")
+  output$download_binary_funnel <- binary_download_handler("FunnelPlot", function(result) plot_binary_funnel(result, input$binary_col_square), settings_prefix = "binary_funnel")
   output$download_binary_subgroup <- binary_download_handler(
     "Subgroup",
-    function(result) plot_binary_subgroup(result, input$binary_col_square, input$binary_col_square_lines),
+    function(result) plot_binary_subgroup(result, input$binary_col_square, input$binary_col_square_lines, identical(input$binary_forest_sort, "yes")),
     require_component = "subgroup",
     settings_prefix = "binary_subgroup"
   )
   output$download_binary_metareg <- binary_download_handler(
     "Metarregression",
-    plot_binary_metareg,
+    function(result) plot_binary_metareg(result, input$binary_col_square),
     require_component = "metareg",
     settings_prefix = "binary_metareg"
   )
@@ -11519,7 +11548,7 @@ server <- function(input, output, session) {
   output$network_binary_rankogram <- renderPlot({
     result <- network_binary_result()
     validate(need(!is.null(result), "Run the network analysis to create the rankogram."))
-    plot_network_binary_rankogram(result)
+    plot_network_binary_rankogram(result, input$network_binary_col_points)
   })
 
   output$network_binary_funnel <- renderPlot({
@@ -11640,8 +11669,8 @@ server <- function(input, output, session) {
     "network_binary_graph"
   )
   output$download_network_binary_forest <- network_binary_download_handler("Forestplot", plot_network_binary_forest, "network_binary_forest")
-  output$download_network_binary_split <- network_binary_download_handler("SplitEvidence", plot_network_binary_split, "network_binary_split")
-  output$download_network_binary_rankogram <- network_binary_download_handler("P_score_ranking", plot_network_binary_rankogram, "network_binary_rankogram")
+  output$download_network_binary_split <- network_binary_download_handler("SplitEvidence", function(result) plot_network_binary_split(result, input$network_binary_col_points), "network_binary_split")
+  output$download_network_binary_rankogram <- network_binary_download_handler("P_score_ranking", function(result) plot_network_binary_rankogram(result, input$network_binary_col_points), "network_binary_rankogram")
   output$download_network_binary_funnel <- network_binary_download_handler("Comparison_Adjusted_Funnel", plot_network_binary_funnel, "network_binary_funnel")
 
   output$download_network_binary_pairwise <- downloadHandler(
@@ -11709,7 +11738,7 @@ server <- function(input, output, session) {
   output$network_cont_rankogram <- renderPlot({
     result <- network_cont_result()
     validate(need(!is.null(result), "Run the network analysis to create the rankogram."))
-    plot_network_binary_rankogram(result)
+    plot_network_binary_rankogram(result, input$network_cont_col_points)
   })
 
   output$network_cont_funnel <- renderPlot({
@@ -11830,8 +11859,8 @@ server <- function(input, output, session) {
     "network_cont_graph"
   )
   output$download_network_cont_forest <- network_cont_download_handler("Forestplot", plot_network_binary_forest, "network_cont_forest")
-  output$download_network_cont_split <- network_cont_download_handler("SplitEvidence", plot_network_binary_split, "network_cont_split")
-  output$download_network_cont_rankogram <- network_cont_download_handler("P_score_ranking", plot_network_binary_rankogram, "network_cont_rankogram")
+  output$download_network_cont_split <- network_cont_download_handler("SplitEvidence", function(result) plot_network_binary_split(result, input$network_cont_col_points), "network_cont_split")
+  output$download_network_cont_rankogram <- network_cont_download_handler("P_score_ranking", function(result) plot_network_binary_rankogram(result, input$network_cont_col_points), "network_cont_rankogram")
   output$download_network_cont_funnel <- network_cont_download_handler("Comparison_Adjusted_Funnel", plot_network_binary_funnel, "network_cont_funnel")
 
   output$download_network_cont_pairwise <- downloadHandler(
@@ -11902,7 +11931,7 @@ server <- function(input, output, session) {
   output$network_precalc_ci_rankogram <- renderPlot({
     result <- network_precalc_ci_result()
     validate(need(!is.null(result), "Run the network analysis to create the rankogram."))
-    plot_network_binary_rankogram(result)
+    plot_network_binary_rankogram(result, input$network_precalc_ci_col_points)
   })
 
   output$network_precalc_ci_funnel <- renderPlot({
@@ -12023,8 +12052,8 @@ server <- function(input, output, session) {
     "network_precalc_ci_graph"
   )
   output$download_network_precalc_ci_forest <- network_precalc_ci_download_handler("Forestplot", plot_network_binary_forest, "network_precalc_ci_forest")
-  output$download_network_precalc_ci_split <- network_precalc_ci_download_handler("SplitEvidence", plot_network_binary_split, "network_precalc_ci_split")
-  output$download_network_precalc_ci_rankogram <- network_precalc_ci_download_handler("P_score_ranking", plot_network_binary_rankogram, "network_precalc_ci_rankogram")
+  output$download_network_precalc_ci_split <- network_precalc_ci_download_handler("SplitEvidence", function(result) plot_network_binary_split(result, input$network_precalc_ci_col_points), "network_precalc_ci_split")
+  output$download_network_precalc_ci_rankogram <- network_precalc_ci_download_handler("P_score_ranking", function(result) plot_network_binary_rankogram(result, input$network_precalc_ci_col_points), "network_precalc_ci_rankogram")
   output$download_network_precalc_ci_funnel <- network_precalc_ci_download_handler("Comparison_Adjusted_Funnel", plot_network_binary_funnel, "network_precalc_ci_funnel")
 
   output$download_network_precalc_ci_pairwise <- downloadHandler(
@@ -12085,19 +12114,19 @@ server <- function(input, output, session) {
   output$cont_mean_forest <- renderPlot({
     result <- cont_mean_result_dyn()
     validate(need(!is.null(result), "Run the analysis to create the forest plot."))
-    plot_cont_mean_forest(result, input$cont_mean_col_square, input$cont_mean_col_square_lines)
+    plot_cont_mean_forest(result, input$cont_mean_col_square, input$cont_mean_col_square_lines, identical(input$cont_mean_forest_sort, "yes"))
   })
 
   output$cont_mean_loo <- renderPlot({
     result <- cont_mean_result_dyn()
     validate(need(!is.null(result), "Run the analysis to create the leave-one-out plot."))
-    plot_cont_mean_loo(result)
+    plot_cont_mean_loo(result, input$cont_mean_col_square)
   })
 
   output$cont_mean_funnel <- renderPlot({
     result <- cont_mean_result_dyn()
     validate(need(!is.null(result), "Run the analysis to create the funnel plot."))
-    plot_cont_mean_funnel(result)
+    plot_cont_mean_funnel(result, input$cont_mean_col_square)
   })
 
   output$cont_mean_bias <- renderPrint({
@@ -12116,7 +12145,7 @@ server <- function(input, output, session) {
   output$cont_mean_subgroup_plot <- renderPlot({
     result <- cont_mean_result_dyn()
     validate(need(!is.null(result) && !is.null(result$subgroup), if (is.null(result)) "Run the analysis first." else "Pick a subgroup column in this card to create this plot."))
-    plot_cont_mean_subgroup(result, input$cont_mean_col_square, input$cont_mean_col_square_lines)
+    plot_cont_mean_subgroup(result, input$cont_mean_col_square, input$cont_mean_col_square_lines, identical(input$cont_mean_forest_sort, "yes"))
   })
 
   output$cont_mean_subgroup_note <- renderPrint({
@@ -12131,7 +12160,7 @@ server <- function(input, output, session) {
   output$cont_mean_metareg_plot <- renderPlot({
     result <- cont_mean_result_dyn()
     validate(need(!is.null(result) && !is.null(result$metareg), if (is.null(result)) "Run the analysis first." else "Pick a moderator column in this card to create this plot."))
-    plot_cont_mean_metareg(result)
+    plot_cont_mean_metareg(result, input$cont_mean_col_square)
   })
 
   output$cont_mean_metareg_summary <- renderPrint({
@@ -12259,20 +12288,20 @@ server <- function(input, output, session) {
 
   output$download_cont_mean_forest <- cont_mean_download_handler(
     "Forestplot",
-    function(result) plot_cont_mean_forest(result, input$cont_mean_col_square, input$cont_mean_col_square_lines),
+    function(result) plot_cont_mean_forest(result, input$cont_mean_col_square, input$cont_mean_col_square_lines, identical(input$cont_mean_forest_sort, "yes")),
     settings_prefix = "cont_mean_forest"
   )
-  output$download_cont_mean_loo <- cont_mean_download_handler("Leave_one_out", plot_cont_mean_loo, settings_prefix = "cont_mean_loo")
-  output$download_cont_mean_funnel <- cont_mean_download_handler("FunnelPlot", plot_cont_mean_funnel, settings_prefix = "cont_mean_funnel")
+  output$download_cont_mean_loo <- cont_mean_download_handler("Leave_one_out", function(result) plot_cont_mean_loo(result, input$cont_mean_col_square), settings_prefix = "cont_mean_loo")
+  output$download_cont_mean_funnel <- cont_mean_download_handler("FunnelPlot", function(result) plot_cont_mean_funnel(result, input$cont_mean_col_square), settings_prefix = "cont_mean_funnel")
   output$download_cont_mean_subgroup <- cont_mean_download_handler(
     "Subgroup",
-    function(result) plot_cont_mean_subgroup(result, input$cont_mean_col_square, input$cont_mean_col_square_lines),
+    function(result) plot_cont_mean_subgroup(result, input$cont_mean_col_square, input$cont_mean_col_square_lines, identical(input$cont_mean_forest_sort, "yes")),
     require_component = "subgroup",
     settings_prefix = "cont_mean_subgroup"
   )
   output$download_cont_mean_metareg <- cont_mean_download_handler(
     "Metarregression",
-    plot_cont_mean_metareg,
+    function(result) plot_cont_mean_metareg(result, input$cont_mean_col_square),
     require_component = "metareg",
     settings_prefix = "cont_mean_metareg"
   )

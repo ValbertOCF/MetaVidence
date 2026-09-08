@@ -280,7 +280,7 @@ ul.task-list li input[type="checkbox"] {
 <h4 class="anchored" data-anchor-id="as-duas-formas-podem-se-misturar-no-mesmo-arquivo">As duas formas podem se misturar no mesmo arquivo</h4>
 <p>Preencha as colunas que cada estudo reporta e deixe o resto vazio. O conjunto de exemplo faz exatamente isso: oito estudos com média e desvio, quatro com mediana e quartis. O MetaVidence converte os de mediana antes de agrupar, pelo método de Luo e colaboradores para a média e o de Shi e colaboradores para o desvio-padrão, que são os padrões atuais do pacote <code>meta</code>.</p>
 <p>O <strong>Data check</strong> informa quantos estudos foram convertidos, então o número está na sua frente antes de qualquer coisa rodar e vai direto para a seção de métodos.</p>
-<p>Média e desvio continua sendo a entrada ideal: é o que o estudo mediu, sem nada estimado. A conversão existe para que um estudo que reportou mediana participe da análise em vez de ficar de fora, não como escolha equivalente.</p>
+<p>Média e desvio são os valores que o estudo mediu diretamente. A conversão os estima a partir da mediana e dos quartis, para que um estudo que reportou mediana participe da análise.</p>
 <p>Colunas extras ficam disponíveis para subgrupo e meta-regressão, como nos demais módulos. O <strong>Data check</strong> confere as obrigatórias, conta os estudos e aponta problemas, incluindo <code>event</code> maior que <code>n</code>.</p>
 </section>
 </section>
@@ -290,23 +290,17 @@ ul.task-list li input[type="checkbox"] {
 <section id="proporções-únicas" class="level3">
 <h3 class="anchored" data-anchor-id="proporções-únicas">Proporções únicas</h3>
 <p><strong>Outcome name</strong> entra nos títulos e nos nomes de arquivo, como sempre.</p>
-<p><strong>Summary measure (sm)</strong> (padrão <code>PLOGIT</code>) escolhe a transformação. Proporções perto de 0% ou de 100% têm variância pequena demais e distorcem o agrupamento se usadas cruas, por isso a transformação existe:</p>
+<p><strong>Summary measure (sm)</strong> (padrão <code>PLOGIT</code>) escolhe a escala em que as proporções são agrupadas. Proporções perto de 0% ou de 100% têm variância muito pequena na escala crua, e é isso que as transformações endereçam:</p>
 <ul>
-<li><code>PLOGIT</code>, logito. É o padrão e a recomendação para a maioria dos casos.</li>
-<li><code>PFT</code>, Freeman-Tukey duplo arco-seno. Estabiliza a variância quando há proporções muito próximas dos extremos, mas a volta para a escala de porcentagem é problemática quando os tamanhos amostrais variam muito entre estudos. Use com consciência disso.</li>
+<li><code>PLOGIT</code>, logito. É o padrão.</li>
+<li><code>PFT</code>, Freeman-Tukey duplo arco-seno. Estabiliza a variância em proporções próximas dos extremos. A volta para a escala de porcentagem depende dos tamanhos amostrais dos estudos.</li>
 <li><code>PAS</code>, arco-seno simples.</li>
 <li><code>PLN</code>, logaritmo da proporção.</li>
-<li><code>PRAW</code>, proporção crua, sem transformar. Só faz sentido quando todas as proporções estão longe de 0% e de 100%.</li>
+<li><code>PRAW</code>, proporção crua, sem transformar.</li>
 </ul>
 <p>Os resultados sempre voltam para a escala de porcentagem nos gráficos e tabelas, então a transformação é uma escolha de método, não de apresentação.</p>
 <p><strong>Method</strong> (padrão <code>Inverse</code>) escolhe entre <code>Inverse</code>, o inverso da variância, e <code>GLMM</code>, um modelo logístico de intercepto aleatório.</p>
-<p>Recomendação: mantenha <code>Inverse</code>, que é o que a grande maioria das meta-análises de prevalência publicadas usa, e deixe <code>Tau method</code> em <code>REML</code>.</p>
-<p>Troque para <code>GLMM</code> com <code>Tau method</code> em <code>ML</code> quando o seu conjunto tiver:</p>
-<ul>
-<li>estudos com zero eventos, ou</li>
-<li>proporções muito próximas de 0% ou de 100%.</li>
-</ul>
-<p>Nessas duas situações o <code>Inverse</code> precisa somar 0,5 a cada célula, uma correção de continuidade que desloca justamente os estudos extremos, que são os que você está tentando estimar bem. O <code>GLMM</code> modela as contagens diretamente e dispensa essa correção.</p>
+<p>O <code>Inverse</code> aplica ponderação pelo inverso da variância às proporções transformadas. Com estudos de zero eventos, ou proporções muito próximas de 0% ou de 100%, ele soma 0,5 a cada célula como correção de continuidade. O <code>GLMM</code> modela as contagens diretamente e dispensa essa correção. O <code>GLMM</code> é normalmente usado com <code>Tau method</code> em <code>ML</code>, e o <code>Inverse</code> com <code>REML</code>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -317,7 +311,7 @@ O GLMM não tem coluna de peso
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Um ajuste GLMM não produz peso por estudo, então o forest plot sai sem a coluna Weight e com todos os quadrados do mesmo tamanho. Não é um defeito do gráfico: o peso simplesmente não existe nesse modelo. Se a coluna de peso for importante para a figura do seu artigo, esse é um argumento a favor do <code>Inverse</code>.</p>
+<p>Um ajuste GLMM não produz peso por estudo, então o forest plot sai sem a coluna Weight e com todos os quadrados do mesmo tamanho. Não é um defeito do gráfico: o peso simplesmente não existe nesse modelo. O método <code>Inverse</code> produz peso por estudo, então lá a coluna aparece.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -338,7 +332,7 @@ GLMM exige PLOGIT
 </section>
 <section id="médias-únicas" class="level3">
 <h3 class="anchored" data-anchor-id="médias-únicas">Médias únicas</h3>
-<p><strong>Summary measure (sm)</strong> (padrão <code>MRAW</code>) tem duas opções. <code>MRAW</code> agrupa a média crua, na unidade original, e é a recomendação. <code>MLN</code> agrupa o logaritmo da média, útil quando a medida é positiva e fortemente assimétrica, como tempo até um evento ou concentração sérica.</p>
+<p><strong>Summary measure (sm)</strong> (padrão <code>MRAW</code>) tem duas opções. <code>MRAW</code> agrupa a média na unidade de medida original. <code>MLN</code> agrupa a média na escala logarítmica, o que exige valores estritamente positivos.</p>
 <p><strong>Analysis model</strong>, <strong>Tau method</strong> (padrão <code>REML</code>) e <strong>Prediction interval</strong> (padrão <code>Yes</code>) funcionam como no módulo binário. Não há campo <strong>Method</strong>, nem <strong>Random CI method</strong>, nem <strong>Prediction method</strong>.</p>
 </section>
 </section>

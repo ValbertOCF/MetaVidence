@@ -258,25 +258,23 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="statistical-settings-advanced" class="level3">
 <h3 class="anchored" data-anchor-id="statistical-settings-advanced">Statistical settings (advanced)</h3>
-<p>These fields are the same in most modules, with the same defaults and the same recommendations.</p>
+<p>These fields are the same in most modules, with the same defaults.</p>
 <p><strong>Analysis model</strong> (default <code>Random-effects</code>).</p>
 <ul>
-<li><code>Random-effects</code> lets the true effect vary between studies. This is the usual choice, because populations, doses and follow-up times almost always differ.</li>
-<li><code>Fixed-effect</code> assumes every study estimates exactly the same effect. It is only justified for very close replications.</li>
-<li><code>Both</code> draws the two lines on the same forest plot. It is a good way to show the reader that the conclusion did not depend on the model choice.</li>
+<li><code>Random-effects</code> lets the true effect vary between studies.</li>
+<li><code>Fixed-effect</code> assumes every study estimates exactly the same effect.</li>
+<li><code>Both</code> draws the two lines on the same forest plot.</li>
 </ul>
-<p>Recommendation: keep <code>Random-effects</code>, and use <code>Both</code> when you want the comparison to be explicit in the paper.</p>
-<p><strong>Tau method</strong> (default <code>REML</code>) is the estimator of the between-study variance, τ², which drives the random-effects weights, I² and the prediction interval. Recommendation: keep <code>REML</code>. Use <code>DL</code> (DerSimonian-Laird) only to reproduce an older analysis, since it was the historical default. <code>PM</code> and <code>SJ</code> are defensible alternatives when there are few studies. <code>ML</code> tends to underestimate τ².</p>
-<p><strong>I-squared method</strong> (default <code>Q</code>) decides how I² is computed. <code>Q</code> is the classic Higgins and Thompson definition, I² = (Q − df)/Q, which is what almost every published meta-analysis reports and what the <code>meta</code> package uses by default. <code>From tau-squared</code> derives it from the estimated τ² instead. The two can differ a lot: on the same four studies we get 89.9% with <code>Q</code> and 97.2% with τ². Neither is wrong, they answer slightly different questions, but they are not interchangeable in a manuscript. Recommendation: keep <code>Q</code> unless you have a stated reason, and say in the methods which one you used.</p>
-<p><strong>Prediction interval</strong> adds the range where the effect of a future study is expected to fall. It needs at least 3 studies. Recommendation: turn it on when heterogeneity is relevant, because it is the most honest way to show what that heterogeneity means in practice. With 3 or 4 studies the interval comes out so wide that it rarely says anything. The default varies by module.</p>
+<p><strong>Tau method</strong> (default <code>REML</code>) is the estimator of the between-study variance, τ², which drives the random-effects weights, I² and the prediction interval. <code>REML</code> is restricted maximum likelihood, <code>ML</code> maximum likelihood, <code>DL</code> the DerSimonian-Laird estimator, and <code>PM</code>, <code>SJ</code>, <code>HE</code>, <code>HS</code> and <code>EB</code> the remaining estimators implemented in <code>meta</code>.</p>
+<p><strong>I-squared method</strong> (default <code>Q</code>) decides how I² is computed. <code>Q</code> uses the Higgins and Thompson definition, I² = (Q − df)/Q. <code>From tau-squared</code> derives it from the estimated τ² instead. The two answer different questions and can differ substantially on the same data: on the same four studies we get 89.9% with <code>Q</code> and 97.2% with τ².</p>
+<p><strong>Prediction interval</strong> adds the range where the effect of a future study is expected to fall. It needs at least 3 studies, and with 3 or 4 the interval comes out very wide. The default varies by module.</p>
 <p><strong>Random CI method</strong> (default <code>classic</code>) sets how the confidence interval of the pooled effect is computed under the random-effects model.</p>
 <ul>
 <li><code>classic</code> uses the normal approximation.</li>
-<li><code>HK</code>, Hartung-Knapp, uses the t distribution and generally widens the interval, with better coverage when there are few studies.</li>
+<li><code>HK</code>, Hartung-Knapp, uses the t distribution, which usually widens the interval.</li>
 <li><code>KR</code>, Kenward-Roger, follows the same idea with a variance adjustment.</li>
 </ul>
-<p>Recommendation: consider <code>HK</code> when you have few studies, say fewer than 10, and heterogeneity is present. Keep <code>classic</code> if you need to stay comparable with a published analysis. In rare situations <code>HK</code> produces a narrower interval than <code>classic</code>, so it is worth looking at both before deciding.</p>
-<p><strong>Prediction method</strong> (default <code>V</code>) sets how the prediction interval is computed. <code>V</code> uses the t distribution with k-1 degrees of freedom and <code>HTS</code> uses t with k-2, so it is slightly more conservative. Recommendation: keep <code>V</code>.</p>
+<p><strong>Prediction method</strong> (default <code>V</code>) sets how the prediction interval is computed. <code>V</code> uses the t distribution with k-1 degrees of freedom and <code>HTS</code> uses t with k-2.</p>
 <p><strong>Method</strong>, the pooling method, exists only in the binary and single-proportion modules, with different options in each. See the module page.</p>
 </section>
 <section id="subgroup-and-meta-regression" class="level3">

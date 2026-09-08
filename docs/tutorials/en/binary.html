@@ -244,18 +244,18 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="summary-measure-sm">Summary measure (sm)</h3>
 <p>Default <code>RR</code>. It decides what gets pooled:</p>
 <ul>
-<li><code>RR</code>, risk ratio. The easiest to communicate and the most used in clinical trials. Recommended as a starting point.</li>
+<li><code>RR</code>, risk ratio. The ratio of the event risks in the two groups.</li>
 <li><code>OR</code>, odds ratio. Needed if you will compare against literature that uses OR, or if you intend to use the Peto or GLMM methods, which only work with <code>OR</code>. Remember that the OR drifts away from the RR when the event is common.</li>
-<li><code>RD</code>, risk difference, on the absolute scale. Useful for communicating clinical impact (“7 fewer events per 100 patients”), but usually more heterogeneous across studies than the relative measures.</li>
+<li><code>RD</code>, risk difference, on the absolute scale: the difference between the two event risks, read as events per 100 patients.</li>
 </ul>
 </section>
 <section id="method" class="level3">
 <h3 class="anchored" data-anchor-id="method">Method</h3>
 <p>Default <code>inverse</code>. It is the pooling method, and it exists only in this module and in single proportions:</p>
 <ul>
-<li><code>inverse</code>, inverse variance. The app default, and it serves well when studies are of reasonable size and events are not rare.</li>
-<li><code>MH</code>, Mantel-Haenszel. Behaves better than inverse variance when there are few events or small studies. It is the Cochrane default for binary data. Recommended if your outcome is uncommon.</li>
-<li><code>Peto</code>. Suits very rare events with groups of similar size. Only works with <code>sm = OR</code>.</li>
+<li><code>inverse</code>, inverse variance. The app default. Each study is weighted by the inverse of the variance of its effect estimate.</li>
+<li><code>MH</code>, Mantel-Haenszel. Uses the Mantel-Haenszel weights, computed from the cell counts rather than from the variance of the effect estimate.</li>
+<li><code>Peto</code>. Uses the one-step Peto odds ratio. Only works with <code>sm = OR</code>.</li>
 <li><code>GLMM</code>, generalized linear mixed model. Avoids the continuity corrections the other methods apply to zero cells. Slower. Only works with <code>sm = OR</code>, and the forest plot comes out without the Weight column, because a GLMM fit produces no per-study weight.</li>
 </ul>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -275,7 +275,7 @@ Peto and GLMM require OR
 <section id="the-other-fields" class="level3">
 <h3 class="anchored" data-anchor-id="the-other-fields">The other fields</h3>
 <p><strong>Outcome name</strong>, the outcome direction and the group names work as described in <a href="./flow.html#outcome-settings">Outcome settings</a>.</p>
-<p><strong>Analysis model</strong>, <strong>Tau method</strong>, <strong>Random CI method</strong> and <strong>Prediction method</strong> work and are recommended as in <a href="./flow.html#statistical-settings-advanced">Statistical settings (advanced)</a>. In this module the <strong>Prediction interval</strong> is off by default.</p>
+<p><strong>Analysis model</strong>, <strong>Tau method</strong>, <strong>Random CI method</strong> and <strong>Prediction method</strong> work as described in <a href="./flow.html#statistical-settings-advanced">Statistical settings (advanced)</a>. In this module the <strong>Prediction interval</strong> is off by default.</p>
 </section>
 </section>
 <section id="step-3-export-and-results" class="level2">

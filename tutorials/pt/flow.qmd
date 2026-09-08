@@ -90,58 +90,40 @@ módulo.
 
 ### Statistical settings (advanced) {#statistical-settings-advanced}
 
-Estes campos são os mesmos na maioria dos módulos, com os mesmos padrões e as
-mesmas recomendações.
+Estes campos são os mesmos na maioria dos módulos, com os mesmos padrões.
 
 **Analysis model** (padrão `Random-effects`).
 
-* `Random-effects` deixa o efeito verdadeiro variar entre estudos. É a escolha
-  usual, porque populações, doses e tempos de seguimento quase sempre diferem.
+* `Random-effects` deixa o efeito verdadeiro variar entre estudos.
 * `Fixed-effect` assume que todos os estudos estimam exatamente o mesmo efeito.
-  Só se justifica em réplicas muito próximas.
-* `Both` desenha as duas linhas no mesmo forest plot. É uma boa forma de mostrar
-  ao leitor que a conclusão não dependeu da escolha do modelo.
-
-Recomendação: mantenha `Random-effects`, e use `Both` quando quiser deixar a
-comparação explícita no artigo.
+* `Both` desenha as duas linhas no mesmo forest plot.
 
 **Tau method** (padrão `REML`) é o estimador da variância entre estudos, o τ²,
-que governa os pesos do modelo aleatório, o I² e o intervalo de predição.
-Recomendação: mantenha `REML`. Use `DL` (DerSimonian-Laird) apenas para
-reproduzir uma análise antiga, já que foi o padrão histórico. `PM` e `SJ` são
-alternativas defensáveis quando há poucos estudos. `ML` tende a subestimar o τ².
+que governa os pesos do modelo aleatório, o I² e o intervalo de predição. `REML`
+é a máxima verossimilhança restrita, `ML` a máxima verossimilhança, `DL` o
+estimador de DerSimonian-Laird, e `PM`, `SJ`, `HE`, `HS` e `EB` os demais
+estimadores implementados no `meta`.
 
-**I-squared method** (padrão `Q`) define como o I² é calculado. `Q` é a definição
-clássica de Higgins e Thompson, I² = (Q − gl)/Q, que é o que praticamente todo
-artigo publicado reporta e o que o pacote `meta` usa por padrão. `From
-tau-squared` deriva o valor do τ² estimado. Os dois podem divergir bastante: nos
-mesmos quatro estudos, 89,9% com `Q` e 97,2% com τ². Nenhum está errado, eles
-respondem a perguntas ligeiramente diferentes, mas não são intercambiáveis num
-manuscrito. Recomendação: mantenha `Q`, a menos que tenha um motivo declarado, e
-diga nos métodos qual você usou.
+**I-squared method** (padrão `Q`) define como o I² é calculado. `Q` usa a
+definição de Higgins e Thompson, I² = (Q − gl)/Q. `From tau-squared` deriva o
+valor do τ² estimado. Os dois respondem a perguntas diferentes e podem divergir
+bastante nos mesmos dados: nos mesmos quatro estudos, 89,9% com `Q` e 97,2% com
+τ².
 
 **Prediction interval** acrescenta ao forest plot a faixa onde se espera o efeito
-de um estudo futuro. Precisa de pelo menos 3 estudos. Recomendação: ligue quando
-houver heterogeneidade relevante, porque é a forma mais honesta de mostrar o que
-a heterogeneidade significa na prática. Com 3 ou 4 estudos o intervalo sai tão
-largo que raramente informa algo. O padrão varia por módulo.
+de um estudo futuro. Precisa de pelo menos 3 estudos, e com 3 ou 4 o intervalo
+sai muito largo. O padrão varia por módulo.
 
 **Random CI method** (padrão `classic`) define como o intervalo de confiança do
 efeito agrupado é calculado no modelo aleatório.
 
 * `classic` usa a aproximação normal.
-* `HK`, Hartung-Knapp, usa a distribuição t e em geral alarga o intervalo, com
-  cobertura melhor quando há poucos estudos.
+* `HK`, Hartung-Knapp, usa a distribuição t, o que em geral alarga o intervalo.
 * `KR`, Kenward-Roger, segue a mesma ideia com um ajuste da variância.
-
-Recomendação: considere `HK` quando tiver poucos estudos, digamos menos de 10, e
-heterogeneidade presente. Mantenha `classic` se precisar ser comparável a uma
-análise já publicada. Em situações raras o `HK` produz um intervalo mais estreito
-que o `classic`, então vale olhar os dois antes de decidir.
 
 **Prediction method** (padrão `V`) define como o intervalo de predição é
 calculado. `V` usa a distribuição t com k-1 graus de liberdade e `HTS` usa t com
-k-2, portanto é um pouco mais conservador. Recomendação: mantenha `V`.
+k-2.
 
 **Method**, o método de agrupamento, só existe nos módulos binário e de
 proporções únicas, com opções diferentes em cada um. Veja a página do módulo.

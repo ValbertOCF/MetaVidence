@@ -1,0 +1,150 @@
+---
+title: "Comece aqui"
+subtitle: "Abrir no navegador, ou instalar o R e rodar no seu computador"
+---
+
+Há duas formas de usar o MetaVidence, e as duas fazem exatamente as mesmas
+contas. Comece pelo navegador, que não pede instalação nenhuma. Se você for usar
+com frequência, vale o caminho do R, que abre bem mais rápido e funciona sem
+internet.
+
+# No navegador
+
+## 1. Abra o site
+
+Vá para [metavidence.com](https://metavidence.com). Não precisa criar conta, nem
+instalar nada, nem enviar arquivo para servidor nenhum.
+
+## 2. Espere o primeiro carregamento
+
+Na primeira visita aparece uma tela com a palavra **Loading** e uma barra. O
+navegador está baixando o R e os pacotes estatísticos compilados para rodar
+dentro dele. Isso leva alguns minutos numa conexão comum.
+
+Enquanto espera, você pode usar os dois links da tela, que abrem em outra aba e
+não interrompem o carregamento.
+
+Da segunda vez em diante o navegador já tem os arquivos guardados e abre bem mais
+rápido.
+
+## 3. Siga o fluxo
+
+Com o app aberto, siga [o fluxo em três passos](flow.qmd): ele mostra como
+escolher o módulo, carregar os dados, ajustar os parâmetros e exportar os
+resultados.
+
+# No R, no seu computador
+
+Vale a pena se você vai usar bastante: abre em segundos em vez de minutos, roda
+sem internet depois de instalado, e aguenta conjuntos maiores com mais folga.
+
+Você vai instalar três coisas, nesta ordem: o R, o RStudio e o pacote
+`metavidence`.
+
+## 1. Instale o R
+
+O R é a linguagem que faz as contas. O RStudio sozinho não funciona sem ele, por
+isso o R vem primeiro.
+
+1. Vá para [cran.r-project.org](https://cran.r-project.org).
+2. Clique no link do seu sistema: **Download R for Windows**, **Download R for
+   macOS** ou **Download R for Linux**.
+3. No Windows, clique em **base** e depois em **Download R para Windows**. No
+   macOS, escolha o arquivo `.pkg` que corresponde ao seu processador: o de
+   **arm64** para Macs com chip Apple (M1 em diante) e o outro para Macs Intel.
+4. Abra o arquivo baixado e siga o instalador, aceitando as opções padrão.
+
+O MetaVidence precisa de **R 4.1 ou mais novo**. Qualquer versão baixada hoje do
+CRAN atende.
+
+## 2. Instale o RStudio
+
+O RStudio é a janela por onde você usa o R. Dá para viver sem ele, mas com ele
+tudo fica mais simples.
+
+1. Vá para
+   [posit.co/download/rstudio-desktop](https://posit.co/download/rstudio-desktop/).
+2. Baixe a versão gratuita, **RStudio Desktop**, para o seu sistema.
+3. Abra o arquivo e siga o instalador.
+
+## 3. Abra o RStudio e encontre o Console
+
+Abra o RStudio. A janela é dividida em painéis; o que interessa agora é o
+**Console**, normalmente no canto inferior esquerdo, com um `>` piscando.
+
+É ali que você cola os comandos dos próximos passos. Cole a linha e aperte Enter.
+
+## 4. Instale o pacote
+
+O MetaVidence foi submetido à CRAN. Até ele ser aceito, a instalação é a partir
+do repositório de origem. Cole estas duas linhas no Console, uma de cada vez,
+apertando Enter depois de cada:
+
+```r
+install.packages("remotes")
+```
+
+```r
+remotes::install_github("ValbertOCF/MetaVidence", subdir = "pkg")
+```
+
+A primeira linha instala o auxiliar que sabe instalar a partir do GitHub. A
+segunda baixa o MetaVidence e os pacotes de que ele depende, entre eles `meta`,
+`metafor`, `netmeta`, `mada` e `shiny`. São muitos arquivos, então a primeira
+instalação demora alguns minutos. Deixe rodar até o `>` voltar a aparecer
+sozinho no Console.
+
+Quando o MetaVidence estiver na CRAN, isso vira uma linha só,
+`install.packages("metavidence")`, e esta página vai dizer isso.
+
+Se o R perguntar algo como *"Do you want to install from sources the package
+which needs compilation?"*, responda `no` e aperte Enter. A versão pronta é
+suficiente e instala muito mais rápido.
+
+## 5. Rode o MetaVidence
+
+Com a instalação terminada, cole:
+
+```r
+metavidence::run_app()
+```
+
+O MetaVidence abre numa janela do RStudio ou no seu navegador, com a mesma
+aparência da versão online. Daqui em diante é o mesmo fluxo de três passos.
+
+::: {.callout-important}
+## O Console fica ocupado enquanto o app roda
+Isso é normal: o R está servindo o aplicativo. Para voltar a usar o Console,
+feche a janela do MetaVidence ou clique no símbolo de parar (o quadrado
+vermelho) no canto do Console.
+:::
+
+## 6. Nas próximas vezes
+
+Instalar é só uma vez. Depois disso, abra o RStudio e rode apenas:
+
+```r
+metavidence::run_app()
+```
+
+Para atualizar quando sair uma versão nova, repita o comando do passo 4.
+
+## Se algo der errado
+
+**O comando de instalação devolve um erro dizendo que o pacote não está
+disponível.** Confira se a linha foi colada inteira, incluindo as aspas. Se
+estiver correta, pode ser uma versão de R antiga demais: rode
+`R.version.string` no Console e confirme que é 4.1 ou maior.
+
+**A instalação para no meio, num pacote de que o MetaVidence depende.** Rode
+`install.packages("nome_do_pacote")` só para aquele pacote, veja a mensagem de
+erro dele, e depois repita o comando do passo 4.
+
+**`run_app()` diz que não encontrou a pasta do aplicativo.** Instale de novo com
+o comando do passo 4.
+
+**Nada abre ao rodar `run_app()`.** Force o navegador com:
+
+```r
+metavidence::run_app(launch.browser = TRUE)
+```

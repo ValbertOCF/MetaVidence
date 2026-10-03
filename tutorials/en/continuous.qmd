@@ -1,0 +1,110 @@
+---
+title: "Continuous outcomes"
+subtitle: "Mean difference and standardized mean difference"
+---
+
+Use this module when the outcome is a numeric measure: blood pressure, days in
+hospital, quality of life score. Follow [the three-step flow](flow.qmd); this
+page covers what the data has to look like and what changes in step 2.
+
+## Step 1, the data
+
+Every study needs `study`, `n.e` and `n.c`. Then, for each group, whatever the
+paper actually reported.
+
+### Mean and standard deviation
+
+| Column | What it is |
+|---|---|
+| `n.e`, `mean.e`, `sd.e` | size, mean and SD of the experimental group |
+| `n.c`, `mean.c`, `sd.c` | the same for the control group |
+
+### A study reporting a median is accepted too
+
+| Column | What it is |
+|---|---|
+| `n.e`, `median.e`, `q1.e`, `q3.e` | size, median and quartiles of the experimental group |
+| `n.c`, `median.c`, `q1.c`, `q3.c` | the same for the control group |
+
+`min.e`, `max.e`, `min.c` and `max.c` are optional. They can stand in for the
+quartiles when a paper reports only a range, and the conversion is then less
+precise.
+
+### The two can be mixed in one file
+
+Fill the columns each study reports and leave the rest empty. The example dataset
+does exactly that: eight studies with mean and SD, four with median and
+quartiles. MetaVidence converts the median studies before pooling, using the
+method of Luo and colleagues for the mean and that of Shi and colleagues for the
+standard deviation, which are the current defaults of the `meta` package.
+
+The **Data check** reports how many studies were converted, so the number is in
+front of you before anything runs and can go straight into the methods section.
+
+::: {.callout-warning}
+## The conversion has limits
+It assumes an approximately symmetric distribution. With strongly skewed data,
+which is often exactly why the paper reported a median in the first place, the
+estimated mean may not represent the study well. Report how many studies were
+converted, and consider a sensitivity analysis without them.
+:::
+
+::: {.callout-important}
+## A median with a standard deviation and nothing else
+That pair cannot be converted, and MetaVidence refuses the file rather than
+accept it. Left alone, the `meta` package would drop those studies from the
+analysis without a word, and a meta-analysis that is quietly missing studies is
+worse than an error message.
+:::
+
+The Data check otherwise works as in the binary module: it verifies the required
+columns, counts the studies, lists the columns left for subgroup and
+meta-regression and flags problems, including quartiles out of order.
+
+## Step 2, the parameters
+
+### Outcome settings
+
+**Outcome name**, **If the outcome increases, is that beneficial or harmful?**,
+**Experimental group name** and **Control group name** work exactly as in the
+binary module.
+
+**Summary measure (sm)** (default `MD`) decides the scale of the pooled result:
+
+* `MD`, mean difference. The result comes out in the original measurement unit,
+  for example "3.2 fewer days in hospital". It assumes every study used the same
+  scale.
+* `SMD`, standardized mean difference. The result comes out in standard
+  deviation units, with no measurement unit, so studies that used different
+  instruments can be combined.
+
+### Statistical settings (advanced)
+
+**Analysis model**, **Tau method**, **Random CI method** and **Prediction
+method** work exactly as in
+[the flow](flow.qmd#statistical-settings-advanced).
+
+**Prediction interval** here is on by default (`Yes`), unlike the binary module.
+Turn it off if you have fewer than 3 studies, or if the interval is so wide that
+it gets in the way of reading the figure.
+
+There is no **Method** field in this module. Mantel-Haenszel, Peto and GLMM are
+methods for event counts, and do not apply to means.
+
+## Step 3, export and results
+
+The cards are the same as in the binary module, with the same behavior:
+
+* **Forest plot**, with each study effect, the weights and the pooled diamond.
+* **Leave-one-out analysis**, to see whether a single study holds up the result.
+* **Funnel plot** and **Small-study effects**, the latter with Egger's test.
+* **Subgroup analysis**, with the column selector inside the card itself.
+* **Meta-regression**, with numeric moderators and a bubble plot.
+* **Subgroup summary table** and **Meta-regression summary table**, as XLSX.
+
+::: {.callout-warning}
+## Check the sign before pooling
+In continuous outcomes it is common for some studies to report change from
+baseline and others the final value. Mixing the two without thinking produces a
+meaningless pooled effect. Standardize before loading the spreadsheet.
+:::

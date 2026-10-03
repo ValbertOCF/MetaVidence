@@ -1,0 +1,60 @@
+# --- files from other projects that happen to live in this folder ---
+hackathon_mailmerge.gs
+hackathon_wpp.gs
+realocacao_grupos.gs
+build_deck.js
+fluxogramas_grupos_combinado.svg
+fluxo_grupos_pesquisa_x_edition.svg
+fluxo_grupos_pesquisa_x_edition.png
+
+# --- local backups and scratch files ---
+app_backup_pre_redesign.R
+app.R.bak
+app.R.bak2
+batch_fixture.xlsx
+image.jpeg
+
+# --- paper material: visual abstract, flowchart, verification scripts ---
+# Stays out of the public repository until the IJMI submission.
+design/
+
+# --- forest plots captured from published papers, for the validation ---
+# Third-party figures: they are the input to the reproduction check, not
+# something this repository may redistribute.
+validações/
+
+# --- shinylive working folder, recreated by build_shinylive.R ---
+shinylive_app/
+
+# --- local deployment records (shinyapps.io) ---
+rsconnect/
+
+# --- R ---
+.Rhistory
+.RData
+.Rproj.user/
+*.Rproj
+
+# --- system and editors ---
+.DS_Store
+Thumbs.db
+.claude/
+
+# --- R package build artefacts ---
+# pkg/inst/app/ IS versioned on purpose: without it,
+# install_github(subdir = "pkg") assembles a package with no application.
+# build_package.R regenerates those files from the root app.R and checks that
+# they match.
+*.tar.gz
+*.Rcheck/
+
+# --- tutorials: the source is tutorials/*.qmd, the rest is generated ---
+# What goes online is docs/tutorials/, put back by build_shinylive.R.
+# Quarto also writes its own .gitignore inside tutorials/pt and tutorials/en;
+# the rule below does not depend on those surviving.
+tutorials/_site/
+tutorials/*/.quarto/
+
+# --- submission folder: carries the usability results and the ---
+# --- reproduction table, which do not belong in the public repo ---
+manuscript/

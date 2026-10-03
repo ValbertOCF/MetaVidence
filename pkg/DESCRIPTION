@@ -1,0 +1,44 @@
+Package: metavidence
+Type: Package
+Title: No-Code Meta-Analysis 'Shiny' Application
+Version: 0.1.0
+Authors@R: person(given = c("Valbert", "Oliveira"), family = "Costa Filho",
+                  email = "valbert@alu.ufc.br",
+                  role = c("aut", "cre"),
+                  comment = c(ORCID = "0009-0003-2864-0966"))
+Description: A 'shiny' application that guides researchers through
+    meta-analysis in three steps: load the data, choose the parameters and
+    review the results. Covers pairwise meta-analysis of binary and continuous
+    outcomes, pre-calculated effect sizes, single-arm proportions and means,
+    frequentist network meta-analysis and diagnostic test accuracy, producing
+    forest plots, funnel plots, leave-one-out analyses, subgroup analyses,
+    meta-regression and publication-ready exports. Pairwise and single-arm
+    models use the methods implemented in 'meta' and 'metafor'; network
+    meta-analysis follows Rucker (2012) <doi:10.1002/jrsm.1058> as implemented
+    in 'netmeta'; diagnostic accuracy uses the bivariate model of Reitsma et
+    al. (2005) <doi:10.1016/j.jclinepi.2005.02.022>, fitted as a bivariate
+    binomial generalized linear mixed model (Chu and Cole (2006)
+    <doi:10.1016/j.jclinepi.2006.06.011>) following the Cochrane Handbook for
+    Systematic Reviews of Diagnostic Test Accuracy.
+    The application runs locally and no data leaves the user's computer.
+License: GPL-3
+Encoding: UTF-8
+URL: https://metavidence.com, https://github.com/ValbertOCF/MetaVidence
+BugReports: https://github.com/ValbertOCF/MetaVidence/issues
+Depends: R (>= 4.1)
+Imports:
+    shiny (>= 1.7.0),
+    meta (>= 7.0-0),
+    metafor (>= 4.0-0),
+    netmeta (>= 2.8-0),
+    lme4,
+    lmtest,
+    ggplot2,
+    readxl,
+    openxlsx,
+    zip,
+    stats,
+    utils,
+    grDevices,
+    graphics
+RoxygenNote: 7.3.2

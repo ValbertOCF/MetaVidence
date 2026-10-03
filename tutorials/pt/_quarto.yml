@@ -1,0 +1,52 @@
+project:
+  type: website
+  output-dir: ../_site/pt
+
+website:
+  title: "MetaVidence"
+  navbar:
+    background: light
+    left:
+      - text: "Início"
+        href: index.qmd
+      - text: "Comece aqui"
+        href: get-started.qmd
+      - text: "O fluxo"
+        href: flow.qmd
+      - text: "Módulos"
+        menu:
+          - text: "Desfechos binários"
+            href: binary.qmd
+          - text: "Desfechos contínuos"
+            href: continuous.qmd
+          - text: "Efeitos pré-calculados"
+            href: precalculated.qmd
+          - text: "Braço único"
+            href: single-arm.qmd
+          - text: "Meta-análise em rede"
+            href: network.qmd
+          - text: "Meta-análise diagnóstica"
+            href: diagnostic.qmd
+      - text: "Vários desfechos"
+        href: multiple-outcomes.qmd
+      - text: "Como citar"
+        href: how-to-cite.qmd
+    right:
+      - text: "English"
+        href: "../en/"
+      - text: "Abrir o MetaVidence"
+        href: "../../"
+  page-footer:
+    center: "MetaVidence"
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-title: "Nesta página"
+    lang: pt
+    include-in-header:
+      text: |
+        <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+    link-external-newwindow: true

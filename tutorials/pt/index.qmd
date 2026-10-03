@@ -1,0 +1,43 @@
+---
+title: "Tutoriais do MetaVidence"
+---
+
+O MetaVidence faz meta-análise sem código. Você carrega uma planilha, escolhe os
+parâmetros e recebe os gráficos e tabelas prontos para publicação, tudo no
+navegador, sem instalar nada e sem que os seus dados saiam do seu computador.
+
+## Por onde começar
+
+1. **[Comece aqui](get-started.qmd)** mostra como abrir o MetaVidence no
+   navegador, e como instalar o R, o RStudio e o pacote se você preferir rodar no
+   seu computador.
+2. **[O fluxo em três passos](flow.qmd)** percorre as telas de ponta a ponta:
+   dados, parâmetros e exportação. Todo módulo funciona assim.
+3. **A página do seu módulo** trata só do que muda nele, como as colunas
+   obrigatórias e a medida de efeito.
+
+Todo módulo traz um conjunto de dados de exemplo com 12 estudos. Vale rodar a
+análise com ele antes de usar os seus dados, para ver o que cada tela produz sem
+precisar preparar planilha nenhuma.
+
+## Escolhendo o módulo
+
+| Você tem… | Use |
+|---|---|
+| Eventos e tamanhos amostrais nos dois grupos | [Desfechos binários](binary.qmd) |
+| Média e desvio, mediana e IQR, ou os dois misturados | [Desfechos contínuos](continuous.qmd) |
+| O efeito já calculado, com IC ou erro-padrão | [Efeitos pré-calculados](precalculated.qmd) |
+| Uma proporção ou média por estudo, sem comparação | [Braço único](single-arm.qmd) |
+| Três ou mais tratamentos comparados indiretamente | [Meta-análise em rede](network.qmd) |
+| Tabelas 2×2 de acurácia diagnóstica | [Meta-análise diagnóstica](diagnostic.qmd) |
+
+Tem mais de um desfecho para analisar? Depois de escolher o módulo, siga
+[Vários desfechos de uma vez](multiple-outcomes.qmd) para rodar todos numa só
+passada.
+
+## Como citar
+
+Se o MetaVidence produziu resultados que você vai publicar,
+[cite o MetaVidence e os pacotes de análise](how-to-cite.qmd). Citação é o que
+mantém de pé uma ferramenta acadêmica gratuita, e registrar qual software
+produziu os seus números faz parte de uma análise reproduzível.

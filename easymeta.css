@@ -1,0 +1,2158 @@
+/* ============================================================
+   MetaVidence, design system v2
+   Neutral, high-contrast reading surface; brand navy/blue/cyan
+   reserved for actions, accents and identity.
+   Type pairing: Inter (body) + Manrope (headings & brand).
+   ============================================================ */
+
+:root {
+  /* text */
+  --ink: #0d1726;          /* headings, strongest text */
+  --text: #2b3a51;         /* body & instructional text */
+  --muted: #5b6a83;        /* hints, captions only */
+
+  /* brand */
+  --navy-950: #071833;
+  --navy-900: #0b2247;
+  --navy-800: #103266;
+  --blue-600: #1769e0;
+  --blue-500: #2b8cff;
+  --blue-100: #eaf3ff;
+  --cyan: #5bd1ff;
+
+  /* surfaces */
+  --paper: #f7f8fa;
+  --card: #ffffff;
+  --line: #e7eaf0;
+  --line-strong: #d6dce6;
+  --field: #fcfdfe;
+
+  /* feedback */
+  --ok: #15803d;
+  --ok-bg: #ecfdf3;
+  --danger: #b3132f;
+  --danger-bg: #fff1f3;
+
+  /* shape & depth */
+  --radius-lg: 18px;
+  --radius-md: 13px;
+  --radius-sm: 10px;
+  --shadow-card: 0 1px 2px rgba(16, 30, 54, 0.04), 0 8px 24px rgba(16, 30, 54, 0.05);
+  --shadow-pop: 0 18px 50px rgba(7, 24, 51, 0.16);
+  --grad-brand: linear-gradient(135deg, var(--blue-600) 0%, var(--blue-500) 55%, var(--cyan) 130%);
+  --focus-ring: 0 0 0 3px rgba(43, 140, 255, 0.3);
+
+  /* type */
+  --font-body: Inter, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-display: Manrope, Inter, 'Segoe UI', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Bootstrap 3 sets html { font-size: 10px }, which silently shrinks
+   every rem-based size in this file. Restore a real root size. */
+html {
+  /* Master type scale: every font-size below is in rem, so changing this
+     single value rescales all typography at once (was 18px). */
+  font-size: 14.4px;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  background-color: var(--paper);
+  background-image: linear-gradient(180deg, #eef2f7 0%, var(--paper) 320px);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+}
+
+::selection {
+  background: rgba(43, 140, 255, 0.22);
+}
+
+.container-fluid {
+  min-height: 100vh;
+  padding: 0;
+}
+
+/* global "server is computing" bar. Shiny toggles html.shiny-busy */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 99999;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent 0%, var(--blue-600) 35%, var(--cyan) 55%, transparent 80%);
+  background-size: 45% 100%;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 0.2s ease 0.3s;
+  animation: em-busy-slide 1.1s linear infinite;
+}
+
+html.shiny-busy body::after {
+  opacity: 1;
+}
+
+@keyframes em-busy-slide {
+  from { background-position-x: -45%; }
+  to { background-position-x: 145%; }
+}
+
+/* pulse cue on the Next button after a dataset loads */
+.run-action.em-attention {
+  animation: em-pulse 1.2s ease-out 2;
+}
+
+@keyframes em-pulse {
+  0% { box-shadow: 0 8px 20px rgba(23, 105, 224, 0.28), 0 0 0 0 rgba(43, 140, 255, 0.55); }
+  70% { box-shadow: 0 8px 20px rgba(23, 105, 224, 0.28), 0 0 0 16px rgba(43, 140, 255, 0); }
+  100% { box-shadow: 0 8px 20px rgba(23, 105, 224, 0.28), 0 0 0 0 rgba(43, 140, 255, 0); }
+}
+
+.tab-content {
+  min-height: 100vh;
+}
+
+/* gentle fade when switching pages / steps */
+.tab-pane.active {
+  animation: em-fade-in 0.28s ease both;
+}
+
+@keyframes em-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* accessible focus everywhere */
+a:focus-visible,
+button:focus-visible,
+.btn:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* ============================================================
+   Home page
+   ============================================================ */
+
+.home-page {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  padding: clamp(20px, 3vw, 40px) clamp(16px, 4vw, 56px);
+}
+
+.home-shell {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.home-split {
+  display: grid;
+  grid-template-columns: minmax(340px, 0.9fr) minmax(420px, 1.1fr);
+  gap: clamp(30px, 5vw, 70px);
+  align-items: center;
+}
+
+.home-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: clamp(24px, 4vh, 44px);
+}
+
+.home-brand-mark svg {
+  display: block;
+  width: 44px;
+  height: 44px;
+  filter: drop-shadow(0 8px 18px rgba(23, 105, 224, 0.32));
+}
+
+.home-brand-name {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.home-brand-name span {
+  color: var(--blue-600);
+}
+
+.home-intro h1 {
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(2.3rem, 2.72vw, 3.3rem);
+  font-weight: 800;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+}
+
+.grad-text {
+  background: linear-gradient(110deg, var(--blue-600) 10%, var(--blue-500) 55%, var(--cyan) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.home-sub {
+  max-width: 480px;
+  margin: 16px 0 0;
+  color: var(--text);
+  font-size: 1.08rem;
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+.home-sub strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* A single secondary call to action on the home page. Outlined, not filled:
+   the module cards on the right are the primary action and must not have to
+   compete with it. */
+.home-actions {
+  margin-top: 28px;
+}
+
+.home-tutorial-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 22px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: var(--shadow-card);
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+
+.home-tutorial-link:hover,
+.home-tutorial-link:focus {
+  transform: translateY(-2px);
+  border-color: rgba(43, 140, 255, 0.55);
+  color: var(--blue-600);
+  box-shadow: 0 14px 32px rgba(23, 105, 224, 0.14);
+  text-decoration: none;
+  outline: none;
+}
+
+.home-tutorial-arrow {
+  color: var(--blue-600);
+  font-size: 1.05rem;
+  transition: transform 160ms ease;
+}
+
+.home-tutorial-link:hover .home-tutorial-arrow {
+  transform: translateX(3px);
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  color: var(--blue-600);
+  font-family: var(--font-display);
+  font-size: 0.84rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* --- module cards ----------------------------------------- */
+
+.module-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 0;
+}
+
+.module-card.btn,
+.module-card {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  color: var(--text);
+  background: var(--card);
+  box-shadow: var(--shadow-card);
+  text-align: left;
+  white-space: normal;
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+}
+
+.module-card.btn-default {
+  text-shadow: none;
+}
+
+.module-card:hover,
+.module-card:focus,
+.module-card.btn:hover,
+.module-card.btn:focus {
+  transform: translateY(-3px);
+  border-color: rgba(43, 140, 255, 0.5);
+  background: #fff;
+  box-shadow: 0 16px 40px rgba(23, 105, 224, 0.13);
+  outline: none;
+}
+
+.module-card-content {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 30px;
+  gap: 15px;
+  align-items: center;
+  width: 100%;
+  min-height: 96px;
+  padding: 17px 19px;
+}
+
+.module-number {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  color: #fff;
+  background: var(--grad-brand);
+  font-weight: 800;
+  font-size: 1.05rem;
+  box-shadow: 0 8px 20px rgba(23, 105, 224, 0.26);
+}
+
+.module-number svg {
+  width: 25px;
+  height: 25px;
+  display: block;
+}
+
+.module-title,
+.module-subtitle {
+  display: block;
+}
+
+.module-card .module-title,
+.module-card .module-subtitle,
+.module-card .module-number,
+.module-card .module-arrow {
+  text-shadow: none;
+}
+
+.module-title {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.module-subtitle {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  font-weight: 400;
+}
+
+.module-arrow {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  color: var(--blue-600);
+  background: var(--blue-100);
+  font-size: 1.3rem;
+  font-weight: 800;
+  line-height: 1;
+  transition: transform 160ms ease, background 160ms ease, color 160ms ease;
+}
+
+.module-card:hover .module-arrow,
+.module-card:focus .module-arrow {
+  transform: translateX(3px);
+  color: #fff;
+  background: var(--blue-600);
+}
+
+/* ============================================================
+   Workflow & analysis pages
+   ============================================================ */
+
+.workflow-page,
+.analysis-page {
+  min-height: 100vh;
+  padding: 24px clamp(16px, 4vw, 56px) 36px;
+}
+
+.workflow-header {
+  max-width: 1380px;
+  margin: 18px auto 18px;
+}
+
+.workflow-header h2 {
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(1.7rem, 2.4vw, 2.4rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+}
+
+.workflow-header p:not(.eyebrow) {
+  max-width: 860px;
+  margin-top: 10px;
+  color: var(--text);
+  font-size: 1.08rem;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* chooser pages: centered column of option rows */
+.workflow-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.workflow-page > .back-button {
+  align-self: flex-start;
+}
+
+.workflow-page .workflow-header {
+  width: 100%;
+  max-width: 720px;
+  margin: clamp(28px, 6vh, 60px) auto 30px;
+  text-align: center;
+}
+
+.workflow-page .workflow-header p:not(.eyebrow) {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.06rem;
+}
+
+.wf-header-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 70px;
+  height: 70px;
+  margin-bottom: 18px;
+  border-radius: 20px;
+  color: #fff;
+  background: var(--grad-brand);
+  box-shadow: 0 14px 30px rgba(23, 105, 224, 0.3);
+}
+
+.wf-header-icon svg {
+  width: 36px;
+  height: 36px;
+  display: block;
+}
+
+.workflow-options {
+  display: grid;
+  gap: 16px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.wf-option-card.btn,
+.wf-option-card {
+  position: relative;
+  width: 100%;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: var(--shadow-card);
+  color: var(--text);
+  text-align: left;
+  white-space: normal;
+  overflow: hidden;
+  transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+}
+
+.wf-option-card.btn-default {
+  text-shadow: none;
+}
+
+.wf-option-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--grad-brand);
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+
+.wf-option-card:hover,
+.wf-option-card:focus {
+  transform: translateY(-2px);
+  border-color: rgba(43, 140, 255, 0.5);
+  box-shadow: 0 16px 40px rgba(23, 105, 224, 0.14);
+  outline: none;
+}
+
+.wf-option-card:hover::before,
+.wf-option-card:focus::before {
+  opacity: 1;
+}
+
+.wf-option-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 24px;
+  align-items: center;
+  padding: 26px 28px;
+}
+
+.wf-option-body {
+  display: block;
+  min-width: 0;
+}
+
+.wf-option-title {
+  display: block;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.wf-option-text {
+  display: block;
+  margin-top: 5px;
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.wf-option-cols {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+  margin-top: 14px;
+}
+
+.wf-option-cols-label {
+  margin-right: 3px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.wf-option-cols code {
+  padding: 4px 11px;
+  border: 1px solid rgba(23, 105, 224, 0.16);
+  border-radius: 8px;
+  background: var(--blue-100);
+  color: var(--navy-800);
+  font-family: Consolas, 'Courier New', monospace;
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.wf-option-go {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 24px;
+  border-radius: 999px;
+  background: var(--grad-brand);
+  color: #fff;
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: 0 8px 18px rgba(23, 105, 224, 0.28);
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.wf-option-card:hover .wf-option-go,
+.wf-option-card:focus .wf-option-go {
+  transform: translateX(3px);
+  box-shadow: 0 10px 24px rgba(23, 105, 224, 0.38);
+}
+
+/* --- analysis layout grids --------------------------------- */
+
+.analysis-topbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-width: 1380px;
+  margin: 0 auto;
+}
+
+.analysis-header {
+  max-width: 1380px;
+}
+
+.analysis-header h2 {
+  font-size: clamp(1.5rem, 2.08vw, 2rem);
+}
+
+.analysis-single-column {
+  display: grid;
+  gap: 20px;
+  max-width: 1380px;
+  margin: 20px auto 0;
+}
+
+.analysis-two-column,
+.results-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px;
+  max-width: 1380px;
+  margin: 20px auto 0;
+  align-items: start;
+}
+
+/* Step 1: the two import routes on top, and below them the Data check taking
+   the full width, with the Next button in that card's own footer. It used to be
+   stacked in the right column with the button spanning both columns, which left
+   a large void on the left and pushed the button out of sight. */
+.data-step-grid .data-check-card {
+  grid-column: 1 / -1;
+}
+
+.data-check-actions {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.data-step-grid .data-check-actions .run-action.btn {
+  min-width: 280px;
+}
+
+.parameter-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(260px, 1fr));
+  column-gap: 22px;
+  row-gap: 6px;
+  align-items: start;
+}
+
+/* --- parameter sections (built by easymeta.js) -------------- */
+
+.parameter-grid.em-param-sections {
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 14px;
+}
+
+.em-param-section {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: #fafbfd;
+  /* overflow must stay visible or selectize dropdowns get clipped */
+  overflow: visible;
+}
+
+.em-param-section[open] {
+  background: #fff;
+  border-color: var(--line-strong);
+}
+
+.em-param-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  padding: 14px 16px;
+  border-radius: calc(var(--radius-md) - 2px);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  transition: background 140ms ease;
+}
+
+.em-param-section[open] > .em-param-summary {
+  border-radius: calc(var(--radius-md) - 2px) calc(var(--radius-md) - 2px) 0 0;
+}
+
+.em-param-summary::-webkit-details-marker {
+  display: none;
+}
+
+.em-param-summary:hover {
+  background: var(--blue-100);
+}
+
+.em-param-summary::before {
+  content: '▸';
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  color: #fff;
+  background: var(--grad-brand);
+  font-size: 1.05rem;
+  line-height: 1;
+  box-shadow: 0 5px 12px rgba(23, 105, 224, 0.26);
+  transition: transform 160ms ease;
+}
+
+.em-param-section[open] > .em-param-summary::before {
+  transform: rotate(90deg);
+}
+
+.em-param-title {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  font-weight: 800;
+}
+
+.em-param-hint {
+  color: var(--muted);
+  font-size: 0.93rem;
+  font-weight: 400;
+}
+
+.em-param-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  padding: 8px 16px;
+  border: 1px solid rgba(23, 105, 224, 0.32);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--blue-600);
+  font-size: 0.93rem;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 1px 2px rgba(16, 30, 54, 0.05);
+  transition: background 140ms ease, color 140ms ease;
+}
+
+.em-param-summary:hover .em-param-toggle {
+  background: var(--blue-600);
+  color: #fff;
+}
+
+.em-param-toggle::before {
+  content: 'Show options';
+}
+
+.em-param-section[open] > .em-param-summary .em-param-toggle::before {
+  content: 'Hide options';
+}
+
+.em-param-toggle::after {
+  content: '▾';
+  font-size: 1.05rem;
+  line-height: 1;
+  transition: transform 160ms ease;
+}
+
+.em-param-section[open] > .em-param-summary .em-param-toggle::after {
+  transform: rotate(180deg);
+}
+
+.em-param-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(260px, 1fr));
+  column-gap: 22px;
+  row-gap: 6px;
+  align-items: start;
+  padding: 6px 18px 16px;
+}
+
+/* --- "?" tooltips on parameter labels (built by easymeta.js) - */
+
+.em-help {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 17px;
+  height: 17px;
+  margin-left: 7px;
+  border-radius: 999px;
+  background: var(--blue-100);
+  color: var(--blue-600);
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: help;
+  vertical-align: 1px;
+  user-select: none;
+}
+
+.em-help:hover,
+.em-help:focus {
+  background: var(--blue-600);
+  color: #fff;
+  outline: none;
+}
+
+.em-help-tip {
+  position: absolute;
+  bottom: calc(100% + 9px);
+  left: -12px;
+  z-index: 10050;
+  width: 290px;
+  max-width: 74vw;
+  padding: 11px 14px;
+  border-radius: 10px;
+  background: var(--navy-950);
+  color: rgba(255, 255, 255, 0.94);
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  font-weight: 400;
+  line-height: 1.55;
+  text-align: left;
+  white-space: normal;
+  box-shadow: 0 14px 34px rgba(7, 24, 51, 0.3);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(4px);
+  transition: opacity 140ms ease, transform 140ms ease, visibility 140ms ease;
+}
+
+.em-help-tip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 14px;
+  border: 6px solid transparent;
+  border-top-color: var(--navy-950);
+}
+
+.em-help:hover .em-help-tip,
+.em-help:focus .em-help-tip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+@media (max-width: 920px) {
+  .em-param-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   Step indicator → visual stepper (enhanced by easymeta.js)
+   ============================================================ */
+
+.step-indicator {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+/* original text output kept for screen readers */
+.step-indicator .shiny-text-output {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.em-stepper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  box-shadow: var(--shadow-card);
+}
+
+.em-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  flex: 0 0 auto;
+}
+
+.em-step-dot {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  border: 2px solid var(--line-strong);
+  color: var(--muted);
+  background: #fff;
+  font-size: 0.86rem;
+  font-weight: 700;
+  transition: background 200ms ease, border-color 200ms ease, color 200ms ease;
+}
+
+.em-step-label {
+  color: var(--muted);
+  font-size: 1rem;
+  font-weight: 500;
+  transition: color 200ms ease;
+}
+
+.em-step.is-active .em-step-dot {
+  border-color: transparent;
+  color: #fff;
+  background: var(--grad-brand);
+  box-shadow: 0 6px 16px rgba(23, 105, 224, 0.32);
+}
+
+.em-step.is-active .em-step-label {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.em-step.is-done .em-step-dot {
+  border-color: transparent;
+  color: #fff;
+  background: var(--navy-800);
+}
+
+.em-step.is-done .em-step-label {
+  color: var(--navy-800);
+}
+
+.em-step-line {
+  flex: 1 1 24px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--line-strong);
+  transition: background 200ms ease;
+}
+
+.em-step-line.is-done {
+  background: var(--grad-brand);
+}
+
+/* ============================================================
+   Cards
+   ============================================================ */
+
+.analysis-card {
+  position: relative;
+  overflow: visible;
+  padding: clamp(20px, 2.6vw, 28px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  box-shadow: var(--shadow-card);
+}
+
+.analysis-card::before {
+  content: none;
+}
+
+.analysis-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.analysis-card h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 14px;
+  color: var(--ink);
+  font-size: 1.34rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.analysis-card h3::before {
+  content: '';
+  flex: 0 0 auto;
+  width: 6px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--grad-brand);
+}
+
+.help-text,
+.status-message {
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.analysis-card label,
+.analysis-card .control-label {
+  display: inline-block;
+  color: var(--ink);
+  font-size: 0.97rem;
+  font-weight: 600;
+  line-height: 1.45;
+  margin-bottom: 5px;
+}
+
+.status-message:empty {
+  display: none;
+}
+
+.status-message.easy-meta-status-error-box,
+.status-message.easy-meta-status-error-box * {
+  color: var(--danger) !important;
+  font-weight: 600 !important;
+}
+
+.status-message.easy-meta-status-error-box {
+  margin-top: 14px;
+  padding: 12px 14px 12px 40px;
+  border: 1px solid rgba(179, 19, 47, 0.25);
+  border-radius: var(--radius-md);
+  background: var(--danger-bg);
+  position: relative;
+}
+
+.status-message.easy-meta-status-error-box::before {
+  content: '!';
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: var(--danger);
+  color: #fff !important;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.microcopy {
+  margin-bottom: 7px;
+}
+
+.microcopy::before {
+  content: '✓';
+  display: inline-grid;
+  place-items: center;
+  width: 19px;
+  height: 19px;
+  margin-right: 8px;
+  border-radius: 999px;
+  color: #fff;
+  background: var(--grad-brand);
+  font-size: 0.68rem;
+  font-weight: 700;
+  vertical-align: 1px;
+}
+
+.required-columns {
+  margin-top: 12px;
+  padding: 14px 16px;
+  border-left: 4px solid var(--blue-500);
+  border-radius: 10px;
+  background: #f0f7ff;
+  color: var(--text);
+  font-size: 0.98rem;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+.required-columns strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.required-columns strong:first-child {
+  display: inline-block;
+  margin-bottom: 4px;
+  color: var(--navy-800);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* IMPORTANT: never display:none a container holding an empty Shiny
+   output. Shiny suspends hidden outputs, so the message would never
+   arrive and the box would stay empty forever. Instead, the empty
+   state simply collapses (zero height) and the box styling is applied
+   only once the text output has content. */
+.prominent-status {
+  margin: 0;
+  color: var(--navy-800);
+}
+
+.prominent-status:has(> .shiny-text-output:not(:empty)) {
+  margin: 16px 0;
+  padding: 12px 14px;
+  border: 1px solid rgba(23, 105, 224, 0.18);
+  border-radius: var(--radius-md);
+  background: rgba(23, 105, 224, 0.05);
+}
+
+.status-message:has(> .shiny-text-output:not(:empty)) {
+  margin-top: 12px;
+}
+
+.parameter-grid + .prominent-status {
+  display: none;
+}
+
+/* ============================================================
+   Form controls
+   ============================================================ */
+
+.analysis-card .form-control,
+.analysis-card .selectize-input,
+.analysis-card textarea {
+  min-height: 46px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  color: var(--ink);
+  background: var(--field);
+  font-size: 1.02rem;
+  box-shadow: none;
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.analysis-card .form-control:focus,
+.analysis-card .selectize-input.focus,
+.analysis-card textarea:focus {
+  border-color: var(--blue-500);
+  box-shadow: var(--focus-ring);
+}
+
+.analysis-card .selectize-input {
+  padding: 10px 12px;
+}
+
+.selectize-dropdown {
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 14px 34px rgba(16, 30, 54, 0.12);
+  color: var(--text);
+  font-size: 1rem;
+  z-index: 10040 !important;
+}
+
+.selectize-dropdown .active {
+  background: var(--blue-100);
+  color: var(--ink);
+}
+
+.parameter-grid .form-group,
+.parameter-grid .selectize-control {
+  position: relative;
+}
+
+/* NOTE: selectize puts `dropdown-active` on `.selectize-input`, not on the
+   `.selectize-control` wrapper, and a rule written against the wrapper never
+   matches. */
+.parameter-grid .selectize-control:has(.selectize-input.dropdown-active) {
+  z-index: 10030 !important;
+}
+
+/* `.analysis-card > *` gives every direct child its own stacking context at
+   z-index 1, so a later sibling (the Back/Continue row) paints over an open
+   dropdown and swallows the clicks, so the options stay visible but dead.
+   Lift whichever child currently holds the open dropdown above its siblings. */
+.analysis-card > *:has(.selectize-input.dropdown-active) {
+  z-index: 10035;
+}
+
+body > .selectize-dropdown,
+body > .selectize-dropdown.single,
+body > .selectize-dropdown.multi {
+  z-index: 99999 !important;
+}
+
+.analysis-card textarea {
+  min-height: 170px;
+  font-family: Consolas, 'Courier New', monospace;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* file inputs become drop-zones */
+.analysis-card .shiny-input-container:has(input[type=file]) {
+  padding: 16px 18px;
+  border: 2px dashed var(--line-strong);
+  border-radius: var(--radius-md);
+  background: #fafcff;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+
+.analysis-card .shiny-input-container:has(input[type=file]):hover {
+  border-color: var(--blue-500);
+  background: #f3f9ff;
+}
+
+.analysis-card .shiny-input-container:has(input[type=file]) > label {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--ink);
+  font-size: 0.97rem;
+  font-weight: 600;
+}
+
+.analysis-card .input-group {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.analysis-card .input-group .input-group-btn {
+  display: block;
+  width: auto;
+  flex: 0 0 auto;
+}
+
+.analysis-card .input-group .btn-file,
+.analysis-card .input-group-btn .btn {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 22px;
+  color: #fff;
+  background: var(--grad-brand);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-shadow: none;
+  box-shadow: 0 6px 14px rgba(23, 105, 224, 0.25);
+}
+
+.analysis-card .input-group .form-control {
+  flex: 1 1 auto;
+  margin-left: 12px;
+  min-height: 0;
+  padding: 8px 4px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--muted);
+  font-size: 0.97rem;
+}
+
+.analysis-card .progress {
+  height: 8px;
+  margin-top: 12px;
+  margin-bottom: 2px;
+  border-radius: 999px;
+  background: var(--blue-100);
+  box-shadow: none;
+}
+
+.analysis-card .progress-bar {
+  background: var(--grad-brand);
+  box-shadow: none;
+  /* the slim bar clips Shiny's "Upload complete" label; hide the text,
+     the filled bar plus the status message below convey completion */
+  font-size: 0;
+  color: transparent;
+  text-shadow: none;
+}
+
+/* --- tabbed data importer (built by easymeta.js) ------------ */
+
+.em-input-enhanced hr {
+  display: none;
+}
+
+.em-input-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+  padding: 5px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #edf1f7;
+}
+
+.em-input-tab {
+  flex: 1 1 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.93rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 140ms ease, color 140ms ease, box-shadow 140ms ease;
+}
+
+.em-input-tab svg {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 auto;
+}
+
+.em-input-tab:hover {
+  color: var(--ink);
+}
+
+.em-input-tab.is-active {
+  background: #fff;
+  color: var(--blue-600);
+  box-shadow: 0 1px 3px rgba(16, 30, 54, 0.14);
+}
+
+.em-input-panel {
+  margin-top: 18px;
+}
+
+.em-input-panel .form-group {
+  margin-bottom: 0;
+}
+
+.em-example-hint {
+  margin: 0 0 14px;
+}
+
+/* file picker and template button side by side */
+.em-upload-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.em-upload-row > .form-group {
+  flex: 1 1 300px;
+  min-width: 0;
+}
+
+.em-upload-row > .btn {
+  flex: 0 0 auto;
+  margin-top: 0;
+  align-self: center;
+}
+
+.em-example-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.em-example-row .btn {
+  margin-top: 0;
+}
+
+.em-input-panel .outline-action.btn {
+  margin-top: 12px;
+}
+
+/* collapsible required-columns guide */
+.em-cols-details {
+  margin-top: 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: #fafbfd;
+  overflow: hidden;
+}
+
+.em-cols-details[open] {
+  background: #fff;
+  border-color: var(--line-strong);
+}
+
+.em-cols-summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 16px;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  transition: background 140ms ease;
+}
+
+.em-cols-summary::-webkit-details-marker {
+  display: none;
+}
+
+.em-cols-summary:hover {
+  background: var(--blue-100);
+}
+
+.em-cols-summary::before {
+  content: 'i';
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--blue-100);
+  color: var(--blue-600);
+  font-size: 0.82rem;
+  font-weight: 700;
+  font-style: italic;
+  font-family: Georgia, serif;
+}
+
+.em-cols-title {
+  color: var(--ink);
+  font-size: 0.97rem;
+  font-weight: 600;
+}
+
+.em-cols-chevron {
+  margin-left: auto;
+  color: var(--blue-600);
+  font-size: 1rem;
+  transition: transform 160ms ease;
+}
+
+.em-cols-details[open] .em-cols-chevron {
+  transform: rotate(180deg);
+}
+
+/* Dentro do guia recolhivel o proprio <details> ja' e' a caixa: a moldura azul
+   do .required-columns viraria caixa dentro de caixa. Aqui fica so' o texto,
+   recuado ate' o titulo do summary (16px de padding + 24px do icone + 10px de
+   gap), para o bloco nao comecar debaixo do icone. */
+.em-cols-details .required-columns {
+  margin: 0;
+  padding: 0 16px 16px 50px;
+  border-left: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--text);
+}
+
+.em-cols-details .required-columns strong:first-child {
+  color: var(--ink);
+}
+
+/* checkboxes / radios */
+.analysis-card .checkbox label,
+.analysis-card .radio label {
+  font-weight: 500;
+  color: var(--text);
+}
+
+.analysis-card input[type="checkbox"],
+.analysis-card input[type="radio"] {
+  accent-color: var(--blue-600);
+  width: 16px;
+  height: 16px;
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+
+.btn {
+  transition: background 150ms ease, color 150ms ease, border-color 150ms ease,
+    box-shadow 150ms ease, transform 150ms ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.primary-action.btn,
+.run-action.btn {
+  border: 0;
+  border-radius: 999px;
+  padding: 11px 22px;
+  color: #fff;
+  background: var(--grad-brand);
+  font-size: 1.02rem;
+  font-weight: 600;
+  box-shadow: 0 8px 20px rgba(23, 105, 224, 0.28);
+  text-shadow: none;
+}
+
+.primary-action.btn:hover,
+.primary-action.btn:focus,
+.run-action.btn:hover,
+.run-action.btn:focus {
+  color: #fff;
+  background: linear-gradient(135deg, #1257bd 0%, var(--blue-600) 55%, var(--blue-500) 130%);
+  box-shadow: 0 10px 26px rgba(23, 105, 224, 0.36);
+}
+
+.outline-action.btn {
+  margin-top: 8px;
+  border: 1px solid rgba(23, 105, 224, 0.32);
+  color: var(--navy-800);
+  background: #fff;
+  box-shadow: none;
+  font-weight: 600;
+}
+
+.outline-action.btn:hover,
+.outline-action.btn:focus {
+  color: var(--ink);
+  background: var(--blue-100);
+}
+
+.run-action.btn {
+  width: 100%;
+  margin-top: 8px;
+  padding: 14px 24px;
+  font-size: 1.05rem;
+}
+
+.step-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.step-actions .run-action.btn {
+  width: auto;
+  min-width: 240px;
+}
+
+.back-button {
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 9px 18px;
+  color: var(--text);
+  background: #fff;
+  font-weight: 600;
+  font-size: 0.96rem;
+  box-shadow: 0 1px 2px rgba(16, 30, 54, 0.05);
+  text-shadow: none;
+}
+
+.back-button::before {
+  content: '←';
+  margin-right: 7px;
+  font-weight: 600;
+}
+
+.back-button:hover,
+.back-button:focus {
+  color: var(--ink);
+  background: var(--blue-100);
+  border-color: rgba(43, 140, 255, 0.45);
+}
+
+.secondary-button.btn {
+  background: #fff;
+  color: var(--text);
+}
+
+/* download / result buttons */
+.download-card .btn,
+.result-button-row .btn,
+.result-button-row .btn-default,
+.result-button-row .btn-primary {
+  border: 1px solid rgba(23, 105, 224, 0.28);
+  border-radius: 999px;
+  padding: 9px 17px;
+  color: var(--navy-800);
+  background: #fff;
+  font-size: 0.96rem;
+  font-weight: 600;
+  text-shadow: none;
+  box-shadow: 0 1px 2px rgba(16, 30, 54, 0.04);
+}
+
+.download-card .btn:hover,
+.result-button-row .btn:hover,
+.result-button-row .btn:focus {
+  background: var(--blue-100);
+  color: var(--ink);
+  border-color: rgba(43, 140, 255, 0.5);
+}
+
+.prepare-action.btn {
+  background: var(--blue-100);
+}
+
+.shiny-download-link.is-disabled,
+.download-link.is-disabled {
+  opacity: 0.45;
+  filter: grayscale(0.4);
+  cursor: not-allowed;
+}
+
+.locked-download-action.btn {
+  border-color: var(--line-strong);
+  background: #f3f5f8;
+  color: var(--muted);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.batch-download-status {
+  display: none;
+  margin: -2px 0 12px;
+  padding: 8px 12px;
+  border: 1px solid rgba(23, 105, 224, 0.16);
+  border-radius: var(--radius-sm);
+  background: rgba(23, 105, 224, 0.05);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.batch-download-status.is-visible {
+  display: block;
+}
+
+.batch-download-status.is-ready {
+  border-color: rgba(21, 128, 61, 0.25);
+  background: var(--ok-bg);
+  color: var(--ok);
+}
+
+/* ============================================================
+   Result & data cards
+   ============================================================ */
+
+.preview-card,
+.preview-card {
+  overflow-x: auto;
+}
+
+.results-grid {
+  margin-top: 0;
+}
+
+.analysis-card table {
+  width: 100%;
+  font-size: 0.97rem;
+  border-collapse: collapse;
+}
+
+.analysis-card table th,
+.analysis-card table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  color: var(--text);
+}
+
+.data-check-card th,
+.main-result-card th,
+.analysis-card table th {
+  color: var(--ink);
+  background: #f3f6fa;
+  font-weight: 600;
+}
+
+.analysis-card table tr:hover td {
+  background: #f8fafc;
+}
+
+.data-check-card table,
+.main-result-card table {
+  margin: 8px 0 0;
+}
+
+.data-check-card {
+  border-color: var(--line);
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafd 100%);
+}
+
+.em-check-ic {
+  display: inline-grid;
+  place-items: center;
+  width: 19px;
+  height: 19px;
+  margin-right: 9px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+  vertical-align: -3px;
+}
+
+.em-check-ic.is-ok {
+  background: var(--ok-bg);
+  color: var(--ok);
+  border: 1px solid rgba(21, 128, 61, 0.3);
+}
+
+.em-check-ic.is-bad {
+  background: var(--danger-bg);
+  color: var(--danger);
+  border: 1px solid rgba(179, 19, 47, 0.3);
+}
+
+.em-check-ic.is-neutral {
+  background: #eef1f6;
+  color: var(--muted);
+  border: 1px solid var(--line-strong);
+}
+
+.main-result-card {
+  border-color: var(--line-strong);
+}
+
+/* In the results grid, cards on the same row stretch to the height of the
+   tallest one (Small-study effects has less content than the Funnel plot beside
+   it). .result-button-row carries margin-top:auto, which only started to bite
+   once stretching applied, and it threw the lone button of the shorter card
+   down to the baseline, far from the text explaining it. Aligning the content
+   to the top instead turns the spare height into space at the card's end. */
+.results-grid {
+  align-items: stretch;
+}
+
+.results-grid .result-button-row {
+  margin-top: 0;
+  padding-top: 18px;
+}
+
+.download-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f7fafd 100%);
+}
+
+.result-control-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.result-button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+/* Column selector inside the subgroup and meta-regression cards (step 3):
+   switching the column redraws the plot immediately. */
+.card-picker {
+  margin-top: 14px;
+  max-width: 340px;
+}
+
+.card-picker .form-group {
+  margin-bottom: 0;
+}
+
+.card-picker .control-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.card-export-controls {
+  display: grid;
+  grid-template-columns: minmax(96px, 0.9fr) minmax(84px, 0.7fr) minmax(84px, 0.7fr);
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.compact-input label {
+  display: block;
+  margin: 0 0 5px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.compact-input .form-group {
+  margin-bottom: 0;
+}
+
+.compact-input .form-control,
+.compact-input .selectize-input {
+  border-radius: var(--radius-sm);
+  min-height: 40px;
+  font-size: 0.92rem;
+}
+
+.analysis-card pre {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: #f8fafc;
+  color: var(--ink);
+  padding: 14px 16px;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.results-grid .analysis-card pre {
+  max-height: 560px;
+  overflow: auto;
+}
+
+.results-grid .analysis-card {
+  min-width: 0;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 18px 0;
+}
+
+/* ============================================================
+   Placeholder page
+   ============================================================ */
+
+/* ============================================================
+   Modals, notifications, overlays, toasts
+   ============================================================ */
+
+.modal-content {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-pop);
+  overflow: hidden;
+}
+
+.modal-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--line);
+  background: #fbfcfe;
+}
+
+.modal-title {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.15rem;
+}
+
+.modal-body {
+  padding: 22px 24px;
+  color: var(--text);
+}
+
+.modal-body pre {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: #f8fafc;
+  color: var(--ink);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.modal-footer {
+  border-top: 1px solid var(--line);
+  background: #fbfcfe;
+}
+
+.modal-footer .btn {
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 9px 22px;
+  color: var(--text);
+  background: #fff;
+  font-weight: 600;
+}
+
+.modal-footer .btn:hover {
+  background: var(--blue-100);
+  color: var(--ink);
+}
+
+@media (min-width: 1100px) {
+  .modal-lg {
+    width: min(1060px, 92vw);
+  }
+}
+
+.shiny-notification {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: #fff;
+  color: var(--text);
+  box-shadow: var(--shadow-pop);
+  font-weight: 500;
+}
+
+.shiny-notification-error {
+  border-color: rgba(179, 19, 47, 0.3);
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+.shiny-notification.prepare-notification-shell {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: translate(-50%, -50%) !important;
+  min-width: 320px;
+  max-width: min(92vw, 560px);
+  z-index: 2200 !important;
+}
+
+.prepare-notification {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.prepare-notification-spinner {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 3px solid rgba(23, 105, 224, 0.2);
+  border-top-color: var(--blue-600);
+  animation: easy-meta-spin 0.9s linear infinite;
+  flex: 0 0 auto;
+}
+
+@keyframes easy-meta-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================================
+   Scrollbars (WebKit)
+   ============================================================ */
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 999px;
+  border: 2px solid var(--paper);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b9c4d4;
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+
+@media (max-width: 1080px) {
+  .home-page {
+    align-items: flex-start;
+  }
+
+  .home-split {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+
+  .home-brand {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 920px) {
+  .analysis-two-column,
+  .results-grid,
+  .parameter-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-export-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .em-step-label {
+    display: none;
+  }
+
+  .em-step.is-active .em-step-label {
+    display: inline;
+  }
+}
+
+@media (max-width: 640px) {
+  html,
+  body {
+    font-size: 12.8px;
+  }
+
+  .home-page {
+    padding-top: 22px;
+  }
+
+  .module-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .module-card-content {
+    grid-template-columns: 48px 1fr 30px;
+    padding: 16px;
+    gap: 14px;
+  }
+
+  .module-number {
+    width: 48px;
+    height: 48px;
+  }
+
+  .module-number svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .module-arrow {
+    width: 30px;
+    height: 30px;
+    font-size: 1.15rem;
+  }
+
+  .step-actions {
+    justify-content: stretch;
+  }
+
+  .step-actions .btn {
+    flex: 1 1 auto;
+  }
+
+  .wf-option-content {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .wf-option-go {
+    justify-self: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001s !important;
+    transition-duration: 0.001s !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* --- Citation ------------------------------------------------------------ */
+/* The "How to cite" link sits next to the tutorials one, with less visual
+   weight: it is footer information, not a step in the flow. */
+.home-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.home-cite-link {
+  color: var(--muted);
+  font-size: .95rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.home-cite-link:hover,
+.home-cite-link:focus {
+  color: var(--blue-600);
+}
+
+/* The citation reminder is the only fixed content in the step 3 card, so it
+   carries the visual weight: its own box, a tinted background and the link as a
+   button. The type is larger than the app's ordinary help text and uses the
+   darkest colours in the palette: mid grey disappears inside a tinted box. */
+.cite-reminder {
+  margin-top: 4px;
+  padding: 22px 24px;
+  border: 1px solid rgba(23, 105, 224, 0.55);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(43, 140, 255, 0.16), rgba(43, 140, 255, 0.06));
+}
+
+.cite-reminder-lead {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.35;
+  letter-spacing: -.01em;
+}
+
+.cite-reminder-body {
+  margin: 0;
+  color: var(--ink);
+  font-size: 1.12rem;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.cite-reminder-action {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 18px;
+  padding: 12px 26px;
+  border-radius: 999px;
+  background: var(--blue-600);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(23, 105, 224, 0.28);
+  transition: transform 160ms ease, background 160ms ease;
+}
+
+.cite-reminder-action:hover,
+.cite-reminder-action:focus {
+  background: var(--blue-500);
+  color: #fff;
+  text-decoration: none;
+  transform: translateY(-1px);
+}

@@ -1,0 +1,29 @@
+/* Herda a paleta do app (easymeta.css) para o site nao parecer outro produto. */
+:root {
+  --ink: #0d1726;
+  --text: #2b3a51;
+  --muted: #5b6a83;
+  --blue-600: #1769e0;
+  --blue-100: #eaf3ff;
+  --line: #e7eaf0;
+  --bs-body-color: var(--text);
+  --bs-link-color: var(--blue-600);
+  --bs-link-hover-color: #0f4fa8;
+}
+
+body { color: var(--text); }
+h1, h2, h3, h4 { color: var(--ink); font-weight: 700; letter-spacing: -0.01em; }
+.navbar { border-bottom: 1px solid var(--line); }
+.navbar-brand { font-weight: 800; color: var(--ink) !important; }
+
+/* As capturas de tela sao o conteudo principal: emolduradas e clicaveis. */
+.content img {
+  max-width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 1px 2px rgba(16,30,54,.04), 0 8px 24px rgba(16,30,54,.05);
+  margin: 6px 0 4px;
+}
+figure figcaption { color: var(--muted); font-size: .9rem; }
+
+.callout { border-radius: 10px; }

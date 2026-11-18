@@ -1,0 +1,52 @@
+project:
+  type: website
+  output-dir: ../_site/en
+
+website:
+  title: "MetaVidence"
+  navbar:
+    background: light
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "Get started"
+        href: get-started.qmd
+      - text: "The flow"
+        href: flow.qmd
+      - text: "Modules"
+        menu:
+          - text: "Binary outcomes"
+            href: binary.qmd
+          - text: "Continuous outcomes"
+            href: continuous.qmd
+          - text: "Pre-calculated effects"
+            href: precalculated.qmd
+          - text: "Single arm"
+            href: single-arm.qmd
+          - text: "Network meta-analysis"
+            href: network.qmd
+          - text: "Diagnostic accuracy"
+            href: diagnostic.qmd
+      - text: "Multiple outcomes"
+        href: multiple-outcomes.qmd
+      - text: "How to cite"
+        href: how-to-cite.qmd
+    right:
+      - text: "Português"
+        href: "../pt/"
+      - text: "Open MetaVidence"
+        href: "../../"
+  page-footer:
+    center: "MetaVidence"
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-title: "On this page"
+    lang: en
+    include-in-header:
+      text: |
+        <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+    link-external-newwindow: true

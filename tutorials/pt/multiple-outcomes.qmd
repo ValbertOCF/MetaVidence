@@ -1,0 +1,122 @@
+---
+title: "Vários desfechos de uma vez"
+subtitle: "Montar uma planilha com todos os desfechos e exportar tudo numa rodada"
+---
+
+Siga os passos desta página para analisar mortalidade, recidiva e eventos
+adversos numa única rodada, e baixar cada tipo de gráfico já com todos os
+desfechos dentro de um ZIP.
+
+Funciona nestes módulos: desfechos binários, desfechos contínuos, os três de
+efeitos pré-calculados, proporções únicas e médias únicas. Rede e diagnóstica
+não têm este modo.
+
+## 1. Baixe o modelo
+
+1. Abra o módulo que você vai usar.
+2. No passo **Data**, vá ao cartão da direita, **More than one outcome**.
+3. Clique em **Download XLSX template**, ao lado do campo de arquivo.
+
+Você recebe uma planilha com três abas já preenchidas e no formato certo. Use
+esse arquivo como ponto de partida, não o modelo do cartão da esquerda, que é de
+desfecho único e tem uma estrutura diferente.
+
+## 2. Monte a sua planilha
+
+Abra o modelo e siga estas regras:
+
+1. **Deixe uma aba por desfecho.** Acrescente ou apague abas até ficar com o
+   número de desfechos que você tem.
+2. **Renomeie cada aba com o nome do desfecho.** Escreva `Mortalidade em 30
+   dias`, não `Planilha1`. Esse nome vai para o título dos gráficos e para o
+   nome dos arquivos exportados.
+3. **Preencha cada aba como se fosse uma análise separada.** Todos os estudos
+   daquele desfecho, com todas as colunas obrigatórias do módulo.
+4. **Use os mesmos nomes de coluna em todas as abas**, exatamente como estão no
+   modelo.
+5. **Repita o estudo em quantas abas ele aparecer.** As abas não se comunicam:
+   nenhum estudo é ligado ao seu par em outra aba.
+6. Salve como `.xlsx`.
+
+::: {.callout-important}
+## Regras do nome da aba
+O Excel limita nome de aba a 31 caracteres e recusa `:` `\` `/` `?` `*` `[` `]`.
+Ao gerar os arquivos, o MetaVidence troca tudo que não é letra ou número por `_`,
+então `Sobrevida livre de progressão` chega ao seu computador como
+`Sobrevida_livre_de_progressao`.
+:::
+
+::: {.callout-tip}
+## Vai usar subgrupo ou meta-regressão?
+Inclua a coluna em **todas** as abas em que você quer esse resultado. Se ela
+faltar numa aba, aquele desfecho roda sem o subgrupo e o app registra o motivo,
+em vez de interromper a rodada inteira.
+:::
+
+## 3. Envie a planilha
+
+1. Volte ao cartão **More than one outcome**.
+2. Clique em **Browse** em *Import multi-outcome workbook (.xlsx)*.
+3. Escolha o seu arquivo.
+
+Não use o campo do cartão da esquerda. Ele lê só a primeira aba e trata o
+arquivo como um desfecho único.
+
+## 4. Confira o Data check
+
+O cartão **Data check** passa a mostrar uma linha por desfecho, com o número de
+estudos encontrados em cada um.
+
+Leia antes de seguir. Se alguma aba estiver com coluna faltando ou com valor
+inválido, corrija a planilha e envie de novo. É mais rápido do que descobrir o
+erro depois de rodar tudo.
+
+## 5. Ajuste os parâmetros
+
+Clique em **Next: parameters**. Uma coisa muda nesta tela quando você está em
+lote: o campo **Outcome name** desaparece, porque quem nomeia cada desfecho
+agora é o nome da aba.
+
+Escolha o `sm`, o modelo e o resto normalmente. Um único conjunto de parâmetros
+vale para todos os desfechos. Subgrupo e meta-regressão não se definem aqui:
+essas colunas você escolhe no passo 3, dentro do cartão do resultado, igual ao
+modo de desfecho único.
+
+::: {.callout-warning}
+## Um sm para todos
+Se um desfecho pede `RR` e outro pede `MD`, não coloque os dois no mesmo arquivo.
+Separe em duas planilhas e faça duas rodadas.
+:::
+
+## 6. Rode a análise
+
+Clique em **Run analysis**. O app processa cada aba, uma por uma, e avança para
+o passo 3.
+
+## 7. Baixe os resultados
+
+Em lote cada cartão de resultado ganha um botão a mais. Para cada gráfico que
+você quiser:
+
+1. Clique em **1. Run analysis**, dentro do cartão.
+2. Espere o botão ao lado deixar de mostrar *2. Download locked*.
+3. Clique em **2. Download**.
+
+Os cartões **Subgroup analysis** e **Meta-regression** trazem também um seletor
+de coluna. Escolha a coluna ali e clique em **1. Run analysis** no mesmo cartão.
+Trocar a coluna trava o download de novo, então clique em **1. Run analysis**
+outra vez para reconstruir os arquivos com a nova coluna.
+
+Escolha o formato, a largura e a altura antes de baixar, nos campos do próprio
+cartão. Vale para todos os desfechos daquele ZIP.
+
+Você recebe um arquivo `Forest_Batch.zip`, e dentro dele um gráfico por desfecho,
+com o nome da aba no nome do arquivo. Repita para o funnel, o leave-one-out e o
+que mais precisar.
+
+::: {.callout-tip}
+## Prepare só o que você vai usar
+Cada clique em **1. Run analysis** desenha aquele gráfico para todos os
+desfechos. Com muitos desfechos isso leva tempo, então prepare apenas os cartões
+que vão para o artigo.
+:::

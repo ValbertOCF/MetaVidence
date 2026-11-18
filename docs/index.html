@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MetaVidence</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <script
+      src="./shinylive/load-shinylive-sw.js"
+      type="module"
+    ></script>
+    <script type="module">
+      import { runExportedApp } from "./shinylive/shinylive.js";
+      runExportedApp({
+        id: "root",
+        appEngine: "r",
+        relPath: "",
+      });
+    </script>
+    <link rel="stylesheet" href="./shinylive/style-resets.css" />
+    <link rel="stylesheet" href="./shinylive/shinylive.css" />
+    
+  </head>
+  <body>
+<!-- ============================================================
+     MetaVidence, tela de carregamento do WebAssembly
+
+     O shinylive baixa o R inteiro e os pacotes antes de mostrar
+     qualquer coisa. Sem isto o visitante ve uma pagina em branco
+     e acha que quebrou.
+
+     Injetada em docs/index.html por build_shinylive.R, porque o
+     shinylive::export() reescreve aquele arquivo a cada build.
+
+     De proposito NAO tenta medir progresso. O webR baixa e compila
+     dentro de um Web Worker; da thread principal nao da' para ver
+     nem os bytes nem as etapas com confiabilidade. Uma barra
+     indeterminada diz a verdade ("estou trabalhando") sem inventar
+     numero nenhum. Restam duas responsabilidades, ambas essenciais:
+     sumir quando o app aparece, e nunca prender o visitante.
+     ============================================================ -->
+
+<style>
+  #mv-boot {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background-color: #f7f8fa;
+    background-image: linear-gradient(180deg, #eef2f7 0%, #f7f8fa 320px);
+    color: #2b3a51;
+    font-family: Inter, 'Segoe UI', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    transition: opacity 420ms ease;
+  }
+
+  #mv-boot.mv-done {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .mv-card {
+    width: 100%;
+    max-width: 560px;
+    text-align: center;
+  }
+
+  .mv-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 30px;
+  }
+
+  .mv-brand svg {
+    display: block;
+    width: 46px;
+    height: 46px;
+    filter: drop-shadow(0 8px 18px rgba(23, 105, 224, 0.32));
+  }
+
+  .mv-name {
+    font-family: Manrope, Inter, 'Segoe UI', sans-serif;
+    font-size: 1.7rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: #0d1726;
+  }
+
+  .mv-name span { color: #1769e0; }
+
+  .mv-headline {
+    margin: 0 0 8px;
+    font-family: Manrope, Inter, 'Segoe UI', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #0d1726;
+  }
+
+  .mv-lede {
+    margin: 0 auto 26px;
+    max-width: 440px;
+    font-size: 0.97rem;
+    color: #5b6a83;
+  }
+
+  /* Indeterminate bar: it signals activity, not progress. There is no honest
+     percentage to show, because webR downloads inside a Web Worker and the main
+     thread cannot see it. */
+  .mv-track {
+    position: relative;
+    height: 7px;
+    margin-bottom: 30px;
+    border-radius: 999px;
+    background: #e7eaf0;
+    overflow: hidden;
+  }
+
+  .mv-track::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent 0%, #2b8cff 45%, #5bd1ff 60%, transparent 100%);
+    background-size: 45% 100%;
+    background-repeat: no-repeat;
+    animation: mv-slide 1.3s linear infinite;
+  }
+
+  /* Stopped: the boot failed and nothing further is happening. */
+  .mv-track.is-stopped::after { animation: none; background: none; }
+
+  @keyframes mv-slide {
+    from { background-position-x: -45%; }
+    to   { background-position-x: 145%; }
+  }
+
+  .mv-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .mv-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 20px;
+    border: 1px solid #d6dce6;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #0d1726;
+    font-family: Manrope, Inter, 'Segoe UI', sans-serif;
+    font-size: 0.93rem;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 1px 2px rgba(16, 30, 54, 0.04), 0 8px 24px rgba(16, 30, 54, 0.05);
+    transition: transform 160ms ease, border-color 160ms ease, color 160ms ease, box-shadow 160ms ease;
+  }
+
+  .mv-btn:hover,
+  .mv-btn:focus {
+    transform: translateY(-2px);
+    border-color: rgba(43, 140, 255, 0.55);
+    color: #1769e0;
+    box-shadow: 0 14px 32px rgba(23, 105, 224, 0.14);
+    text-decoration: none;
+    outline: none;
+  }
+
+  .mv-btn span { color: #1769e0; }
+
+  .mv-note {
+    margin: 22px 0 0;
+    font-size: 0.85rem;
+    color: #5b6a83;
+  }
+
+  .mv-slow {
+    margin: 14px 0 0;
+    font-size: 0.85rem;
+    color: #5b6a83;
+    display: none;
+  }
+
+  .mv-slow.is-on { display: block; }
+
+  @media (max-width: 520px) {
+    .mv-actions { flex-direction: column; }
+    .mv-btn { justify-content: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mv-track::after { animation: none; background: #2b8cff; background-size: 100% 100%; }
+    #mv-boot { transition: none; }
+  }
+</style>
+
+<div id="mv-boot" role="status" aria-live="polite">
+  <div class="mv-card">
+    <div class="mv-brand">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="mv-logo-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1769e0"/><stop offset="1" stop-color="#5bd1ff"/></linearGradient></defs><rect x="2" y="2" width="44" height="44" rx="13" fill="url(#mv-logo-grad)"/><path d="M24 10v28" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round"/><path d="M12 16h14" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round"/><circle cx="19" cy="16" r="3" fill="#ffffff"/><path d="M18 24h18" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round"/><circle cx="29" cy="24" r="3" fill="#ffffff"/><path d="M17 34l7-5 7 5-7 5z" fill="#ffffff"/></svg>
+      <span class="mv-name">Meta<span>Vidence</span></span>
+    </div>
+
+    <h1 class="mv-headline" id="mv-headline">Loading</h1>
+    <p class="mv-lede" id="mv-lede">
+      MetaVidence runs R itself inside your browser, so your data never leaves
+      this computer. The first visit takes a moment while R loads.
+    </p>
+
+    <div class="mv-track" id="mv-track" aria-hidden="true"></div>
+
+    <div class="mv-actions">
+      <a class="mv-btn" href="tutorials/en/" target="_blank" rel="noopener">Read the tutorials <span>&rarr;</span></a>
+      <a class="mv-btn" href="tutorials/en/get-started.html" target="_blank" rel="noopener">Want a faster MetaVidence? Run it locally <span>&rarr;</span></a>
+    </div>
+
+    <p class="mv-note" id="mv-note">Both open in a new tab, so this page keeps loading.</p>
+    <p class="mv-slow" id="mv-slow">
+      Still loading. The first visit downloads R and the statistical packages;
+      after that it starts faster.
+    </p>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var boot = document.getElementById('mv-boot');
+  if (!boot) return;
+
+  var t0 = (window.performance && performance.now) ? performance.now() : Date.now();
+  function elapsed() {
+    var ms = ((window.performance && performance.now) ? performance.now() : Date.now()) - t0;
+    return (ms / 1000).toFixed(1) + 's';
+  }
+
+  /* This script runs while the <body> is still being parsed: #root comes AFTER
+     the curtain in the HTML, so caching a reference now would capture null and
+     the curtain would never lift. The lookup is therefore redone on every
+     check.
+
+     O shinylive monta assim:
+       <div class="shinylive-viewer">
+         <iframe class="app-frame">   <- o app roda AQUI DENTRO
+         <div class="loading-wrapper">  <- so' existe enquanto carrega
+     Procurar .home-page no documento principal nunca acha nada: o DOM do app
+     esta' no documento do iframe. Duas checagens, a segunda como reserva caso
+     o iframe fique inacessivel. */
+  function appIsUp() {
+    /* 1) o proprio MetaVidence dentro do iframe */
+    try {
+      var frame = document.querySelector('#root iframe.app-frame');
+      var doc = frame && (frame.contentDocument ||
+                          (frame.contentWindow && frame.contentWindow.document));
+      if (doc && doc.querySelector('.home-page, .module-grid, .shiny-bound-input')) {
+        return true;
+      }
+    } catch (e) { /* documento de outra origem: cai na checagem 2 */ }
+
+    /* 2) o sinal do proprio shinylive: o viewer existe e o loading sumiu */
+    var viewer = document.querySelector('#root .shinylive-viewer');
+    if (viewer && !viewer.querySelector('.loading-wrapper')) return true;
+
+    return false;
+  }
+
+  var observer = null;
+  var tick = null;
+  var slowTimer = null;
+  var failSafe = null;
+
+  function cleanup() {
+    if (tick) { clearInterval(tick); tick = null; }
+    if (slowTimer) { clearTimeout(slowTimer); slowTimer = null; }
+    if (failSafe) { clearTimeout(failSafe); failSafe = null; }
+    if (observer) { observer.disconnect(); observer = null; }
+  }
+
+  function dismiss() {
+    boot.classList.add('mv-done');
+    setTimeout(function () {
+      if (boot.parentNode) boot.parentNode.removeChild(boot);
+    }, 500);
+  }
+
+  var settled = false;
+  function finish() {
+    if (settled) return;
+    settled = true;
+    cleanup();
+    try { console.log('[MetaVidence] ready in ' + elapsed()); } catch (e) {}
+    dismiss();
+  }
+
+  /* Duas deteccoes, de proposito:
+     - o MutationObserver e' o caminho rapido;
+     - a sondagem e' o piso, porque o #root pode nascer depois. Numa aba em
+       segundo plano o navegador estrangula setInterval para ~1 s, e so' com
+       ela a cortina demoraria a sair. */
+  function watchRoot() {
+    if (observer || !window.MutationObserver) return;
+    var root = document.getElementById('root');
+    if (!root) return;
+    observer = new MutationObserver(function () {
+      if (appIsUp()) finish();
+    });
+    observer.observe(root, { childList: true, subtree: true });
+  }
+
+  tick = setInterval(function () {
+    watchRoot();
+    if (appIsUp()) finish();
+  }, 250);
+  watchRoot();
+
+  /* shinylive REQUIRES a service worker. When registration fails (a private
+     window in some browsers, an extension blocking it) it throws "ServiceWorker
+     controller was not found" and the interface never appears. Without this the
+     bar would spin forever, which is worse than saying so. */
+  /* Changes the text only. It does NOT set settled and does not call cleanup():
+     if shinylive recovers and the interface appears anyway, the curtain still
+     has to get out of the way. Marking it settled here used to trap the visitor
+     behind an error screen sitting on top of a working app. */
+  var failed = false;
+  function bootFailed() {
+    if (failed || settled) return;
+    failed = true;
+    if (slowTimer) { clearTimeout(slowTimer); slowTimer = null; }
+    try { console.log('[MetaVidence] service worker failed after ' + elapsed()); } catch (e) {}
+    document.getElementById('mv-track').classList.add('is-stopped');
+    document.getElementById('mv-headline').textContent =
+      'This browser could not start MetaVidence';
+    document.getElementById('mv-lede').textContent =
+      'MetaVidence needs a service worker to run R in the browser, and this ' +
+      'one blocked it. Private/incognito windows and some privacy extensions ' +
+      'do that. Try a normal window, or run MetaVidence locally in R.';
+    document.getElementById('mv-note').textContent =
+      'Running it locally in R also avoids the first-visit download.';
+    document.getElementById('mv-slow').classList.remove('is-on');
+  }
+
+  function looksFatal(text) {
+    return typeof text === 'string' && /ServiceWorker controller was not found/i.test(text);
+  }
+
+  window.addEventListener('error', function (e) {
+    if (e && (looksFatal(e.message) || (e.error && looksFatal(e.error.message)))) bootFailed();
+  });
+  window.addEventListener('unhandledrejection', function (e) {
+    var r = e && e.reason;
+    if (r && (looksFatal(r.message) || looksFatal(r))) bootFailed();
+  });
+
+  slowTimer = setTimeout(function () {
+    if (!settled && !failed) document.getElementById('mv-slow').classList.add('is-on');
+  }, 45000);
+
+  /* Fail open: if none of the above fires, the visitor must NOT be left stuck
+     behind a curtain. Better a half-ready app than nothing at all. */
+  failSafe = setTimeout(function () {
+    if (settled) return;
+    settled = true;
+    cleanup();
+    try { console.log('[MetaVidence] gave up after ' + elapsed()); } catch (e) {}
+    dismiss();
+  }, 300000);
+})();
+</script>
+    
+    <div style="height: 100vh; width: 100vw" id="root"></div>
+    
+  </body>
+</html>

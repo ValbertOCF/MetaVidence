@@ -1,0 +1,17 @@
+# Text files are normalised to LF in the repository and checked out native.
+* text=auto
+
+# These are the files that end up inside the CRAN tarball. Pin them to LF in the
+# working tree as well, so the tarball is byte-identical no matter which
+# platform built it. Without this a Windows checkout ships CRLF sources and a
+# Linux checkout ships LF, from the same commit.
+app.R        text eol=lf
+easymeta.css text eol=lf
+easymeta.js  text eol=lf
+pkg/**       text eol=lf
+
+# docs/ is build output from shinylive and Quarto. Store it byte for byte, the
+# way the tools produced it, so what goes online is identical to what was tested
+# here. Without this, line-ending conversion would rewrite the service worker
+# and the WebAssembly loader on every checkout.
+docs/** -text

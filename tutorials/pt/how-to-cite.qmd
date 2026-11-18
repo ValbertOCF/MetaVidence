@@ -1,0 +1,41 @@
+---
+title: "Como citar"
+---
+
+## Cite o MetaVidence
+
+Se o MetaVidence produziu resultados que você vai publicar, cite assim:
+
+> Costa Filho VO (2026). MetaVidence: no-code meta-analysis in the browser and
+> in R. Version 0.1.0. https://metavidence.com
+
+Em BibTeX:
+
+```bibtex
+@Manual{metavidence,
+  title   = {MetaVidence: no-code meta-analysis in the browser and in R},
+  author  = {Valbert Oliveira Costa Filho},
+  year    = {2026},
+  note    = {R package version 0.1.0},
+  url     = {https://metavidence.com}
+}
+```
+
+## Cite também os pacotes de análise
+
+O MetaVidence não faz as contas sozinho. Ele chama
+[meta](https://cran.r-project.org/package=meta),
+[metafor](https://cran.r-project.org/package=metafor),
+[netmeta](https://cran.r-project.org/package=netmeta) e
+[mada](https://cran.r-project.org/package=mada), e são esses pacotes que
+implementam os modelos. Cite os que a sua análise usou, e registre a versão de
+cada um.
+
+No R, `citation("meta")` dá a redação exata de cada um. Quais se aplicam depende
+do módulo:
+
+| Módulo | Pacotes por trás |
+|---|---|
+| Binário, contínuo, pré-calculado, braço único | meta, e metafor na meta-regressão |
+| Meta-análise em rede | netmeta |
+| Acurácia diagnóstica | mada, e meta nos forest plots |

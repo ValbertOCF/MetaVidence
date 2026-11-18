@@ -1,0 +1,16 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^\.github$
+^docs$
+^shinylive_app$
+^design$
+^tutorials$
+^build_.*\.R$
+^loading_screen\.html$
+^DEPLOY\.md$
+^app\.R$
+^easymeta\.(css|js)$
+^batch_fixture\.xlsx$
+^app.*\.bak[0-9]*$
+^image\.jpeg$
+^cran-comments\.md$

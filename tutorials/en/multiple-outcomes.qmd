@@ -1,0 +1,120 @@
+---
+title: "Multiple outcomes at once"
+subtitle: "Build one workbook with every outcome and export it all in a single run"
+---
+
+Follow the steps on this page to analyse mortality, recurrence and adverse
+events in a single run, and download each kind of plot with every outcome
+already inside one ZIP.
+
+It works in these modules: binary outcomes, continuous outcomes, the three
+pre-calculated ones, single proportions and single means. Network and
+diagnostic accuracy do not have this mode.
+
+## 1. Download the template
+
+1. Open the module you are going to use.
+2. In the **Data** step, go to the card on the right, **More than one outcome**.
+3. Click **Download XLSX template**, next to the file field.
+
+You get a workbook with three sheets already filled in and in the right format.
+Start from that file, not from the template in the left card, which is for a
+single outcome and has a different structure.
+
+## 2. Build your workbook
+
+Open the template and follow these rules:
+
+1. **Keep one sheet per outcome.** Add or delete sheets until you have as many
+   as you have outcomes.
+2. **Rename each sheet with the outcome name.** Write `30-day mortality`, not
+   `Sheet1`. That name goes into the plot titles and into the exported file
+   names.
+3. **Fill each sheet as if it were a separate analysis.** Every study for that
+   outcome, with every required column of the module.
+4. **Use the same column names in every sheet**, exactly as they appear in the
+   template.
+5. **Repeat a study in as many sheets as it belongs to.** Sheets do not talk to
+   each other: no study is linked to its counterpart in another sheet.
+6. Save as `.xlsx`.
+
+::: {.callout-important}
+## Sheet name rules
+Excel caps sheet names at 31 characters and rejects `:` `\` `/` `?` `*` `[` `]`.
+When generating files, MetaVidence replaces anything that is not a letter or a
+digit with `_`, so `Progression-free survival` reaches your computer as
+`Progression_free_survival`.
+:::
+
+::: {.callout-tip}
+## Going to use subgroups or meta-regression?
+Include the column in **every** sheet where you want that result. If it is
+missing from one sheet, that outcome runs without the subgroup and the app
+records why, instead of stopping the whole run.
+:::
+
+## 3. Upload the workbook
+
+1. Go back to the **More than one outcome** card.
+2. Click **Browse** under *Import multi-outcome workbook (.xlsx)*.
+3. Pick your file.
+
+Do not use the field in the left card. It reads only the first sheet and treats
+the file as a single outcome.
+
+## 4. Check the Data check
+
+The **Data check** card now shows one row per outcome, with the number of
+studies found in each.
+
+Read it before moving on. If a sheet has a missing column or an invalid value,
+fix the workbook and upload again. That is faster than finding the error after
+running everything.
+
+## 5. Set the parameters
+
+Click **Next: parameters**. One thing changes on this screen in batch mode: the
+**Outcome name** field disappears, because the sheet name now names each
+outcome.
+
+Choose the `sm`, the model and the rest as usual. One single set of parameters
+applies to every outcome. Subgroup and meta-regression are not set here: you
+pick those columns in step 3, inside the result card, exactly as in
+single-outcome mode.
+
+::: {.callout-warning}
+## One sm for all
+If one outcome needs `RR` and another needs `MD`, do not put both in the same
+file. Split them into two workbooks and do two runs.
+:::
+
+## 6. Run the analysis
+
+Click **Run analysis**. The app processes each sheet, one at a time, and moves
+on to step 3.
+
+## 7. Download the results
+
+In batch mode each result card gains an extra button. For every plot you want:
+
+1. Click **1. Run analysis**, inside the card.
+2. Wait for the button beside it to stop showing *2. Download locked*.
+3. Click **2. Download**.
+
+The **Subgroup analysis** and **Meta-regression** cards also carry a column
+picker. Pick the column there, then click **1. Run analysis** in that same card.
+Changing the column locks the download again, so click **1. Run analysis** once
+more to rebuild the files for the new column.
+
+Choose the format, the width and the height before downloading, in the fields of
+that card. They apply to every outcome in that ZIP.
+
+You get a file named `Forest_Batch.zip`, and inside it one plot per outcome,
+with the sheet name in the file name. Repeat for the funnel, the leave-one-out
+and whatever else you need.
+
+::: {.callout-tip}
+## Prepare only what you will use
+Each click on **1. Run analysis** draws that plot for every outcome. With many
+outcomes that takes time, so prepare only the cards that go into the paper.
+:::

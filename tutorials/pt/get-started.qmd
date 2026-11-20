@@ -68,21 +68,46 @@ tudo fica mais simples.
 2. Baixe a versão gratuita, **RStudio Desktop**, para o seu sistema.
 3. Abra o arquivo e siga o instalador.
 
-## 3. Abra o MetaVidence com um clique
+## 3. Abra o RStudio e encontre o Console
 
-1. Baixe o arquivo [MetaVidence.R](https://metavidence.com/MetaVidence.R){download="MetaVidence.R"}
-   e salve num lugar fácil de achar, como a área de trabalho.
-2. Dê dois cliques nele. Ele abre no RStudio. Se o computador perguntar com qual
-   programa abrir, escolha o **RStudio**.
-3. Clique no botão **Source**, no canto superior direito do painel que mostra o
-   arquivo.
+Abra o RStudio. A janela é dividida em painéis; o que interessa agora é o
+**Console**, normalmente no canto inferior esquerdo, com um `>` piscando.
 
-Na primeira vez, o MetaVidence e os pacotes de que ele depende, entre eles
-`meta`, `metafor`, `netmeta`, `lme4` e `shiny`, são instalados. Isso leva alguns
-minutos. Deixe rodar até o MetaVidence abrir sozinho. Você não precisa responder
-nenhuma pergunta no caminho.
+É ali que você cola os comandos dos próximos passos. Cole a linha e aperte Enter.
 
-O MetaVidence abre então numa janela do RStudio ou no seu navegador, com a mesma
+## 4. Instale o pacote
+
+Cole esta linha no Console e aperte Enter:
+
+```r
+install.packages("metavidence", repos = c("https://valbertocf.r-universe.dev", "https://cloud.r-project.org"))
+```
+
+Ela baixa o MetaVidence do [R-universe](https://valbertocf.r-universe.dev) e os
+pacotes de que ele depende, entre eles `meta`, `metafor`, `netmeta`, `lme4` e
+`shiny`, do CRAN. São muitos arquivos, então a primeira instalação demora alguns
+minutos. Deixe rodar até o `>` voltar a aparecer sozinho no Console.
+
+O R pode fazer uma destas duas perguntas no caminho:
+
+- *"Would you like to use a personal library instead?"*: responda `yes` e aperte
+  Enter, e `yes` de novo se ele perguntar se pode criá-la.
+- *"Do you want to install from sources the package which needs compilation?"*:
+  responda `no` e aperte Enter. A versão pronta é suficiente e instala muito mais
+  rápido.
+
+O MetaVidence foi submetido ao CRAN. Quando for aceito, isso vira uma linha só,
+`install.packages("metavidence")`, e esta página vai dizer isso.
+
+## 5. Rode o MetaVidence
+
+Com a instalação terminada, cole:
+
+```r
+metavidence::run_app()
+```
+
+O MetaVidence abre numa janela do RStudio ou no seu navegador, com a mesma
 aparência da versão online. Daqui em diante é o mesmo fluxo de três passos.
 
 ::: {.callout-important}
@@ -92,47 +117,32 @@ feche a janela do MetaVidence ou clique no símbolo de parar (o quadrado
 vermelho) no canto do Console.
 :::
 
-## 4. Nas próximas vezes
+## 6. Nas próximas vezes
 
-Abra o mesmo arquivo `MetaVidence.R` e clique em **Source** de novo. O
-MetaVidence abre em poucos segundos. Quando sair uma versão nova, ele se atualiza
-sozinho antes de abrir, e sem internet abre a versão que você já tem.
-
-## Prefere colar uma linha?
-
-Se preferir não baixar arquivo, abra o RStudio, clique no **Console** (o painel
-com um `>` piscando, normalmente no canto inferior esquerdo), cole esta linha e
-aperte Enter. Ela faz exatamente o mesmo que o arquivo, toda vez que você usar:
+Instalar é só uma vez. Depois disso, abra o RStudio e rode apenas:
 
 ```r
-source("https://metavidence.com/start.R")
+metavidence::run_app()
 ```
 
-Ou, se preferir ver cada passo escrito:
-
-```r
-if (!requireNamespace("metavidence", quietly = TRUE)) install.packages("metavidence", repos = c("https://valbertocf.r-universe.dev", "https://cloud.r-project.org")); metavidence::run_app()
-```
-
-Essa linha mais longa instala só uma vez e não procura atualizações.
-
-O MetaVidence foi submetido ao CRAN. Quando for aceito, também vai dar para
-instalar com `install.packages("metavidence")`.
+Funciona sem internet. Para atualizar quando sair uma versão nova, repita o
+comando do passo 4.
 
 ## Se algo der errado
 
-**O R diz que o MetaVidence precisa de R 4.1 ou mais novo.** Instale a versão
-atual do R em [cran.r-project.org](https://cran.r-project.org) e clique em
-**Source** de novo.
-
-**O R diz que não há conexão com a internet.** A primeira instalação precisa de
-internet. Conecte e clique em **Source** de novo.
+**O comando de instalação devolve um erro dizendo que o pacote não está
+disponível.** Confira se a linha foi colada inteira, incluindo as aspas. Se
+estiver correta, pode ser uma versão de R antiga demais: rode
+`R.version.string` no Console e confirme que é 4.1 ou maior.
 
 **A instalação para no meio, num pacote de que o MetaVidence depende.** Rode
 `install.packages("nome_do_pacote")` só para aquele pacote, veja a mensagem de
-erro dele, e depois clique em **Source** de novo.
+erro dele, e depois repita o comando do passo 4.
 
-**Nada abre.** Cole isto no Console para forçar o navegador:
+**`run_app()` diz que não existe pacote chamado metavidence.** A instalação não
+terminou. Repita o comando do passo 4 e espere o `>` voltar.
+
+**Nada abre ao rodar `run_app()`.** Force o navegador com:
 
 ```r
 metavidence::run_app(launch.browser = TRUE)

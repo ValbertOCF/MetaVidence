@@ -35,14 +35,6 @@ cat("\nelapsed:", round(as.numeric(difftime(Sys.time(), start, units = "mins")),
 ## ---- 1. dominio personalizado -------------------------------------------
 writeLines(domain, file.path(out_dir, "CNAME"))
 
-## The R launchers: start.R installs, updates and opens the package, and
-## MetaVidence.R is the file the tutorial offers, whose Source button calls it.
-## The tutorials and every downloaded MetaVidence.R point to these two URLs, so
-## losing them in an export would break every local install at once.
-for (f in c("start.R", "MetaVidence.R")) {
-  if (!file.exists(f)) stop("Missing ", f, ". The local install instructions would break.")
-  file.copy(f, file.path(out_dir, f), overwrite = TRUE)
-}
 
 ## ---- 2. loading screen, tab title and tab icon --------------------------
 index_path <- file.path(out_dir, "index.html")
@@ -194,7 +186,6 @@ cat("  favicon        :",
 cat("  loading screen :", if (grepl("id=\"mv-boot\"", final, fixed = TRUE)) "injected" else "MISSING", "\n")
 cat("  #root present  :", if (grepl('id="root"', final, fixed = TRUE)) "yes" else "NO", "\n")
 cat("  description    :", if (grepl('name="description"', final, fixed = TRUE)) "injected" else "MISSING", "\n")
-cat("  R launchers    :", if (all(file.exists(file.path(out_dir, c("start.R", "MetaVidence.R"))))) "start.R, MetaVidence.R" else "MISSING", "\n")
 cat("  sitemap        :", length(urls), "URLs | robots.txt",
     if (file.exists(file.path(out_dir, "robots.txt"))) "ok" else "MISSING", "\n")
 n_tut <- vapply(idiomas, function(i)

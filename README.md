@@ -23,16 +23,7 @@ few minutes; after that it starts much faster.
 Worth it if you use it often. It skips the ~130 MB WebAssembly download and runs
 on native R, without the 2 to 3 times penalty of WASM.
 
-Paste this line into the R console. The first time it installs MetaVidence, and
-every time after that it updates it when a new version exists and opens it:
-
-```r
-source("https://metavidence.com/start.R")
-```
-
-Or download [MetaVidence.R](https://metavidence.com/MetaVidence.R), open it in
-RStudio and click **Source**. The package itself is served by
-[R-universe](https://valbertocf.r-universe.dev):
+Install it from [R-universe](https://valbertocf.r-universe.dev) and open it:
 
 ```r
 install.packages("metavidence", repos = c("https://valbertocf.r-universe.dev", "https://cloud.r-project.org"))

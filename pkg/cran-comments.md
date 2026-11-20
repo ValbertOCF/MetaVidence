@@ -6,17 +6,21 @@ This is a new submission.
 
 ## Test environments
 
-* local Windows 11, R 4.4.2 (no LaTeX installed, so the PDF manual was not
-  built locally; both win-builder runs built it without error)
-* win-builder, R-devel (R Under development, 2026-08-31 r90457 ucrt)
-* win-builder, R-release (R 4.6.1)
+* local Windows 11, R 4.4.2, `R CMD check --as-cran` (no LaTeX installed, so
+  the PDF manual was not built locally)
+* win-builder, R-devel and R-release: to be run on this version before
+  submission
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note, identical on R-devel and R-release
+0 errors | 0 warnings | 2 notes
 
-The note is `New submission`, plus two items inside it that we believe are
-false positives:
+* `New submission`.
+* `unable to verify current time`, which comes from the local machine having
+  no access to a time server and is unrelated to the package.
+
+Earlier win-builder runs of a previous version also reported the items below,
+which we believe are false positives.
 
 **Possibly misspelled words in DESCRIPTION.** `Reitsma` and `Rucker` are the
 surnames of the authors of the two methods the package relies on, cited with
@@ -38,7 +42,8 @@ The same page is also reachable at <https://valbertocf.github.io/MetaVidence/>.
 ## What the package does
 
 `metavidence` ships a Shiny application for meta-analysis. All statistical work
-is delegated to `meta`, `metafor`, `netmeta` and `mada`; the package provides
+is delegated to `meta`, `metafor`, `netmeta` and `lme4` (with `lmtest` for the
+likelihood-ratio tests); the package provides
 the guided interface, the input validation and the publication-ready exports.
 
 `run_app()` is the only exported function. Its example is wrapped in

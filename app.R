@@ -56,7 +56,7 @@ METAVIDENCE_CITATION <- list(
     orcid   = "0009-0003-2864-0966",
     year    = 2026,
     title   = "MetaVidence: no-code meta-analysis in the browser and in R",
-    version = "0.1.0",
+    version = "1.0.0",
     url     = "https://metavidence.com"
   ),
   ## Where the current citation always lives. An installed copy can only show

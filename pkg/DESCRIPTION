@@ -1,6 +1,6 @@
 Package: metavidence
 Type: Package
-Title: No-Code Meta-Analysis 'Shiny' Application
+Title: No-Code 'shiny' Application for Meta-Analysis
 Version: 1.0.0
 Authors@R: person(given = c("Valbert", "Oliveira"), family = "Costa Filho",
                   email = "valbert@alu.ufc.br",
@@ -16,10 +16,12 @@ Description: A 'shiny' application that guides researchers through
     models use the methods implemented in 'meta' and 'metafor'; network
     meta-analysis follows Rucker (2012) <doi:10.1002/jrsm.1058> as implemented
     in 'netmeta'; diagnostic accuracy uses the bivariate model of Reitsma et
-    al. (2005) <doi:10.1016/j.jclinepi.2005.02.022>, fitted as a bivariate
-    binomial generalized linear mixed model (Chu and Cole (2006)
+    al. (2005) <doi:10.1016/j.jclinepi.2005.02.022>, fitted with 'lme4' as a
+    bivariate binomial generalized linear mixed model (Chu and Cole (2006)
     <doi:10.1016/j.jclinepi.2006.06.011>) following the Cochrane Handbook for
-    Systematic Reviews of Diagnostic Test Accuracy.
+    Systematic Reviews of Diagnostic Test Accuracy. The development and
+    validation of the application are described in Costa Filho et al. (2026)
+    <doi:10.64898/2026.11.17.26368328>.
     The application runs locally and no data leaves the user's computer.
 License: GPL-3
 Encoding: UTF-8
@@ -28,7 +30,7 @@ BugReports: https://github.com/ValbertOCF/MetaVidence/issues
 Depends: R (>= 4.1)
 Imports:
     shiny (>= 1.7.0),
-    meta (>= 7.0-0),
+    meta (>= 8.0-0),
     metafor (>= 4.0-0),
     netmeta (>= 2.8-0),
     lme4,
@@ -40,5 +42,7 @@ Imports:
     stats,
     utils,
     grDevices,
-    graphics
+    graphics,
+    tools
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2

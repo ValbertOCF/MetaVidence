@@ -7,8 +7,9 @@
 #' @param ... Arguments passed to [shiny::runApp()], for example `port` or
 #'   `launch.browser`.
 #'
-#' @return A 'shiny' application object, invoked for the side effect of
-#'   launching the application.
+#' @return Called for its side effect of launching the application. Returns,
+#'   invisibly, the value passed to [shiny::stopApp()] when the application
+#'   closes (`NULL` by default).
 #'
 #' @examples
 #' # The application blocks the console while it runs, so it is only started
@@ -20,7 +21,7 @@
 #' @export
 #'
 ## O R CMD check so' le R/, nunca inst/. Como o app inteiro vive em
-## inst/app/app.R, os 14 pacotes que ele usa apareceriam como "declared and
+## inst/app/app.R, os 15 pacotes que ele usa apareceriam como "declared and
 ## not used". Estes @importFrom declaram uma funcao real de cada um: a
 ## dependencia passa a ser verificavel em vez de so' anunciada no DESCRIPTION.
 #' @importFrom meta metabin
@@ -36,6 +37,7 @@
 #' @importFrom utils capture.output
 #' @importFrom grDevices adjustcolor
 #' @importFrom graphics par
+#' @importFrom tools file_ext
 run_app <- function(...) {
   app_dir <- system.file("app", package = "metavidence")
   if (!nzchar(app_dir)) {

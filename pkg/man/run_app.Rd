@@ -7,12 +7,13 @@
 run_app(...)
 }
 \arguments{
-\item{...}{Arguments passed to [shiny::runApp()], for example `port` or
-`launch.browser`.}
+\item{...}{Arguments passed to \code{\link[shiny:runApp]{shiny::runApp()}}, for example \code{port} or
+\code{launch.browser}.}
 }
 \value{
-A 'shiny' application object, invoked for the side effect of
-  launching the application.
+Called for its side effect of launching the application. Returns,
+invisibly, the value passed to \code{\link[shiny:stopApp]{shiny::stopApp()}} when the application
+closes (\code{NULL} by default).
 }
 \description{
 Starts the MetaVidence 'shiny' application, a guided three-step interface for

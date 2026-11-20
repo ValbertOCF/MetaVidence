@@ -126,39 +126,32 @@
     "text": "2. Install RStudio\nRStudio is the window through which you use R. You can live without it, but it makes everything simpler.\n\nGo to posit.co/download/rstudio-desktop.\nDownload the free version, RStudio Desktop, for your system.\nOpen the file and follow the installer."
   },
   {
-    "objectID": "get-started.html#open-rstudio-and-find-the-console",
-    "href": "get-started.html#open-rstudio-and-find-the-console",
+    "objectID": "get-started.html#open-metavidence-with-one-click",
+    "href": "get-started.html#open-metavidence-with-one-click",
     "title": "Getting Started With MetaVidence",
-    "section": "3. Open RStudio and find the Console",
-    "text": "3. Open RStudio and find the Console\nOpen RStudio. The window is split into panes; the one that matters now is the Console, usually at the bottom left, with a blinking &gt;.\nThat is where you paste the commands in the next steps. Paste the line and press Enter."
-  },
-  {
-    "objectID": "get-started.html#install-the-package",
-    "href": "get-started.html#install-the-package",
-    "title": "Getting Started With MetaVidence",
-    "section": "4. Install the package",
-    "text": "4. Install the package\nMetaVidence has been submitted to CRAN. Until it is accepted, install it from the source repository. Paste these two lines into the Console, one at a time, pressing Enter after each:\ninstall.packages(\"remotes\")\nremotes::install_github(\"ValbertOCF/MetaVidence\", subdir = \"pkg\")\nThe first line installs the helper that can install from GitHub. The second downloads MetaVidence and the packages it depends on, among them meta, metafor, netmeta, lme4 and shiny. That is a lot of files, so the first installation takes a few minutes. Let it run until the &gt; comes back on its own in the Console.\nOnce MetaVidence is on CRAN, this becomes a single line, install.packages(\"metavidence\"), and this page will say so.\nIf R asks something like “Do you want to install from sources the package which needs compilation?”, answer no and press Enter. The prebuilt version is enough and installs far faster."
-  },
-  {
-    "objectID": "get-started.html#run-metavidence",
-    "href": "get-started.html#run-metavidence",
-    "title": "Getting Started With MetaVidence",
-    "section": "5. Run MetaVidence",
-    "text": "5. Run MetaVidence\nOnce the installation finishes, paste:\nmetavidence::run_app()\nMetaVidence opens in an RStudio window or in your browser, looking exactly like the online version. From here on it is the same three-step flow.\n\n\n\n\n\n\nThe Console stays busy while the app runs\n\n\n\nThat is normal: R is serving the application. To get the Console back, close the MetaVidence window or click the stop symbol (the red square) in the corner of the Console."
+    "section": "3. Open MetaVidence with one click",
+    "text": "3. Open MetaVidence with one click\n\nDownload the file MetaVidence.R and save it somewhere easy to find, such as your desktop.\nDouble-click it. It opens in RStudio. If your computer asks which program to use, choose RStudio.\nClick the Source button, at the top right of the panel that shows the file.\n\nThe first time, MetaVidence and the packages it depends on, among them meta, metafor, netmeta, lme4 and shiny, are installed. That takes a few minutes. Let it run until MetaVidence opens on its own. You do not need to answer any question along the way.\nMetaVidence then opens in an RStudio window or in your browser, looking exactly like the online version. From here on it is the same three-step flow.\n\n\n\n\n\n\nThe Console stays busy while the app runs\n\n\n\nThat is normal: R is serving the application. To get the Console back, close the MetaVidence window or click the stop symbol (the red square) in the corner of the Console."
   },
   {
     "objectID": "get-started.html#next-times",
     "href": "get-started.html#next-times",
     "title": "Getting Started With MetaVidence",
-    "section": "6. Next times",
-    "text": "6. Next times\nYou install only once. After that, open RStudio and run just:\nmetavidence::run_app()\nTo update when a new version comes out, repeat the command from step 4."
+    "section": "4. Next times",
+    "text": "4. Next times\nOpen the same MetaVidence.R file and click Source again. MetaVidence opens in a few seconds. When a new version comes out, it updates itself before opening, and without an internet connection it opens the version you already have."
+  },
+  {
+    "objectID": "get-started.html#prefer-to-paste-a-line",
+    "href": "get-started.html#prefer-to-paste-a-line",
+    "title": "Getting Started With MetaVidence",
+    "section": "Prefer to paste a line?",
+    "text": "Prefer to paste a line?\nIf you would rather not download a file, open RStudio, click the Console (the pane with a blinking &gt;, usually at the bottom left), paste this line and press Enter. It does exactly the same as the file, every time you use it:\nsource(\"https://metavidence.com/start.R\")\nOr, if you prefer to see every step written out:\nif (!requireNamespace(\"metavidence\", quietly = TRUE)) install.packages(\"metavidence\", repos = c(\"https://valbertocf.r-universe.dev\", \"https://cloud.r-project.org\")); metavidence::run_app()\nThis longer line installs only once and does not check for updates.\nMetaVidence has been submitted to CRAN. Once it is accepted, it can also be installed with install.packages(\"metavidence\")."
   },
   {
     "objectID": "get-started.html#if-something-goes-wrong",
     "href": "get-started.html#if-something-goes-wrong",
     "title": "Getting Started With MetaVidence",
     "section": "If something goes wrong",
-    "text": "If something goes wrong\nThe install command returns an error saying the package is not available. Check that the line was pasted whole, including the quotes. If it is correct, your R may be too old: run R.version.string in the Console and confirm it is 4.1 or higher.\nThe installation stops partway, on one of the packages MetaVidence depends on. Run install.packages(\"package_name\") for that package alone, read its error message, then repeat the command from step 4.\nrun_app() says it could not find the application directory. Install again with the command from step 4.\nNothing opens when you run run_app(). Force the browser with:\nmetavidence::run_app(launch.browser = TRUE)"
+    "text": "If something goes wrong\nR says MetaVidence needs R 4.1 or newer. Install the current version of R from cran.r-project.org and click Source again.\nR says there is no internet connection. The first installation needs the internet. Connect and click Source again.\nThe installation stops partway, on one of the packages MetaVidence depends on. Run install.packages(\"package_name\") for that package alone, read its error message, then click Source again.\nNothing opens. Paste this into the Console to force the browser:\nmetavidence::run_app(launch.browser = TRUE)"
   },
   {
     "objectID": "diagnostic.html",

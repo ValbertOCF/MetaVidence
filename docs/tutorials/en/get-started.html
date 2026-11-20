@@ -211,10 +211,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#install-r" id="toc-install-r" class="nav-link" data-scroll-target="#install-r">1. Install R</a></li>
   <li><a href="#install-rstudio" id="toc-install-rstudio" class="nav-link" data-scroll-target="#install-rstudio">2. Install RStudio</a></li>
-  <li><a href="#open-rstudio-and-find-the-console" id="toc-open-rstudio-and-find-the-console" class="nav-link" data-scroll-target="#open-rstudio-and-find-the-console">3. Open RStudio and find the Console</a></li>
-  <li><a href="#install-the-package" id="toc-install-the-package" class="nav-link" data-scroll-target="#install-the-package">4. Install the package</a></li>
-  <li><a href="#run-metavidence" id="toc-run-metavidence" class="nav-link" data-scroll-target="#run-metavidence">5. Run MetaVidence</a></li>
-  <li><a href="#next-times" id="toc-next-times" class="nav-link" data-scroll-target="#next-times">6. Next times</a></li>
+  <li><a href="#open-metavidence-with-one-click" id="toc-open-metavidence-with-one-click" class="nav-link" data-scroll-target="#open-metavidence-with-one-click">3. Open MetaVidence with one click</a></li>
+  <li><a href="#next-times" id="toc-next-times" class="nav-link" data-scroll-target="#next-times">4. Next times</a></li>
+  <li><a href="#prefer-to-paste-a-line" id="toc-prefer-to-paste-a-line" class="nav-link" data-scroll-target="#prefer-to-paste-a-line">Prefer to paste a line?</a></li>
   <li><a href="#if-something-goes-wrong" id="toc-if-something-goes-wrong" class="nav-link" data-scroll-target="#if-something-goes-wrong">If something goes wrong</a></li>
   </ul></li>
   </ul>
@@ -285,25 +284,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Open the file and follow the installer.</li>
 </ol>
 </section>
-<section id="open-rstudio-and-find-the-console" class="level2">
-<h2 class="anchored" data-anchor-id="open-rstudio-and-find-the-console">3. Open RStudio and find the Console</h2>
-<p>Open RStudio. The window is split into panes; the one that matters now is the <strong>Console</strong>, usually at the bottom left, with a blinking <code>&gt;</code>.</p>
-<p>That is where you paste the commands in the next steps. Paste the line and press Enter.</p>
-</section>
-<section id="install-the-package" class="level2">
-<h2 class="anchored" data-anchor-id="install-the-package">4. Install the package</h2>
-<p>MetaVidence has been submitted to CRAN. Until it is accepted, install it from the source repository. Paste these two lines into the Console, one at a time, pressing Enter after each:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"remotes"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"ValbertOCF/MetaVidence"</span>, <span class="at">subdir =</span> <span class="st">"pkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The first line installs the helper that can install from GitHub. The second downloads MetaVidence and the packages it depends on, among them <code>meta</code>, <code>metafor</code>, <code>netmeta</code>, <code>lme4</code> and <code>shiny</code>. That is a lot of files, so the first installation takes a few minutes. Let it run until the <code>&gt;</code> comes back on its own in the Console.</p>
-<p>Once MetaVidence is on CRAN, this becomes a single line, <code>install.packages("metavidence")</code>, and this page will say so.</p>
-<p>If R asks something like <em>“Do you want to install from sources the package which needs compilation?”</em>, answer <code>no</code> and press Enter. The prebuilt version is enough and installs far faster.</p>
-</section>
-<section id="run-metavidence" class="level2">
-<h2 class="anchored" data-anchor-id="run-metavidence">5. Run MetaVidence</h2>
-<p>Once the installation finishes, paste:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>metavidence<span class="sc">::</span><span class="fu">run_app</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>MetaVidence opens in an RStudio window or in your browser, looking exactly like the online version. From here on it is the same three-step flow.</p>
+<section id="open-metavidence-with-one-click" class="level2">
+<h2 class="anchored" data-anchor-id="open-metavidence-with-one-click">3. Open MetaVidence with one click</h2>
+<ol type="1">
+<li>Download the file <a href="https://metavidence.com/MetaVidence.R" download="MetaVidence.R">MetaVidence.R</a> and save it somewhere easy to find, such as your desktop.</li>
+<li>Double-click it. It opens in RStudio. If your computer asks which program to use, choose <strong>RStudio</strong>.</li>
+<li>Click the <strong>Source</strong> button, at the top right of the panel that shows the file.</li>
+</ol>
+<p>The first time, MetaVidence and the packages it depends on, among them <code>meta</code>, <code>metafor</code>, <code>netmeta</code>, <code>lme4</code> and <code>shiny</code>, are installed. That takes a few minutes. Let it run until MetaVidence opens on its own. You do not need to answer any question along the way.</p>
+<p>MetaVidence then opens in an RStudio window or in your browser, looking exactly like the online version. From here on it is the same three-step flow.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -319,18 +308,25 @@ The Console stays busy while the app runs
 </div>
 </section>
 <section id="next-times" class="level2">
-<h2 class="anchored" data-anchor-id="next-times">6. Next times</h2>
-<p>You install only once. After that, open RStudio and run just:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>metavidence<span class="sc">::</span><span class="fu">run_app</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>To update when a new version comes out, repeat the command from step 4.</p>
+<h2 class="anchored" data-anchor-id="next-times">4. Next times</h2>
+<p>Open the same <code>MetaVidence.R</code> file and click <strong>Source</strong> again. MetaVidence opens in a few seconds. When a new version comes out, it updates itself before opening, and without an internet connection it opens the version you already have.</p>
+</section>
+<section id="prefer-to-paste-a-line" class="level2">
+<h2 class="anchored" data-anchor-id="prefer-to-paste-a-line">Prefer to paste a line?</h2>
+<p>If you would rather not download a file, open RStudio, click the <strong>Console</strong> (the pane with a blinking <code>&gt;</code>, usually at the bottom left), paste this line and press Enter. It does exactly the same as the file, every time you use it:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"https://metavidence.com/start.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Or, if you prefer to see every step written out:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"metavidence"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">"metavidence"</span>, <span class="at">repos =</span> <span class="fu">c</span>(<span class="st">"https://valbertocf.r-universe.dev"</span>, <span class="st">"https://cloud.r-project.org"</span>)); metavidence<span class="sc">::</span><span class="fu">run_app</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This longer line installs only once and does not check for updates.</p>
+<p>MetaVidence has been submitted to CRAN. Once it is accepted, it can also be installed with <code>install.packages("metavidence")</code>.</p>
 </section>
 <section id="if-something-goes-wrong" class="level2">
 <h2 class="anchored" data-anchor-id="if-something-goes-wrong">If something goes wrong</h2>
-<p><strong>The install command returns an error saying the package is not available.</strong> Check that the line was pasted whole, including the quotes. If it is correct, your R may be too old: run <code>R.version.string</code> in the Console and confirm it is 4.1 or higher.</p>
-<p><strong>The installation stops partway, on one of the packages MetaVidence depends on.</strong> Run <code>install.packages("package_name")</code> for that package alone, read its error message, then repeat the command from step 4.</p>
-<p><strong><code>run_app()</code> says it could not find the application directory.</strong> Install again with the command from step 4.</p>
-<p><strong>Nothing opens when you run <code>run_app()</code>.</strong> Force the browser with:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>metavidence<span class="sc">::</span><span class="fu">run_app</span>(<span class="at">launch.browser =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>R says MetaVidence needs R 4.1 or newer.</strong> Install the current version of R from <a href="https://cran.r-project.org">cran.r-project.org</a> and click <strong>Source</strong> again.</p>
+<p><strong>R says there is no internet connection.</strong> The first installation needs the internet. Connect and click <strong>Source</strong> again.</p>
+<p><strong>The installation stops partway, on one of the packages MetaVidence depends on.</strong> Run <code>install.packages("package_name")</code> for that package alone, read its error message, then click <strong>Source</strong> again.</p>
+<p><strong>Nothing opens.</strong> Paste this into the Console to force the browser:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>metavidence<span class="sc">::</span><span class="fu">run_app</span>(<span class="at">launch.browser =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>

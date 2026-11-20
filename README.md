@@ -1,4 +1,5 @@
 # MetaVidence
+Hi everyone, my name is Valbert, I'm a brazilian bioinformatician/medical student. I've put my heart and my soul into developing Metavidence and I hope it helps you in the statistical analysis of your meta-analysis and you have a great experience. I'll always welcome feedbacks, if you have one, please mail to: appmetavidence@gmail.com
 
 Meta-analysis without code. A Shiny application that walks the researcher
 through three steps (data, parameters, results) up to publication-ready plots

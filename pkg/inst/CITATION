@@ -2,12 +2,21 @@
 ## Do not edit here: the edit would be lost on the next package build.
 
 bibentry(
+  bibtype  = "Article",
+  title    = "Development and Validation of MetaVidence: A No-Code Application for Accessible and Reproducible Meta-analysis",
+  author   = c(person(given = c("Valbert", "Oliveira"), family = "Costa Filho"), person(given = c("Pedro", "Robson", "Costa"), family = "Passos"), person(given = c("Mariana", "Macambira"), family = "Noronha"), person(given = c("Rafael", "Lara"), family = "Nohmi"), person(given = c("Luis", "Felipe", "Leite"), family = "da Silva"), person(given = c("Erick", "F."), family = "Saldanha"), person(given = c("Giuseppe", "G.", "F."), family = "Leite")),
+  journal  = "medRxiv",
+  year     = "2026",
+  doi      = "10.64898/2026.11.17.26368328",
+  header   = "To cite MetaVidence in publications, please use:"
+)
+bibentry(
   bibtype  = "Manual",
   title    = "MetaVidence: no-code meta-analysis in the browser and in R",
   author   = person(given = c("Valbert", "Oliveira"), family = "Costa Filho", comment = c(ORCID = "0009-0003-2864-0966")),
   year     = "2026",
   note     = "R package version 0.1.0",
   url      = "https://metavidence.com",
-  header   = "To cite MetaVidence in publications, please use:",
+  header   = "And, to credit the version you ran:",
   footer   = "The current citation is always at https://metavidence.com/tutorials/en/how-to-cite.html"
 )

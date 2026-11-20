@@ -60,9 +60,25 @@ METAVIDENCE_CITATION <- list(
     url     = "https://metavidence.com"
   ),
   ## Where the current citation always lives. An installed copy can only show
-  ## what shipped with it, and the paper is expected after this release.
+  ## what shipped with it, so this page is where a newer wording would appear.
   cite_page = "https://metavidence.com/tutorials/en/how-to-cite.html",
-  paper = NULL
+  ## The medRxiv preprint (posted 19 November 2026). When the journal version
+  ## comes out, replace title/journal/doi here and the three handwritten files.
+  paper = list(
+    authors  = "Costa Filho VO, Passos PRC, Noronha MM, Nohmi RL, da Silva LFL, Saldanha EF, Leite GGF",
+    year     = 2026,
+    title    = "Development and Validation of MetaVidence: A No-Code Application for Accessible and Reproducible Meta-analysis",
+    journal  = "medRxiv",
+    detail   = NULL,
+    doi      = "10.64898/2026.11.17.26368328",
+    r_author = paste0('c(person(given = c("Valbert", "Oliveira"), family = "Costa Filho"), ',
+                      'person(given = c("Pedro", "Robson", "Costa"), family = "Passos"), ',
+                      'person(given = c("Mariana", "Macambira"), family = "Noronha"), ',
+                      'person(given = c("Rafael", "Lara"), family = "Nohmi"), ',
+                      'person(given = c("Luis", "Felipe", "Leite"), family = "da Silva"), ',
+                      'person(given = c("Erick", "F."), family = "Saldanha"), ',
+                      'person(given = c("Giuseppe", "G.", "F."), family = "Leite"))')
+  )
 )
 
 ## The tutorials link has to be ABSOLUTE. A relative path breaks in both places

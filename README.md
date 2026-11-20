@@ -68,15 +68,30 @@ export to PNG (600 DPI) and vector PDF. What varies:
 
 ## How to cite
 
-If MetaVidence produced results you are publishing, cite it like this:
+If MetaVidence produced results you are publishing, cite the paper that describes and validates it:
+
+> Costa Filho VO, Passos PRC, Noronha MM, Nohmi RL, da Silva LFL, Saldanha EF,
+> Leite GGF (2026). Development and Validation of MetaVidence: A No-Code
+> Application for Accessible and Reproducible Meta-analysis. medRxiv.
+> doi:10.64898/2026.11.17.26368328
+
+To credit the exact version you ran, you can also cite the software:
 
 > Costa Filho VO (2026). MetaVidence: no-code meta-analysis in the browser and in R.
 > Version 0.1.0. https://metavidence.com
 
 ```bibtex
+@Article{metavidence2026,
+  title   = {Development and Validation of {MetaVidence}: A No-Code Application for Accessible and Reproducible Meta-analysis},
+  author  = {Valbert Oliveira {Costa Filho} and Pedro Robson Costa Passos and Mariana Macambira Noronha and Rafael Lara Nohmi and Luis Felipe Leite {da Silva} and Erick F. Saldanha and Giuseppe G. F. Leite},
+  journal = {medRxiv},
+  year    = {2026},
+  doi     = {10.64898/2026.11.17.26368328}
+}
+
 @Manual{metavidence,
   title   = {MetaVidence: no-code meta-analysis in the browser and in R},
-  author  = {Valbert Oliveira Costa Filho},
+  author  = {Valbert Oliveira {Costa Filho}},
   year    = {2026},
   note    = {R package version 0.1.0},
   url     = {https://metavidence.com}

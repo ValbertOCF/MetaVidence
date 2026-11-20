@@ -113,6 +113,9 @@ renderizando os tutoriais
   ## The images are shared by both languages: they sit one level up and the
   ## pages reference them as ../img/. Without this copy they all break.
   file.copy(file.path(tutorial_src, "img"), tutorial_site, recursive = TRUE, overwrite = TRUE)
+  ## Same for the citation files (RIS, BibTeX, EndNote) that how-to-cite links
+  ## to as ../cite/.
+  file.copy(file.path(tutorial_src, "cite"), tutorial_site, recursive = TRUE, overwrite = TRUE)
   file.copy(file.path(tutorial_src, "index.html"), tutorial_site, overwrite = TRUE)
 } else if (!dir.exists(tutorial_site)) {
   ## Fail loudly: publishing without tutorials would leave the app's buttons

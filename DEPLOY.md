@@ -114,7 +114,7 @@ Testado no navegador, com o app rodando em WebAssembly:
 - módulo binário: análise + forest plot renderizado;
 - network meta-analysis: rodou com `netmeta` 3.4-0 (a versão do webR é mais
   nova que a instalada localmente, sem quebra de compatibilidade);
-- diagnóstico: análise + curva SROC (`mada`);
+- diagnóstico: análise + curva SROC (`lme4`);
 - geração de template `.xlsx` (`openxlsx` + `zip`): arquivo válido;
 - camada de interface: stepper, abas de importação, seções de parâmetros,
   118 tooltips e ícones do data check.

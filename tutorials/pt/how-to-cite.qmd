@@ -11,11 +11,6 @@ Se o MetaVidence produziu resultados que você vai publicar, cite o artigo que o
 > Application for Accessible and Reproducible Meta-analysis. medRxiv.
 > doi:10.64898/2026.11.17.26368328
 
-Para registrar a versão exata que você usou, cite também o software:
-
-> Costa Filho VO (2026). MetaVidence: no-code meta-analysis in the browser and
-> in R. Version 0.1.0. https://metavidence.com
-
 Baixe a referência para o seu gerenciador:
 [RIS](../cite/metavidence.ris){download="metavidence.ris"} (EndNote, Zotero, Mendeley) ·
 [BibTeX](../cite/metavidence.bib){download="metavidence.bib"} ·
@@ -31,14 +26,6 @@ Em BibTeX:
   year    = {2026},
   doi     = {10.64898/2026.11.17.26368328}
 }
-
-@Manual{metavidence,
-  title   = {MetaVidence: no-code meta-analysis in the browser and in R},
-  author  = {Valbert Oliveira {Costa Filho}},
-  year    = {2026},
-  note    = {R package version 0.1.0},
-  url     = {https://metavidence.com}
-}
 ```
 
 ## Cite também os pacotes de análise
@@ -47,7 +34,7 @@ O MetaVidence não faz as contas sozinho. Ele chama
 [meta](https://cran.r-project.org/package=meta),
 [metafor](https://cran.r-project.org/package=metafor),
 [netmeta](https://cran.r-project.org/package=netmeta) e
-[mada](https://cran.r-project.org/package=mada), e são esses pacotes que
+[lme4](https://cran.r-project.org/package=lme4), e são esses pacotes que
 implementam os modelos. Cite os que a sua análise usou, e registre a versão de
 cada um.
 
@@ -58,4 +45,4 @@ do módulo:
 |---|---|
 | Binário, contínuo, pré-calculado, braço único | meta, e metafor na meta-regressão |
 | Meta-análise em rede | netmeta |
-| Acurácia diagnóstica | mada, e meta nos forest plots |
+| Acurácia diagnóstica | lme4, e meta nos forest plots |

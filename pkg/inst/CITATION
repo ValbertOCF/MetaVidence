@@ -8,15 +8,6 @@ bibentry(
   journal  = "medRxiv",
   year     = "2026",
   doi      = "10.64898/2026.11.17.26368328",
-  header   = "To cite MetaVidence in publications, please use:"
-)
-bibentry(
-  bibtype  = "Manual",
-  title    = "MetaVidence: no-code meta-analysis in the browser and in R",
-  author   = person(given = c("Valbert", "Oliveira"), family = "Costa Filho", comment = c(ORCID = "0009-0003-2864-0966")),
-  year     = "2026",
-  note     = "R package version 0.1.0",
-  url      = "https://metavidence.com",
-  header   = "And, to credit the version you ran:",
+  header   = "To cite MetaVidence in publications, please use:",
   footer   = "The current citation is always at https://metavidence.com/tutorials/en/how-to-cite.html"
 )

@@ -91,7 +91,7 @@ remotes::install_github("ValbertOCF/MetaVidence", subdir = "pkg")
 
 The first line installs the helper that can install from GitHub. The second
 downloads MetaVidence and the packages it depends on, among them `meta`,
-`metafor`, `netmeta`, `mada` and `shiny`. That is a lot of files, so the first
+`metafor`, `netmeta`, `lme4` and `shiny`. That is a lot of files, so the first
 installation takes a few minutes. Let it run until the `>` comes back on its own
 in the Console.
 

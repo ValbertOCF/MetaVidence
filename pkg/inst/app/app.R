@@ -42,9 +42,9 @@ addResourcePath("assets", metavidence_assets())
 ## inst/CITATION from this list, and design/check_citation.R verifies the other
 ## two have not drifted.
 ##
-## WHEN THE PAPER IS PUBLISHED: fill in the `paper` block below. It then becomes
-## the primary citation everywhere, and the software entry stays listed second,
-## which is the convention for crediting the version actually run.
+## Once the `paper` block below is filled in, the paper is the only citation
+## asked for everywhere. The software entry is kept for the version number the
+## Methods text records, and is the citation only while `paper` is NULL.
 METAVIDENCE_CITATION <- list(
   software = list(
     ## Given names as a VECTOR, not one string. R's person() abbreviates each

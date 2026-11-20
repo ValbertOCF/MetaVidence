@@ -56,14 +56,18 @@ if (!is.null(cit$paper)) {
   author   = %s,
   journal  = "%s",
   year     = "%d",
-%s  header   = "To cite MetaVidence in publications, please use:"
+%s  header   = "To cite MetaVidence in publications, please use:",
+  footer   = "%s"
 )',
     p$title, p$r_author, p$journal, p$year,
     if (!is.null(p$doi) && nzchar(p$doi)) sprintf('  doi      = "%s",
-', p$doi) else ""))
+', p$doi) else "",
+    paste0("The current citation is always at ", cit$cite_page)))
 }
+## The software entry is the citation only until the paper exists. Once it
+## does, the paper alone is cited (the Methods text still records the version).
 s <- cit$software
-entradas <- c(entradas, sprintf(
+if (is.null(cit$paper)) entradas <- c(entradas, sprintf(
   'bibentry(
   bibtype  = "Manual",
   title    = "%s",
@@ -76,8 +80,7 @@ entradas <- c(entradas, sprintf(
 )',
   s$title, paste(sprintf('"%s"', s$given), collapse = ", "), s$family, s$orcid,
   s$year, s$version, s$url,
-  if (is.null(cit$paper)) "To cite MetaVidence in publications, please use:"
-  else "And, to credit the version you ran:",
+  "To cite MetaVidence in publications, please use:",
   ## An installed package can only show the citation that shipped with it. If
   ## the paper appears after this release, this line is what sends the reader
   ## to the current wording without the app having to fetch anything.

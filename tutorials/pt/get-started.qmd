@@ -90,7 +90,7 @@ remotes::install_github("ValbertOCF/MetaVidence", subdir = "pkg")
 
 A primeira linha instala o auxiliar que sabe instalar a partir do GitHub. A
 segunda baixa o MetaVidence e os pacotes de que ele depende, entre eles `meta`,
-`metafor`, `netmeta`, `mada` e `shiny`. São muitos arquivos, então a primeira
+`metafor`, `netmeta`, `lme4` e `shiny`. São muitos arquivos, então a primeira
 instalação demora alguns minutos. Deixe rodar até o `>` voltar a aparecer
 sozinho no Console.
 

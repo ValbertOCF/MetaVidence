@@ -75,11 +75,6 @@ If MetaVidence produced results you are publishing, cite the paper that describe
 > Application for Accessible and Reproducible Meta-analysis. medRxiv.
 > doi:10.64898/2026.11.17.26368328
 
-To credit the exact version you ran, you can also cite the software:
-
-> Costa Filho VO (2026). MetaVidence: no-code meta-analysis in the browser and in R.
-> Version 0.1.0. https://metavidence.com
-
 ```bibtex
 @Article{metavidence2026,
   title   = {Development and Validation of {MetaVidence}: A No-Code Application for Accessible and Reproducible Meta-analysis},
@@ -87,14 +82,6 @@ To credit the exact version you ran, you can also cite the software:
   journal = {medRxiv},
   year    = {2026},
   doi     = {10.64898/2026.11.17.26368328}
-}
-
-@Manual{metavidence,
-  title   = {MetaVidence: no-code meta-analysis in the browser and in R},
-  author  = {Valbert Oliveira {Costa Filho}},
-  year    = {2026},
-  note    = {R package version 0.1.0},
-  url     = {https://metavidence.com}
 }
 ```
 
@@ -120,7 +107,7 @@ The analyses use the packages
 [meta](https://cran.r-project.org/package=meta),
 [metafor](https://cran.r-project.org/package=metafor),
 [netmeta](https://cran.r-project.org/package=netmeta) and
-[mada](https://cran.r-project.org/package=mada). When publishing results, cite
+[lme4](https://cran.r-project.org/package=lme4). When publishing results, cite
 those packages and record the version you used.
 
 ## Licence

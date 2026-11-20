@@ -11,11 +11,6 @@ If MetaVidence produced results you are publishing, cite the paper that describe
 > Application for Accessible and Reproducible Meta-analysis. medRxiv.
 > doi:10.64898/2026.11.17.26368328
 
-To credit the exact version you ran, you can also cite the software:
-
-> Costa Filho VO (2026). MetaVidence: no-code meta-analysis in the browser and
-> in R. Version 0.1.0. https://metavidence.com
-
 Download the reference for your reference manager:
 [RIS](../cite/metavidence.ris){download="metavidence.ris"} (EndNote, Zotero, Mendeley) ·
 [BibTeX](../cite/metavidence.bib){download="metavidence.bib"} ·
@@ -31,14 +26,6 @@ In BibTeX:
   year    = {2026},
   doi     = {10.64898/2026.11.17.26368328}
 }
-
-@Manual{metavidence,
-  title   = {MetaVidence: no-code meta-analysis in the browser and in R},
-  author  = {Valbert Oliveira {Costa Filho}},
-  year    = {2026},
-  note    = {R package version 0.1.0},
-  url     = {https://metavidence.com}
-}
 ```
 
 ## Cite the analysis packages too
@@ -47,7 +34,7 @@ MetaVidence does not do the maths itself. It calls
 [meta](https://cran.r-project.org/package=meta),
 [metafor](https://cran.r-project.org/package=metafor),
 [netmeta](https://cran.r-project.org/package=netmeta) and
-[mada](https://cran.r-project.org/package=mada), and those packages implement
+[lme4](https://cran.r-project.org/package=lme4), and those packages implement
 the models. Cite the ones your analysis used, and record each version.
 
 In R, `citation("meta")` gives the exact wording for each. Which ones apply
@@ -57,4 +44,4 @@ depends on the module:
 |---|---|
 | Binary, continuous, pre-calculated, single-arm | meta, and metafor for meta-regression |
 | Network meta-analysis | netmeta |
-| Diagnostic test accuracy | mada, and meta for the forest plots |
+| Diagnostic test accuracy | lme4, and meta for the forest plots |

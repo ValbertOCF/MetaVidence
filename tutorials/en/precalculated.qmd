@@ -1,5 +1,6 @@
 ---
-title: "Pre-calculated effects"
+title: "Meta-analysis of Hazard Ratios and Other Effect Estimates"
+description-meta: "Pool hazard ratios and other effect estimates reported with confidence intervals or standard errors in MetaVidence."
 subtitle: "When the paper already gives the effect and you only need to pool"
 ---
 

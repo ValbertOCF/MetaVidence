@@ -39,7 +39,22 @@ writeLines(domain, file.path(out_dir, "CNAME"))
 index_path <- file.path(out_dir, "index.html")
 index <- paste(readLines(index_path, warn = FALSE), collapse = "\n")
 
-index <- sub("<title>[^<]*</title>", "<title>MetaVidence</title>", index)
+## Title, description and link previews. The app itself is drawn by JavaScript
+## inside an iframe, so without these a search engine sees almost no text here.
+index <- sub("<title>[^<]*</title>", paste0(
+  "<title>MetaVidence | Free Meta-analysis Software Without Coding</title>\n",
+  "    <meta name=\"description\" content=\"Run pairwise, single-arm, pre-calculated, network ",
+  "and diagnostic test accuracy meta-analyses without coding. Free, browser-based software ",
+  "with downloadable plots and tables.\">\n",
+  "    <link rel=\"canonical\" href=\"https://", domain, "/\">\n",
+  "    <meta property=\"og:title\" content=\"MetaVidence | Meta-analysis Without Coding\">\n",
+  "    <meta property=\"og:description\" content=\"Free software for running meta-analyses ",
+  "in your browser, without coding.\">\n",
+  "    <meta property=\"og:url\" content=\"https://", domain, "/\">\n",
+  "    <meta property=\"og:type\" content=\"website\">"), index)
+if (!grepl("name=\"description\"", index, fixed = TRUE)) {
+  stop("Description was not injected. Check the <title> anchor in index.html.")
+}
 
 ## The tab icon comes from the OUTER document. The app declares its own in
 ## app.R, but on the website shinylive mounts the app inside an iframe, and an
@@ -107,6 +122,11 @@ renderizando os tutoriais
            paste(utils::tail(st, 10), collapse = "
 "))
     }
+    ## Once (Nov 2026) a render produced the pages but not site_libs/, which
+    ## holds every page's CSS and JS: the tutorials would have gone out unstyled.
+    if (!dir.exists(file.path(tutorial_site, idioma, "site_libs"))) {
+      stop("Quarto rendered ", idioma, " without site_libs/. Run build_shinylive.R again.")
+    }
     cat("  ", idioma, "ok
 ")
   }
@@ -134,6 +154,24 @@ dir.create(destino_tutoriais, recursive = TRUE, showWarnings = FALSE)
 file.copy(list.files(tutorial_site, full.names = TRUE), destino_tutoriais,
           recursive = TRUE, overwrite = TRUE)
 
+## ---- 4. robots.txt and sitemap.xml ----------------------------------------
+## Also wiped by the export, so they are written here. The sitemap lists only the
+## public pages (the app and the tutorials), never the WebAssembly files.
+writeLines(c("User-agent: *", "Allow: /", "",
+             paste0("Sitemap: https://", domain, "/sitemap.xml")),
+           file.path(out_dir, "robots.txt"))
+paginas <- unlist(lapply(idiomas, function(idioma) {
+  html <- sort(list.files(file.path(destino_tutoriais, idioma), pattern = "[.]html$"))
+  html <- setdiff(html, "404.html")
+  paste0("https://", domain, "/tutorials/", idioma, "/", sub("^index[.]html$", "", html))
+}))
+urls <- unique(c(paste0("https://", domain, "/"), paste0("https://", domain, "/tutorials/"), paginas))
+writeLines(c('<?xml version="1.0" encoding="UTF-8"?>',
+             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+             paste0("  <url><loc>", urls, "</loc></url>"),
+             "</urlset>"),
+           file.path(out_dir, "sitemap.xml"))
+
 ## ---- verificacao --------------------------------------------------------
 final <- paste(readLines(index_path, warn = FALSE), collapse = "\n")
 cat("\npost-export checks\n")
@@ -146,6 +184,9 @@ cat("  favicon        :",
 ")
 cat("  loading screen :", if (grepl("id=\"mv-boot\"", final, fixed = TRUE)) "injected" else "MISSING", "\n")
 cat("  #root present  :", if (grepl('id="root"', final, fixed = TRUE)) "yes" else "NO", "\n")
+cat("  description    :", if (grepl('name="description"', final, fixed = TRUE)) "injected" else "MISSING", "\n")
+cat("  sitemap        :", length(urls), "URLs | robots.txt",
+    if (file.exists(file.path(out_dir, "robots.txt"))) "ok" else "MISSING", "\n")
 n_tut <- vapply(idiomas, function(i)
   length(list.files(file.path(destino_tutoriais, i), pattern = "[.]html$")), integer(1))
 cat("  tutorials      :", if (all(n_tut > 0))

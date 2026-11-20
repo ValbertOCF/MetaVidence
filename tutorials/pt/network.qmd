@@ -1,5 +1,6 @@
 ---
-title: "Meta-análise em rede"
+title: "Meta-análise em rede sem programação"
+description-meta: "Prepare os dados, escolha os modelos e interprete uma meta-análise em rede no MetaVidence, com league table, node splitting e P-scores."
 subtitle: "Comparar três ou mais tratamentos, incluindo os que nunca foram testados entre si"
 ---
 

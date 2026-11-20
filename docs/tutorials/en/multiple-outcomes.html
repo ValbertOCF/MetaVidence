@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="Analyze every outcome of a systematic review in a single run in MetaVidence, with one workbook and the same settings for all outcomes.">
 
-<title>Multiple outcomes at once – MetaVidence</title>
+<title>Analyzing Multiple Outcomes at Once – MetaVidence</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -181,7 +182,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Multiple outcomes at once</h1>
+<h1 class="title">Analyzing Multiple Outcomes at Once</h1>
 <p class="subtitle lead">Build one workbook with every outcome and export it all in a single run</p>
 </div>
 
@@ -405,7 +406,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/metavidence\.com\/tutorials\/en\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

@@ -1,5 +1,6 @@
 ---
 title: "O fluxo em três passos"
+description-meta: "Como todo módulo do MetaVidence funciona, da checagem dos dados às configurações estatísticas e à exportação dos resultados."
 subtitle: "Como todo módulo funciona: dados, parâmetros, exportação"
 ---
 

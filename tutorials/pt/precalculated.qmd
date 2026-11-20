@@ -1,5 +1,6 @@
 ---
-title: "Efeitos pré-calculados"
+title: "Meta-análise de hazard ratios e outros efeitos pré-calculados"
+description-meta: "Agrupe hazard ratios e outros efeitos relatados com intervalo de confiança ou erro padrão no MetaVidence."
 subtitle: "Quando o artigo já traz o efeito e você só precisa agrupar"
 ---
 

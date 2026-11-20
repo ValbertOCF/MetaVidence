@@ -1,5 +1,6 @@
 ---
-title: "Diagnostic test accuracy meta-analysis"
+title: "Diagnostic Test Accuracy Meta-analysis Without Coding"
+description-meta: "Estimate summary sensitivity and specificity with a bivariate model in MetaVidence, for one index test or two tests in the same studies."
 subtitle: "Sensitivity, specificity, summary point and diagnostic odds ratio"
 ---
 

@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="Abra o MetaVidence no navegador ou instale como pacote do R e faça sua primeira meta-análise sem programação.">
 
-<title>Comece aqui – MetaVidence</title>
+<title>Primeiros passos com o MetaVidence – MetaVidence</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -224,7 +225,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Comece aqui</h1>
+<h1 class="title">Primeiros passos com o MetaVidence</h1>
 <p class="subtitle lead">Abrir no navegador, ou instalar o R e rodar no seu computador</p>
 </div>
 
@@ -428,7 +429,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/metavidence\.com\/tutorials\/pt\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

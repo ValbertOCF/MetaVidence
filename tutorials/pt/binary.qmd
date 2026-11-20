@@ -1,5 +1,6 @@
 ---
-title: "Desfechos binários"
+title: "Meta-análise de desfechos binários sem programação"
+description-meta: "Agrupe riscos relativos, razões de chances e diferenças de risco a partir de contagens de eventos no MetaVidence, com subgrupos, meta-regressão e funnel plot."
 subtitle: "Risco relativo, razão de chances e diferença de risco a partir de contagens de eventos"
 ---
 

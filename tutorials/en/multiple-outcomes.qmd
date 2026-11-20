@@ -1,5 +1,6 @@
 ---
-title: "Multiple outcomes at once"
+title: "Analyzing Multiple Outcomes at Once"
+description-meta: "Analyze every outcome of a systematic review in a single run in MetaVidence, with one workbook and the same settings for all outcomes."
 subtitle: "Build one workbook with every outcome and export it all in a single run"
 ---
 

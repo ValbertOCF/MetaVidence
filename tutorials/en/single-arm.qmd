@@ -1,5 +1,6 @@
 ---
-title: "Single-arm meta-analysis"
+title: "Single-arm Meta-analysis of Proportions and Means"
+description-meta: "Pool proportions or means from single-arm studies in MetaVidence, without a comparison group and without coding."
 subtitle: "Pooling a proportion or a mean, with no comparison group"
 ---
 

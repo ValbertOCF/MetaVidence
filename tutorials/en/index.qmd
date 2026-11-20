@@ -1,5 +1,6 @@
 ---
-title: "MetaVidence tutorials"
+title: "MetaVidence Tutorials: Meta-analysis Without Coding"
+description-meta: "Step-by-step tutorials for running meta-analyses in MetaVidence, a free no-code application that runs R in the browser."
 ---
 
 MetaVidence does meta-analysis without code. You load a spreadsheet, choose the

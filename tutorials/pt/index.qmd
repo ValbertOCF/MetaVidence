@@ -1,5 +1,6 @@
 ---
-title: "Tutoriais do MetaVidence"
+title: "Tutoriais do MetaVidence: meta-análise sem programação"
+description-meta: "Tutoriais passo a passo para fazer meta-análises no MetaVidence, um aplicativo gratuito e sem programação que roda o R no navegador."
 ---
 
 O MetaVidence faz meta-análise sem código. Você carrega uma planilha, escolhe os

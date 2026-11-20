@@ -1,5 +1,6 @@
 ---
-title: "Get started"
+title: "Getting Started With MetaVidence"
+description-meta: "Open MetaVidence in the browser or install it as an R package, and run your first meta-analysis without coding."
 subtitle: "Open it in the browser, or install R and run it on your own computer"
 ---
 

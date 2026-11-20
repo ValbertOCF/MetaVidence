@@ -1,5 +1,6 @@
 ---
-title: "How to cite"
+title: "How to Cite MetaVidence"
+description-meta: "How to cite MetaVidence in publications, with RIS, BibTeX and EndNote files to download."
 ---
 
 ## Cite MetaVidence

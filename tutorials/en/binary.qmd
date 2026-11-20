@@ -1,5 +1,6 @@
 ---
-title: "Binary outcomes"
+title: "Meta-analysis of Binary Outcomes Without Coding"
+description-meta: "Pool risk ratios, odds ratios and risk differences from event counts in MetaVidence, with subgroup analysis, meta-regression and funnel plots."
 subtitle: "Risk ratio, odds ratio and risk difference from event counts"
 ---
 

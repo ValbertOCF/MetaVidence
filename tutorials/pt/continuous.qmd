@@ -1,5 +1,6 @@
 ---
-title: "Desfechos contínuos"
+title: "Meta-análise de desfechos contínuos sem programação"
+description-meta: "Agrupe diferenças de médias e diferenças de médias padronizadas no MetaVidence, incluindo estudos que relatam medianas com quartis ou amplitude."
 subtitle: "Diferença de médias e diferença de médias padronizada"
 ---
 

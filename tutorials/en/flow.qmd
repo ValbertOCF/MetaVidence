@@ -1,5 +1,6 @@
 ---
-title: "The three-step flow"
+title: "The Three-step Flow"
+description-meta: "How every MetaVidence module works, from data check to statistical settings to results and export."
 subtitle: "How every module works: data, parameters, export"
 ---
 

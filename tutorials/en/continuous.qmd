@@ -1,5 +1,6 @@
 ---
-title: "Continuous outcomes"
+title: "Meta-analysis of Continuous Outcomes Without Coding"
+description-meta: "Pool mean differences and standardized mean differences in MetaVidence, including studies that report medians with quartiles or ranges."
 subtitle: "Mean difference and standardized mean difference"
 ---
 

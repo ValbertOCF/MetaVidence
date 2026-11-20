@@ -1,5 +1,6 @@
 ---
 title: "Vários desfechos de uma vez"
+description-meta: "Analise todos os desfechos de uma revisão sistemática numa única rodada no MetaVidence, com uma planilha e as mesmas configurações para todos."
 subtitle: "Montar uma planilha com todos os desfechos e exportar tudo numa rodada"
 ---
 

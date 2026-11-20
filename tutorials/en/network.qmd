@@ -1,5 +1,6 @@
 ---
-title: "Network meta-analysis"
+title: "Network Meta-analysis Without Coding"
+description-meta: "Prepare data, choose models and interpret network meta-analysis results in MetaVidence, including league tables, node splitting and P-scores."
 subtitle: "Comparing three or more treatments, including ones never tested against each other"
 ---
 

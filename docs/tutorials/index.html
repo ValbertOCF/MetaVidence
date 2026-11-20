@@ -1,9 +1,11 @@
 <!doctype html>
-<html lang="pt">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MetaVidence</title>
+<title>MetaVidence Documentation and Tutorials</title>
+<meta name="description" content="Learn how to use MetaVidence for meta-analysis without coding. Explore step-by-step tutorials, the supported analyses and citation guidance.">
+<link rel="canonical" href="https://metavidence.com/tutorials/">
 <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 <style>
   :root {
@@ -21,7 +23,23 @@
     font-family: Inter, 'Segoe UI', Helvetica, Arial, sans-serif;
     line-height: 1.6;
   }
-  .card { width: 100%; max-width: 520px; text-align: center; }
+  .card { width: 100%; max-width: 620px; text-align: center; }
+  .intro { text-align: left; color: var(--text); font-size: .97rem; margin: 0 0 14px; }
+  ul.families {
+    text-align: left; margin: 0 0 18px; padding-left: 20px;
+    color: var(--text); font-size: .95rem;
+  }
+  ul.families li { margin: 2px 0; }
+  .note { text-align: left; font-size: .9rem; color: var(--muted); margin: 0 0 26px; }
+  .links {
+    display: flex; flex-wrap: wrap; gap: 8px 18px; justify-content: center;
+    margin: 0 0 28px; font-size: .93rem;
+  }
+  .links a { color: var(--blue-600); font-weight: 600; }
+  h2 {
+    font-family: Manrope, Inter, 'Segoe UI', sans-serif;
+    font-size: 1.05rem; font-weight: 800; color: var(--ink); margin: 0 0 12px;
+  }
   .brand {
     display: flex; align-items: center; justify-content: center;
     gap: 12px; margin-bottom: 28px;
@@ -67,7 +85,34 @@
       <span class="name">Meta<span>Vidence</span></span>
     </div>
 
-    <h1>Tutoriais / Tutorials</h1>
+    <h1>Meta-analysis without coding</h1>
+    <p class="intro">
+      MetaVidence is a free application for conducting meta-analyses without
+      coding. Researchers can import spreadsheets, specify statistical models and
+      export plots and tables. The web application runs R inside the browser
+      through WebAssembly, so study data stay on the user's device. It supports:
+    </p>
+    <ul class="families">
+      <li>Pairwise meta-analysis of binary and continuous outcomes</li>
+      <li>Single-arm meta-analysis of proportions and means</li>
+      <li>Meta-analysis of pre-calculated effects, such as hazard ratios</li>
+      <li>Network meta-analysis</li>
+      <li>Diagnostic test accuracy meta-analysis</li>
+    </ul>
+    <p class="note">
+      The development and validation of MetaVidence are described in a preprint
+      that has not yet been peer reviewed.
+    </p>
+
+    <div class="links">
+      <a href="../">Open the app</a>
+      <a href="en/get-started.html">Getting started</a>
+      <a href="https://doi.org/10.64898/2026.11.17.26368328">Preprint</a>
+      <a href="en/how-to-cite.html">How to cite</a>
+      <a href="https://github.com/ValbertOCF/MetaVidence">GitHub</a>
+    </div>
+
+    <h2>Tutoriais / Tutorials</h2>
     <p>Escolha o idioma. Choose your language.</p>
 
     <div class="langs">
@@ -78,18 +123,8 @@
     <p class="back"><a href="../">Voltar ao MetaVidence / Back to MetaVidence</a></p>
   </div>
 
-<script>
-  /* Sends the visitor straight to their browser language, but only on the
-     first visit: anyone who picked a language by hand must not be thrown back
-     to it on every return. */
-  (function () {
-    try {
-      if (sessionStorage.getItem('mv-lang-visto')) return;
-      sessionStorage.setItem('mv-lang-visto', '1');
-      var l = (navigator.language || '').toLowerCase();
-      location.replace(l.indexOf('pt') === 0 ? 'pt/' : 'en/');
-    } catch (e) { /* sem sessionStorage: fica na pagina de escolha */ }
-  })();
-</script>
+<!-- No automatic redirect to the browser language any more: this page is now the
+     presentation of the tutorials, and a script redirect would make search
+     engines treat it as a redirect and never index its text. -->
 </body>
 </html>

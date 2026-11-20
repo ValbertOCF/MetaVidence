@@ -1,5 +1,6 @@
 ---
-title: "Meta-análise diagnóstica"
+title: "Meta-análise de acurácia diagnóstica sem programação"
+description-meta: "Estime sensibilidade e especificidade resumidas com modelo bivariado no MetaVidence, para um teste índice ou dois testes nos mesmos estudos."
 subtitle: "Sensibilidade, especificidade, ponto de resumo e razão de chances diagnóstica"
 ---
 

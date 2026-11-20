@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="Agrupe hazard ratios e outros efeitos relatados com intervalo de confiança ou erro padrão no MetaVidence.">
 
-<title>Efeitos pré-calculados – MetaVidence</title>
+<title>Meta-análise de hazard ratios e outros efeitos pré-calculados – MetaVidence</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -182,7 +183,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Efeitos pré-calculados</h1>
+<h1 class="title">Meta-análise de hazard ratios e outros efeitos pré-calculados</h1>
 <p class="subtitle lead">Quando o artigo já traz o efeito e você só precisa agrupar</p>
 </div>
 
@@ -398,7 +399,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/metavidence\.com\/tutorials\/pt\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

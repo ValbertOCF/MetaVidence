@@ -4,6 +4,8 @@ project:
 
 website:
   title: "MetaVidence"
+  site-url: "https://metavidence.com/tutorials/en/"
+  description: "Tutorials for conducting meta-analysis without coding using MetaVidence."
   navbar:
     background: light
     left:

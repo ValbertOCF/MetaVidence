@@ -1,5 +1,6 @@
 ---
-title: "Meta-análise de braço único"
+title: "Meta-análise de braço único de proporções e médias"
+description-meta: "Agrupe proporções ou médias de estudos de braço único no MetaVidence, sem grupo de comparação e sem programação."
 subtitle: "Agrupar uma proporção ou uma média, sem grupo de comparação"
 ---
 
